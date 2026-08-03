@@ -1,0 +1,96 @@
+# ===============================================
+# 毎週月曜 AM2:00(JST) に自動再学習
+# ===============================================
+name: 毎週自動再学習
+
+on:
+  schedule:
+    - cron: "0 17 * * 0"   # UTC日曜17:00 = JST月曜02:00
+  workflow_dispatch:         # 手動実行ボタン有効化
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリ取得
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: パッケージインストール
+        run: pip install -r requirements.txt
+
+      - name: S3から特徴量データ取得
+        env:
+          AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION:    ${{ secrets.AWS_REGION }}
+        run: |
+          python - <<'EOF'
+          import boto3
+          import os
+
+          bucket = "${{ secrets.S3_BUCKET }}"
+          prefix = "homedoor/features"
+
+          s3 = boto3.client('s3')
+          os.makedirs("data/features", exist_ok=True)
+
+          files = ["features_all.csv", "features_fault.csv"]
+          for f in files:
+              s3_key = f"{prefix}/{f}"
+              local  = f"data/features/{f}"
+              print(f"ダウンロード中: {s3_key} → {local}")
+              s3.download_file(bucket, s3_key, local)
+              size = os.path.getsize(local) / 1024 / 1024
+              print(f"✅ 完了: {size:.1f}MB")
+          EOF
+
+      - name: モデル学習・比較
+        run: |
+          python src/train_models.py \
+            --features data/features/features_all.csv \
+            --models   models \
+            --reports  reports \
+            --config   config/settings.yaml
+
+      - name: 異常判定実行
+        run: |
+          python src/predict.py \
+            --features data/features/features_all.csv \
+            --models   models \
+            --output   data/results/results_latest.json \
+            --config   config/settings.yaml
+
+      - name: 検証AI実行
+        run: |
+          python src/validate_ai.py \
+            --features data/features/features_all.csv \
+            --models   models \
+            --reports  reports
+
+      - name: 生成ファイルをコミット・プッシュ
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models/ reports/ data/results/
+          git diff --cached --quiet || git commit -m "🤖 自動再学習 $(date +'%Y-%m-%d %H:%M JST')"
+          git push
+
+      - name: 完了通知
+        env:
+          MAIL_FROM:         ${{ secrets.MAIL_FROM }}
+          MAIL_TO:           ${{ secrets.MAIL_TO }}
+          MAIL_PASSWORD:     ${{ secrets.MAIL_PASSWORD }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          python src/notify.py \
+            --event retrain_complete \
+            --report reports/model_comparison.json
