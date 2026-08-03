@@ -1,0 +1,52 @@
+# ========================================
+# ホームドア異常予兆検知システム 設定ファイル
+# ========================================
+
+station:
+  name: "五反田"
+  line: 1
+  cars: [1, 2, 3]
+  doors: [1, 2, 3]
+
+data:
+  raw_dir: "data/raw"
+  features_dir: "data/features"
+  results_dir: "data/results"
+  models_dir: "models"
+  reports_dir: "reports"
+  train_days: 90
+
+feature_extraction:
+  phases:
+    idle:    [0.00, 0.78]
+    startup: [0.78, 1.00]
+    steady:  [1.00, 2.75]
+    decel:   [2.75, 3.30]
+    bounce:  [3.30, 4.15]
+    lock:    [4.15, 4.35]
+    after:   [4.35, 11.0]
+
+anomaly_detection:
+  models:
+    - "isolation_forest"
+    - "lof"
+    - "one_class_svm"
+  individual_model: true
+  unified_model: true
+  contamination: 0.01  # 汚染率1%
+
+thresholds:
+  warning: 0.60  # 要注意閾値
+  danger:  0.80  # 異常閾値
+
+schedule:
+  retrain_cron: "0 17 * * 0"       # UTC日曜17:00 = JST月曜02:00
+  morning_check_cron: "30 20 * * *"  # UTC 20:30 = JST 05:30
+
+notification:
+  email:
+    enabled: true
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+  teams:
+    enabled: true
