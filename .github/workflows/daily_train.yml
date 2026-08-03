@@ -15,113 +15,30 @@ jobs:
       contents: write
 
     steps:
-      # ① リポジトリをチェックアウト
       - name: リポジトリ取得
         uses: actions/checkout@v4
 
-      # ② Python環境セットアップ
       - name: Python 3.11 セットアップ
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
 
-      # ③ 依存パッケージインストール
       - name: パッケージインストール
-        run: |
-          pip install -r requirements.txt
-          pip install boto3
+        run: pip install -r requirements.txt
 
-      # ④ S3から特徴量CSVを取得（get_object方式）
-      - name: S3から特徴量データ取得
-        env:
-          AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION:            ${{ secrets.AWS_REGION }}
-          S3_BUCKET:             ${{ secrets.S3_BUCKET }}
-        run: |
-          python - <<'EOF'
-          import boto3
-          import os
-
-          access_key = os.environ.get('AWS_ACCESS_KEY_ID', '').strip()
-          secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', '').strip()
-          region     = os.environ.get('AWS_REGION', 'ap-northeast-1').strip()
-          bucket     = os.environ.get('S3_BUCKET', 'training-s3-apne1-471112986994-001').strip()
-          prefix     = "homedoor/features"
-
-          print(f"接続情報: Bucket={bucket}, Region={region}")
-
-          s3 = boto3.client(
-              's3',
-              aws_access_key_id=access_key,
-              aws_secret_access_key=secret_key,
-              region_name=region
-          )
-
-          os.makedirs("data/features", exist_ok=True)
-
-          files = ["features_all.csv", "features_fault.csv"]
-          for f in files:
-              s3_key = f"{prefix}/{f}"
-              local  = f"data/features/{f}"
-              print(f"ダウンロード中: {s3_key} → {local}")
-              try:
-                  response = s3.get_object(Bucket=bucket, Key=s3_key)
-                  with open(local, 'wb') as out_f:
-                      # 105MBの大容量ファイルに対応するためチャンク読み込み
-                      for chunk in response['Body'].iter_chunks(chunk_size=1024*1024):
-                          out_f.write(chunk)
-                  size = os.path.getsize(local) / 1024 / 1024
-                  print(f"✅ 完了: {size:.1f}MB")
-              except Exception as e:
-                  print(f"❌ ダウンロード失敗 ({f}): {e}")
-                  raise e
-          EOF
-
-      # ⑤ モデル学習
       - name: モデル学習・比較
         run: |
           python src/train_models.py \
-            --features data/features/features_all.csv \
-            --models   models \
-            --reports  reports \
-            --config   config/settings.yaml
+            --features_dir data/features \
+            --models       models \
+            --reports      reports \
+            --config       config/settings.yaml
 
-      # ⑥ 異常判定実行
-      - name: 異常判定
-        run: |
-          python src/predict.py \
-            --features data/features/features_all.csv \
-            --models   models \
-            --output   data/results/results_latest.json \
-            --config   config/settings.yaml
-
-      # ⑦ 検証AI実行
-      - name: 検証AI・自動デバッグ
-        run: |
-          python src/validate_ai.py \
-            --features data/features/features_all.csv \
-            --models   models \
-            --reports  reports
-
-      # ⑧ 生成ファイルをコミット・プッシュ
-      - name: モデル・レポートをコミット
+      - name: 生成ファイルをコミット・プッシュ
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add models/ reports/ data/results/
+          git add models/ reports/
           git diff --cached --quiet || git commit -m "🤖 自動再学習 $(date +'%Y-%m-%d %H:%M JST')"
           git push
-
-      # ⑨ 学習完了通知
-      - name: 完了通知
-        env:
-          MAIL_FROM:         ${{ secrets.MAIL_FROM }}
-          MAIL_TO:           ${{ secrets.MAIL_TO }}
-          MAIL_PASSWORD:     ${{ secrets.MAIL_PASSWORD }}
-          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
-        run: |
-          python src/notify.py \
-            --event retrain_complete \
-            --report reports/model_comparison.json
