@@ -1,11 +1,12 @@
 """
-異常判定スクリプト
+異常判定スクリプト（データ非存在時の安全終了対応版）
 
 使い方:
   python src/predict.py \
     --features data/features/features_latest.csv \
     --models   models \
-    --output   data/results/results_latest.json
+    --output   data/results/results_latest.json \
+    --config   config/settings.yaml
 """
 
 import os
@@ -13,7 +14,6 @@ import json
 import logging
 import argparse
 from datetime import datetime
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -29,6 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 def load_config(path="config/settings.yaml"):
+    if not os.path.exists(path):
+        return {"thresholds": {"warning": 0.60, "danger": 0.80}}
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -41,10 +43,10 @@ def normalize_scores(raw_scores):
 
 
 def get_label(score, config):
-    th = config["thresholds"]
-    if score >= th["danger"]:
+    th = config.get("thresholds", {"warning": 0.60, "danger": 0.80})
+    if score >= th.get("danger", 0.80):
         return "danger"
-    elif score >= th["warning"]:
+    elif score >= th.get("warning", 0.60):
         return "warning"
     return "normal"
 
@@ -133,12 +135,10 @@ def predict_single(row, feature_cols, model_dir, config):
             "source": "unified"
         }
 
-    # アンサンブルスコア（有効なスコアの平均）
     valid_scores = [v["score"] for v in results_by_model.values() if v["score"] is not None]
     ensemble_score = float(np.mean(valid_scores)) if valid_scores else 0.0
     ensemble_label = get_label(ensemble_score, config)
 
-    # 動作種別の日本語表示
     action_jp = "開動作" if operation == "open" else "閉動作" if operation == "close" else operation
 
     return {
@@ -160,10 +160,43 @@ def predict_single(row, feature_cols, model_dir, config):
 
 
 def predict_all(features_path, models_dir, output_path, config):
+    # 特徴量ファイルが存在しない場合の安全処理
+    if not os.path.exists(features_path):
+        logger.warning(f"特徴量ファイルが見つかりません: {features_path}（対象データなしとして処理）")
+        summary = {
+            "predicted_at": datetime.now().isoformat(),
+            "total":        0,
+            "normal":       0,
+            "warning":      0,
+            "danger":       0,
+            "has_anomaly":  False,
+            "results":      []
+        }
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(summary, f, ensure_ascii=False, indent=2)
+        logger.info(f"空の判定結果を出力しました: {output_path}")
+        return []
+
     df = pd.read_csv(features_path)
+    if len(df) == 0:
+        logger.warning("特徴量データが0件です。")
+        summary = {
+            "predicted_at": datetime.now().isoformat(),
+            "total":        0,
+            "normal":       0,
+            "warning":      0,
+            "danger":       0,
+            "has_anomaly":  False,
+            "results":      []
+        }
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(summary, f, ensure_ascii=False, indent=2)
+        return []
+
     logger.info(f"判定対象: {len(df)}件")
 
-    # 除外列（メタデータ列）
     exclude = [
         "timestamp", "station", "line", "car", "door",
         "operation", "filename", "label"
@@ -180,12 +213,8 @@ def predict_all(features_path, models_dir, output_path, config):
         results.append(result)
         if result["label"] == "danger":
             danger_count += 1
-            logger.warning(f"  ⚠️  異常検知: {result['id']}  score={result['score']:.3f}")
         elif result["label"] == "warning":
             warning_count += 1
-            logger.info(f"  △ 要注意: {result['id']}  score={result['score']:.3f}")
-        if (i + 1) % 50 == 0:
-            logger.info(f"  判定済み: {i+1}/{len(df)}")
 
     summary = {
         "predicted_at": datetime.now().isoformat(),
@@ -202,7 +231,6 @@ def predict_all(features_path, models_dir, output_path, config):
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
     logger.info(f"判定完了 → 正常:{summary['normal']} 注意:{warning_count} 異常:{danger_count}")
-    logger.info(f"結果保存: {output_path}")
     return results
 
 
