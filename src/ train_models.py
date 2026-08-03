@@ -289,10 +289,9 @@ def main():
 
     config = load_config(args.config)
 
-    # 10分割された全正常CSVを結合読み込み
+    # 分割された全正常CSVを一括読み込み
     csv_files = sorted(glob.glob(os.path.join(args.features_dir, "features_normal_part*.csv")))
     if not csv_files:
-        # 見つからない場合は旧フォールバック
         csv_files = [os.path.join(args.features_dir, "features_all.csv")]
 
     logger.info(f"特徴量ファイル読み込み対象: {len(csv_files)}件")
