@@ -1,11 +1,12 @@
 """
-モデル学習・比較スクリプト
+モデル学習・比較スクリプト（分割CSV全読込対応版）
 
 実行方法:
-  python src/train_models.py --features data/features/features_latest.csv
+  python src/train_models.py --features_dir data/features
 """
 
 import os
+import glob
 import json
 import logging
 import argparse
@@ -23,7 +24,6 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 warnings.filterwarnings("ignore")
 
@@ -51,6 +51,7 @@ FEATURE_COLS = [
     "max_current_left", "max_current_right",
 ]
 
+
 def get_available_features(df):
     return [c for c in FEATURE_COLS if c in df.columns]
 
@@ -67,7 +68,7 @@ def preprocess(df, feature_cols):
     return X
 
 
-def get_models(contamination=0.02):
+def get_models(contamination=0.01):
     return {
         "isolation_forest": IsolationForest(
             n_estimators=200, contamination=contamination,
@@ -121,8 +122,6 @@ def train_individual_models(df, config, models_dir):
                 scores = normalize_scores(raw_scores)
 
                 model_results[model_name] = {
-                    "model":  model,
-                    "scaler": scaler,
                     "score_mean": float(scores.mean()),
                     "score_std":  float(scores.std()),
                     "threshold_warning": float(np.percentile(scores, 95)),
@@ -145,8 +144,7 @@ def train_individual_models(df, config, models_dir):
                     "score_p99":    float(np.percentile(scores, 99)),
                     "trained_at":   datetime.now().isoformat(),
                 }
-                with open(os.path.join(save_dir, f"{model_name}_dist.json"),
-                          "w", encoding="utf-8") as f:
+                with open(os.path.join(save_dir, f"{model_name}_dist.json"), "w", encoding="utf-8") as f:
                     json.dump(dist_info, f, ensure_ascii=False, indent=2)
 
             except Exception as e:
@@ -201,8 +199,7 @@ def train_unified_model(df, config, models_dir):
                     "score_p99":    float(np.percentile(scores, 99)),
                     "trained_at":   datetime.now().isoformat(),
                 }
-                with open(os.path.join(save_dir, f"{model_name}_dist.json"),
-                          "w", encoding="utf-8") as f:
+                with open(os.path.join(save_dir, f"{model_name}_dist.json"), "w", encoding="utf-8") as f:
                     json.dump(dist_info, f, ensure_ascii=False, indent=2)
 
             except Exception as e:
@@ -214,100 +211,7 @@ def train_unified_model(df, config, models_dir):
     return summary
 
 
-def compare_models(individual_summary, unified_summary, reports_dir):
-    logger.info("=== モデル比較レポート生成 ===")
-    os.makedirs(reports_dir, exist_ok=True)
-
-    rows = []
-    model_names = ["isolation_forest", "lof", "one_class_svm"]
-
-    for model_id, results in individual_summary.items():
-        for model_name in model_names:
-            if model_name in results:
-                r = results[model_name]
-                rows.append({
-                    "type":              "個別モデル",
-                    "model_id":          model_id,
-                    "algorithm":         model_name,
-                    "score_mean":        r["score_mean"],
-                    "score_std":         r["score_std"],
-                    "threshold_warning": r.get("threshold_warning"),
-                    "threshold_danger":  r.get("threshold_danger"),
-                })
-
-    for model_id, results in unified_summary.items():
-        for model_name in model_names:
-            if model_name in results:
-                r = results[model_name]
-                rows.append({
-                    "type":              "統合モデル",
-                    "model_id":          model_id,
-                    "algorithm":         model_name,
-                    "score_mean":        r["score_mean"],
-                    "score_std":         r["score_std"],
-                    "threshold_warning": None,
-                    "threshold_danger":  None,
-                })
-
-    df_report = pd.DataFrame(rows)
-
-    csv_path = os.path.join(reports_dir, "model_comparison.csv")
-    df_report.to_csv(csv_path, index=False, encoding="utf-8-sig")
-    logger.info(f"比較CSV: {csv_path}")
-
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    fig.suptitle("個別モデル vs 統合モデル　異常スコア分布比較", fontsize=13, fontweight="bold")
-    colors = {"個別モデル": "#1d4ed8", "統合モデル": "#dc2626"}
-
-    for i, algo in enumerate(model_names):
-        ax = axes[i]
-        sub = df_report[df_report["algorithm"] == algo]
-        if len(sub) == 0:
-            continue
-        for mtype, grp in sub.groupby("type"):
-            ax.bar(range(len(grp)), grp["score_mean"], yerr=grp["score_std"],
-                   label=mtype, alpha=0.7, color=colors.get(mtype, "gray"), capsize=3)
-        ax.set_title(algo.replace("_", " ").title(), fontsize=11)
-        ax.set_ylabel("異常スコア（平均）")
-        ax.set_ylim(0, 1)
-        ax.axhline(0.40, color="orange", linestyle="--", linewidth=1, label="警告閾値")
-        ax.axhline(0.65, color="red",    linestyle="--", linewidth=1, label="異常閾値")
-        ax.legend(fontsize=8)
-
-    plt.tight_layout()
-    fig_path = os.path.join(reports_dir, "model_comparison.png")
-    plt.savefig(fig_path, dpi=120, bbox_inches="tight")
-    plt.close()
-    logger.info(f"比較グラフ: {fig_path}")
-
-    recommendation = _recommend_model(df_report)
-    summary_json = {
-        "generated_at":             datetime.now().isoformat(),
-        "individual_model_count":   len(individual_summary),
-        "unified_model_count":      len(unified_summary),
-        "recommendation":           recommendation,
-        "details":                  rows
-    }
-    json_path = os.path.join(reports_dir, "model_comparison.json")
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(summary_json, f, ensure_ascii=False, indent=2)
-    logger.info(f"比較JSON: {json_path}")
-    return df_report
-
-
-def _recommend_model(df_report):
-    if len(df_report) == 0:
-        return "データ不足のため推奨不可"
-    best = df_report.loc[df_report["score_std"].idxmin()]
-    return (f"推奨: {best['type']} / {best['algorithm']} "
-            f"（score_std={best['score_std']:.4f} が最小で最も安定）")
-
-
 def save_baseline_if_not_exists(df, models_dir):
-    """
-    ベースラインモデルが存在しない場合のみ保存する
-    （初回学習時のデータを基準として保持）
-    """
     baseline_path = os.path.join(models_dir, "baseline_stats.json")
     if os.path.exists(baseline_path):
         logger.info("ベースラインは既に存在します。スキップします。")
@@ -339,12 +243,8 @@ def save_baseline_if_not_exists(df, models_dir):
 
 
 def compare_with_baseline(df, models_dir, reports_dir):
-    """
-    現在のデータとベースラインを比較してドリフトを検出する
-    """
     baseline_path = os.path.join(models_dir, "baseline_stats.json")
     if not os.path.exists(baseline_path):
-        logger.warning("ベースラインが存在しません。スキップします。")
         return
 
     with open(baseline_path, "r", encoding="utf-8") as f:
@@ -361,16 +261,8 @@ def compare_with_baseline(df, models_dir, reports_dir):
         baseline_mean = b["mean"]
         baseline_std  = b["std"]
 
-        if baseline_std == 0:
-            drift = 0.0
-        else:
-            drift = abs(current_mean - baseline_mean) / baseline_std
-
-        status = "正常"
-        if drift > 3.0:
-            status = "異常"
-        elif drift > 2.0:
-            status = "警告"
+        drift = abs(current_mean - baseline_mean) / baseline_std if baseline_std > 0 else 0.0
+        status = "正常" if drift <= 2.0 else "警告" if drift <= 3.0 else "異常"
 
         drift_results.append({
             "feature":        col,
@@ -384,43 +276,40 @@ def compare_with_baseline(df, models_dir, reports_dir):
     os.makedirs(reports_dir, exist_ok=True)
     drift_path = os.path.join(reports_dir, "baseline_drift.csv")
     df_drift.to_csv(drift_path, index=False, encoding="utf-8-sig")
-    logger.info(f"ドリフト検出結果: {drift_path}")
-
-    # 警告・異常があればログに出力
-    warnings_df = df_drift[df_drift["status"] != "正常"]
-    if len(warnings_df) > 0:
-        logger.warning(f"=== ドリフト検出: {len(warnings_df)}件 ===")
-        for _, row in warnings_df.iterrows():
-            logger.warning(
-                f"  [{row['status']}] {row['feature']}: "
-                f"baseline={row['baseline_mean']} → "
-                f"current={row['current_mean']} "
-                f"({row['drift_sigma']:.1f}σ)"
-            )
-    else:
-        logger.info("ドリフト検出: 異常なし")
-
-    return df_drift
+    logger.info(f"ドリフト検出結果出力: {drift_path}")
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--features", default="data/features/features_latest.csv")
-    parser.add_argument("--models",   default="models")
-    parser.add_argument("--reports",  default="reports")
-    parser.add_argument("--config",   default="config/settings.yaml")
+    parser.add_argument("--features_dir", default="data/features")
+    parser.add_argument("--models",       default="models")
+    parser.add_argument("--reports",      default="reports")
+    parser.add_argument("--config",       default="config/settings.yaml")
     args = parser.parse_args()
 
     config = load_config(args.config)
 
-    logger.info(f"特徴量読み込み: {args.features}")
-    df = pd.read_csv(args.features)
-    logger.info(f"  {len(df)}件 / {len(df.columns)}列")
+    # 10分割された全正常CSVを結合読み込み
+    csv_files = sorted(glob.glob(os.path.join(args.features_dir, "features_normal_part*.csv")))
+    if not csv_files:
+        # 見つからない場合は旧フォールバック
+        csv_files = [os.path.join(args.features_dir, "features_all.csv")]
 
-    # ベースライン保存（初回のみ）
+    logger.info(f"特徴量ファイル読み込み対象: {len(csv_files)}件")
+    df_list = [pd.read_csv(f) for f in csv_files if os.path.exists(f)]
+    
+    if not df_list:
+        logger.error("学習用データが見つかりません。")
+        return
+
+    df = pd.concat(df_list, ignore_index=True)
+    # 正常データ（label=0）のみで学習
+    if 'label' in df.columns:
+        df = df[df['label'] == 0]
+
+    logger.info(f"学習用正常データ: {len(df)}件 / {len(df.columns)}列")
+
     save_baseline_if_not_exists(df, args.models)
-
-    # ベースラインとの比較（ドリフト検出）
     compare_with_baseline(df, args.models, args.reports)
 
     individual_summary = {}
@@ -432,14 +321,13 @@ def main():
     if config["anomaly_detection"]["unified_model"]:
         unified_summary = train_unified_model(df, config, args.models)
 
-    compare_models(individual_summary, unified_summary, args.reports)
-
     marker = {
         "trained_at":        datetime.now().isoformat(),
         "n_samples":         len(df),
         "individual_groups": len(individual_summary),
         "unified_groups":    len(unified_summary),
     }
+    os.makedirs(args.models, exist_ok=True)
     with open(os.path.join(args.models, "train_info.json"), "w", encoding="utf-8") as f:
         json.dump(marker, f, ensure_ascii=False, indent=2)
 
