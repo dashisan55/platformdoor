@@ -1,0 +1,62 @@
+# ===============================================
+# 毎日 AM5:30(JST) 朝の点検判定
+# ===============================================
+name: 毎朝自動判定
+
+on:
+  schedule:
+    - cron: "30 20 * * *"   # UTC 20:30 = JST 翌05:30
+  workflow_dispatch:
+
+jobs:
+  morning-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリ取得
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: パッケージインストール
+        run: pip install -r requirements.txt
+
+      - name: 特徴量抽出
+        run: |
+          python src/extract_features.py \
+            --input  data/raw \
+            --output data/features \
+            --config config/settings.yaml
+
+      - name: 異常判定実行
+        run: |
+          python src/predict.py \
+            --features data/features/features_latest.csv \
+            --models   models \
+            --output   data/results/results_latest.json \
+            --config   config/settings.yaml
+
+      - name: 結果をコミット
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/results/ reports/
+          git diff --cached --quiet || git commit -m "📊 朝の点検結果 $(date +'%Y-%m-%d')"
+          git push
+
+      - name: 異常通知
+        env:
+          MAIL_FROM:         ${{ secrets.MAIL_FROM }}
+          MAIL_TO:           ${{ secrets.MAIL_TO }}
+          MAIL_PASSWORD:     ${{ secrets.MAIL_PASSWORD }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          python src/notify.py \
+            --event morning_check \
+            --results data/results/results_latest.json
