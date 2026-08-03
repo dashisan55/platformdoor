@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ホームドア異常予兆検知ダッシュボード</title>
+<style>
+  :root {
+    --primary:#1a4a8a; --primary-light:#2d6bcf;
+    --danger:#dc2626;  --warning:#ca8a04; --success:#16a34a;
+    --bg:#f0f4f8; --card:#fff; --border:#d0d9e6; --text:#2c3e50;
+    --text-light:#6b7c93;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI','Meiryo',sans-serif;background:var(--bg);color:var(--text);}
+  header{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);position:sticky;top:0;z-index:100;}
+  header h1{font-size:18px;}
+  header p{font-size:11px;opacity:.8;margin-top:2px;}
+  .header-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+  .last-updated{font-size:11px;opacity:.7;}
+  .btn-refresh{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;}
+  .btn-refresh:hover{background:rgba(255,255,255,.3);}
+  .container{max-width:1400px;margin:0 auto;padding:16px;}
+  .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:800px){.summary-grid{grid-template-columns:repeat(2,1fr);}}
+  .summary-card{background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border);text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  .summary-card .val{font-size:36px;font-weight:700;}
+  .summary-card .lbl{font-size:12px;color:var(--text-light);margin-top:4px;}
+  .card-normal .val{color:var(--success);}
+  .card-warning .val{color:var(--warning);}
+  .card-danger .val{color:var(--danger);}
+  .card-total .val{color:var(--primary);}
+  .main-grid{display:grid;grid-template-columns:1fr 360px;gap:16px;}
+  @media(max-width:1000px){.main-grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border-radius:10px;border:1px solid var(--border);box-shadow:0 2px 6px rgba(0,0,0,.06);overflow:hidden;margin-bottom:16px;}
+  .card-header{background:var(--primary);color:#fff;padding:10px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .card-body{padding:16px;}
+  .result-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .result-table th{background:var(--primary);color:#fff;padding:8px 10px;text-align:left;white-space:nowrap;}
+  .result-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0;}
+  .result-table tr:hover td{background:#f8faff;}
+  .result-table tr.row-danger td{background:#fff5f5;}
+  .result-table tr.row-warning td{background:#fefce8;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;white-space:nowrap;}
+  .badge-normal{background:#dcfce7;color:#166534;}
+  .badge-warning{background:#fef9c3;color:#92400e;}
+  .badge-danger{background:#fee2e2;color:#991b1b;}
+  .badge-unknown{background:#f3f4f6;color:#6b7280;}
+  .score-bar{display:flex;align-items:center;gap:6px;min-width:100px;}
+  .bar-bg{flex:1;height:8px;border-radius:4px;background:#e5e7eb;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;transition:width .3s;}
+  .fill-n{background:#22c55e;} .fill-w{background:#facc15;} .fill-d{background:#ef4444;}
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8f9fa;}
+  .filter-bar select{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;}
+  .filter-bar label{font-size:12px;color:var(--text-light);}
+  .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:12px;}
+  .detail-row .key{color:var(--text-light);}
+  .detail-row .val-num{font-weight:600;color:var(--primary);}
+  .model-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .model-item{background:#f8f9fa;border-radius:6px;padding:8px;font-size:11px;}
+  .model-item .m-name{color:var(--text-light);margin-bottom:4px;}
+  .model-item .m-score{font-weight:700;font-size:14px;}
+  canvas{width:100%!important;}
+  .loading{text-align:center;padding:40px;color:var(--text-light);}
+  .spinner{display:inline-block;width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .pagination{display:flex;gap:4px;justify-content:center;padding:12px 0;}
+  .page-btn{padding:4px 10px;border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:12px;background:#fff;}
+  .page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .page-btn:hover:not(.active){background:#f0f4f8;}
+  .empty{text-align:center;padding:40px;color:var(--text-light);}
+  .empty .e-icon{font-size:40px;margin-bottom:10px;}
+  .drift-alert{border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:12px;display:flex;align-items:center;gap:8px;}
+  .drift-danger{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;}
+  .drift-warning{background:#fef9c3;border:1px solid #fde047;color:#92400e;}
+  .drift-normal{background:#dcfce7;border:1px solid #86efac;color:#166534;}
+
+  /* ドラッグ＆ドロップ */
+  .drop-zone{border:2px dashed var(--primary-light);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#f8faff;}
+  .drop-zone:hover,.drop-zone.drag-over{background:#e8f0fe;border-color:var(--primary);transform:scale(1.01);}
+  .drop-zone .dz-icon{font-size:48px;margin-bottom:12px;}
+  .drop-zone .dz-title{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+  .drop-zone .dz-sub{font-size:12px;color:var(--text-light);}
+  .drop-zone input[type=file]{display:none;}
+
+  /* 判定結果メイン表示 */
+  .judge-result{border-radius:12px;padding:20px;margin-top:14px;display:none;}
+  .judge-result.show{display:block;}
+  .judge-danger {background:#fff5f5;border:2px solid var(--danger);}
+  .judge-warning{background:#fefce8;border:2px solid #ca8a04;}
+  .judge-normal {background:#f0fdf4;border:2px solid var(--success);}
+  .judge-unknown{background:#f9fafb;border:2px solid #9ca3af;}
+
+  .judge-main{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .judge-icon{font-size:56px;line-height:1;}
+  .judge-text-block{flex:1;}
+  .judge-label{font-size:28px;font-weight:900;margin-bottom:4px;}
+  .judge-label-danger {color:var(--danger);}
+  .judge-label-warning{color:var(--warning);}
+  .judge-label-normal {color:var(--success);}
+  .judge-label-unknown{color:#6b7280;}
+  .judge-sub{font-size:13px;color:var(--text-light);line-height:1.8;}
+  .judge-metrics{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+  .judge-metric{background:rgba(255,255,255,.7);border-radius:8px;padding:8px 14px;text-align:center;min-width:90px;}
+  .judge-metric .jm-val{font-size:18px;font-weight:700;color:var(--primary);}
+  .judge-metric .jm-label{font-size:10px;color:var(--text-light);margin-top:2px;}
+
+  /* プルダウン詳細 */
+  .judge-detail-toggle{margin-top:14px;width:100%;background:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--primary);font-weight:600;display:flex;align-items:center;justify-content:space-between;transition:background .15s;}
+  .judge-detail-toggle:hover{background:rgba(0,0,0,.04);}
+  .judge-detail-body{display:none;margin-top:8px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .judge-detail-body.open{display:block;}
+  .judge-feature-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .judge-feature-table th{background:#f0f4f8;padding:7px 10px;text-align:left;color:var(--text-light);font-weight:600;}
+  .judge-feature-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0;}
+  .judge-feature-table tr:last-child td{border-bottom:none;}
+  .drift-ok {color:var(--success);font-weight:600;}
+  .drift-warn{color:var(--warning);font-weight:600;}
+  .drift-ng  {color:var(--danger);font-weight:600;}
+
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-thumb{background:#c0c8d8;border-radius:3px;}
+</style>
+</head>
+<body>
+<header>
+  <div style="font-size:26px;">🚉</div>
+  <div>
+    <h1>ホームドア異常予兆検知ダッシュボード</h1>
+    <p id="stationInfo">五反田駅 1番線</p>
+  </div>
+  <div class="header-right">
+    <span class="last-updated" id="lastUpdated">読み込み中...</span>
+    <button class="btn-refresh" onclick="loadAll()">🔄 更新</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- サマリーカード -->
+  <div class="summary-grid">
+    <div class="summary-card card-total" ><div class="val" id="s-total"  >-</div><div class="lbl">📊 総判定数</div></div>
+    <div class="summary-card card-normal" ><div class="val" id="s-normal" >-</div><div class="lbl">✅ 正常</div></div>
+    <div class="summary-card card-warning"><div class="val" id="s-warning">-</div><div class="lbl">⚠️ 要注意</div></div>
+    <div class="summary-card card-danger" ><div class="val" id="s-danger" >-</div><div class="lbl">🚨 異常予兆</div></div>
+  </div>
+
+  <!-- ドリフトアラート -->
+  <div id="driftAlert" style="margin-bottom:16px;display:none;">
+    <div class="card">
+      <div class="card-header">📡 ベースライン比較（長期トレンド監視）</div>
+      <div class="card-body" id="driftAlertBody"></div>
+    </div>
+  </div>
+
+  <!-- ★ ドラッグ＆ドロップ判定エリア ★ -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header">🔬 現地データ即時判定（CSV ドラッグ＆ドロップ）</div>
+    <div class="card-body">
+      <div class="drop-zone" id="dropZone"
+           ondragover="onDragOver(event)" ondragleave="onDragLeave(event)"
+           ondrop="onDrop(event)" onclick="document.getElementById('fileInput').click()">
+        <div class="dz-icon">📂</div>
+        <div class="dz-title">CSVファイルをここにドロップ</div>
+        <div class="dz-sub">またはクリックしてファイルを選択<br>現地計測CSVをそのまま放り込んでください</div>
+        <input type="file" id="fileInput" accept=".csv" onchange="onFileSelect(event)">
+      </div>
+      <div class="judge-result" id="judgeResult"></div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div>
+      <!-- 判定結果一覧 -->
+      <div class="card">
+        <div class="card-header">📋 判定結果一覧</div>
+        <div class="filter-bar">
+          <label>動作種別 <select id="filterAction" onchange="applyFilter()">
+            <option value="">すべて</option>
+            <option value="open">開動作</option>
+            <option value="close">閉動作</option>
+          </select></label>
+          <label>号車 <select id="filterCar" onchange="applyFilter()">
+            <option value="">すべて</option>
+            <option value="1">1号車</option>
+            <option value="2">2号車</option>
+            <option value="3">3号車</option>
+          </select></label>
+          <label>判定 <select id="filterLabel" onchange="applyFilter()">
+            <option value="">すべて</option>
+            <option value="danger">異常予兆</option>
+            <option value="warning">要注意</option>
+            <option value="normal">正常</option>
+          </select></label>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="result-table">
+            <thead><tr>
+              <th>日時</th><th>号車</th><th>ドア</th>
+              <th>動作</th><th>スコア</th><th>判定</th><th>詳細</th>
+            </tr></thead>
+            <tbody id="resultTableBody">
+              <tr><td colspan="7"><div class="loading">
+                <div class="spinner"></div><p>データ読み込み中...</p>
+              </div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!-- ベースライン比較グラフ -->
+      <div class="card">
+        <div class="card-header">📊 特徴量ベースライン比較</div>
+        <div class="card-body" style="padding:12px;">
+          <canvas id="driftChart" height="180"></canvas>
+          <p style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">
+            棒グラフ：現在値 ／ 点線：ベースライン平均 ／ 色：乖離度
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- スコア推移 -->
+      <div class="card">
+        <div class="card-header">📈 スコア推移</div>
+        <div class="card-body" style="padding:12px;">
+          <canvas id="scoreChart" height="160"></canvas>
+        </div>
+      </div>
+
+      <!-- 選択データ詳細 -->
+      <div class="card">
+        <div class="card-header">🔍 選択データ詳細</div>
+        <div class="card-body">
+          <div id="detailPanel">
+            <div class="empty"><div class="e-icon">👆</div>
+              <p>テーブルの行を<br>クリックしてください</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- モデル別スコア -->
+      <div class="card">
+        <div class="card-header">🧠 モデル別スコア比較</div>
+        <div class="card-body">
+          <div id="modelPanel">
+            <div class="empty"><div class="e-icon">🤖</div>
+              <p>行を選択すると<br>モデル別スコアを表示</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const RESULTS_URL  = "./data/results/results_latest.json";
+const DRIFT_URL    = "./reports/baseline_drift.csv";
+const BASELINE_URL = "./models/baseline_stats.json";
+const PAGE_SIZE    = 20;
+
+let allResults = [], filteredResults = [], currentPage = 1;
+let baselineData  = [];
+let baselineStats = {};
+
+// ==================== メイン ====================
+async function loadAll() {
+  await loadResults();
+  await loadDrift();
+  await loadBaselineStats();
+}
+
+// ==================== 判定結果 ====================
+async function loadResults() {
+  document.getElementById("lastUpdated").textContent = "読み込み中...";
+  try {
+    let data;
+    try {
+      const res = await fetch(RESULTS_URL + "?t=" + Date.now());
+      if (!res.ok) throw new Error("fetch failed");
+      data = await res.json();
+    } catch { data = generateDemoResults(); }
+    allResults = data.results || [];
+    document.getElementById("s-total").textContent   = data.total   || 0;
+    document.getElementById("s-normal").textContent  = data.normal  || 0;
+    document.getElementById("s-warning").textContent = data.warning || 0;
+    document.getElementById("s-danger").textContent  = data.danger  || 0;
+    const dt = data.predicted_at
+      ? new Date(data.predicted_at).toLocaleString("ja-JP") : "不明";
+    document.getElementById("lastUpdated").textContent = "最終更新: " + dt;
+    applyFilter(); drawScoreChart();
+  } catch(e) {
+    console.error(e);
+    document.getElementById("lastUpdated").textContent = "読み込みエラー";
+  }
+}
+
+// ==================== ドリフト ====================
+async function loadDrift() {
+  try {
+    const res = await fetch(DRIFT_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("drift fetch failed");
+    const text = await res.text();
+    baselineData = parseCSV(text);
+    renderDriftAlert(baselineData);
+    drawDriftChart(baselineData);
+  } catch(e) { console.log("ドリフトデータなし:", e.message); }
+}
+
+// ==================== ベースライン統計 ====================
+async function loadBaselineStats() {
+  try {
+    const res = await fetch(BASELINE_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("baseline fetch failed");
+    const data = await res.json();
+    baselineStats = data.stats || {};
+    console.log("ベースライン読み込み完了:", Object.keys(baselineStats).length, "件");
+  } catch(e) { console.log("ベースラインなし:", e.message); }
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map(line => {
+    const vals = line.split(",");
+    const obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = vals[i] ? vals[i].trim() : "");
+    return obj;
+  });
+}
+
+// ==================== ドリフトアラート ====================
+function renderDriftAlert(rows) {
+  const alertDiv = document.getElementById("driftAlert");
+  const body     = document.getElementById("driftAlertBody");
+  const dangers  = rows.filter(r => r.status === "異常");
+  const warnings = rows.filter(r => r.status === "警告");
+  alertDiv.style.display = "block";
+  if (dangers.length === 0 && warnings.length === 0) {
+    body.innerHTML = `<div class="drift-alert drift-normal">
+      ✅ 全特徴量がベースライン範囲内です。長期トレンド異常なし。</div>`;
+    return;
+  }
+  let html = "";
+  if (dangers.length > 0)
+    html += `<div class="drift-alert drift-danger">🚨 <strong>大幅乖離（${dangers.length}件）：</strong>
+      ${dangers.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
+  if (warnings.length > 0)
+    html += `<div class="drift-alert drift-warning">⚠️ <strong>乖離注意（${warnings.length}件）：</strong>
+      ${warnings.map(r=>`${r.feature}（${parseFloat(r.drift_sigma).toFixed(1)}σ）`).join("　")}</div>`;
+  body.innerHTML = html;
+}
+
+// ==================== ドリフトグラフ ====================
+function drawDriftChart(rows) {
+  const canvas = document.getElementById("driftChart");
+  const W = canvas.offsetWidth || 600; const H = 180;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, W, H);
+  const mainFeatures = ["mean_current","max_current","rms_current","duration","mean_diff","energy","skewness","kurtosis"];
+  const displayRows = rows.filter(r => mainFeatures.includes(r.feature)).slice(0, 8);
+  if (displayRows.length === 0) return;
+  const pad = {l:10,r:10,t:20,b:50};
+  const cW = W-pad.l-pad.r; const cH = H-pad.t-pad.b;
+  const barW = cW / displayRows.length;
+  const maxVal = Math.max(...displayRows.map(r =>
+    Math.max(Math.abs(parseFloat(r.current_mean)||0), Math.abs(parseFloat(r.baseline_mean)||0))
+  )) * 1.2 || 1;
+  displayRows.forEach((r, i) => {
+    const cur   = parseFloat(r.current_mean)  || 0;
+    const base  = parseFloat(r.baseline_mean) || 0;
+    const drift = parseFloat(r.drift_sigma)   || 0;
+    const color = drift >= 3.0 ? "#ef4444" : drift >= 2.0 ? "#facc15" : "#22c55e";
+    const x = pad.l + i * barW + barW * 0.1;
+    const bw = barW * 0.8;
+    const barH = Math.abs(cur / maxVal) * cH;
+    ctx.fillStyle = color + "bb";
+    ctx.fillRect(x, pad.t + cH - barH, bw, barH);
+    const baseY = pad.t + cH - Math.abs(base / maxVal) * cH;
+    ctx.strokeStyle = "#1a4a8a"; ctx.setLineDash([4,3]); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x, baseY); ctx.lineTo(x+bw, baseY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = "#555"; ctx.font = "9px sans-serif"; ctx.textAlign = "center";
+    ctx.save(); ctx.translate(x+bw/2, pad.t+cH+5); ctx.rotate(Math.PI/4);
+    ctx.fillText(r.feature.replace("_current","").replace("_"," "), 0, 0);
+    ctx.restore();
+  });
+}
+
+// ==================== ドラッグ＆ドロップ ====================
+function onDragOver(e) {
+  e.preventDefault();
+  document.getElementById("dropZone").classList.add("drag-over");
+}
+function onDragLeave() {
+  document.getElementById("dropZone").classList.remove("drag-over");
+}
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById("dropZone").classList.remove("drag-over");
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith(".csv")) processCSV(file);
+  else alert("CSVファイルをドロップしてください");
+}
+function onFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processCSV(file);
+}
+
+// ==================== CSV処理・特徴量抽出 ====================
+function processCSV(file) {
+  const result = document.getElementById("judgeResult");
+  result.className = "judge-result show judge-unknown";
+  result.innerHTML = `<div class="loading"><div class="spinner"></div><p>${file.name} を解析中...</p></div>`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const features = extractFeatures(e.target.result, file.name);
+      if (!features) {
+        result.innerHTML = `<div style="color:var(--danger);padding:16px;">
+          ❌ CSVの形式が正しくありません。計測データCSVをドロップしてください。</div>`;
+        return;
+      }
+      const judgment = judgeWithBaseline(features);
+      renderJudgeResult(result, file.name, features, judgment);
+    } catch(err) {
+      result.innerHTML = `<div style="color:var(--danger);padding:16px;">
+        ❌ 読み込みエラー: ${err.message}</div>`;
+    }
+  };
+  reader.readAsText(file, "Shift_JIS");
+}
+
+function extractFeatures(text, filename) {
+  const lines = text.split("\n").map(l=>l.trim()).filter(l=>l&&!l.startsWith("#"));
+  const meta = {};
+  let dataStartIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const parts = lines[i].split(",");
+    const key = parts[0]||""; const val = parts[1]||"";
+    if (key.includes("駅名"))     meta.station   = val;
+    if (key.includes("番線"))     meta.line      = val;
+    if (key.includes("号車番号")) meta.car       = val;
+    if (key.includes("ドア番号")) meta.door      = val;
+    if (key.includes("動作種別")) meta.operation = val;
+    if (key.includes("時間"))     { dataStartIdx = i + 1; break; }
+  }
+  if (dataStartIdx < 0) return null;
+
+  const timeArr=[], leftArr=[], rightArr=[];
+  for (let i = dataStartIdx; i < lines.length; i++) {
+    const parts = lines[i].split(",");
+    if (parts.length < 3) continue;
+    const t=parseFloat(parts[0]), l=parseFloat(parts[1]), r=parseFloat(parts[2]);
+    if (isNaN(t)||isNaN(l)||isNaN(r)) continue;
+    timeArr.push(t); leftArr.push(l); rightArr.push(r);
+  }
+  if (timeArr.length < 10) return null;
+
+  const currArr = leftArr.map((l,i)=>(l+rightArr[i])/2);
+  const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
+  const std  = a => { const m=mean(a); return Math.sqrt(mean(a.map(v=>(v-m)**2))); };
+  const max  = a => Math.max(...a);
+  const min  = a => Math.min(...a);
+  const pct  = (a,p) => { const s=[...a].sort((x,y)=>x-y); return s[Math.floor(s.length*p/100)]; };
+  const diffs = a => a.slice(1).map((v,i)=>Math.abs(v-a[i]));
+  const skew  = a => { const m=mean(a),s=std(a); return s===0?0:mean(a.map(v=>((v-m)/s)**3)); };
+  const kurt  = a => { const m=mean(a),s=std(a); return s===0?0:mean(a.map(v=>((v-m)/s)**4))-3; };
+  const d = diffs(currArr);
+
+  return {
+    filename, meta,
+    mean_current:       +mean(currArr).toFixed(4),
+    std_current:        +std(currArr).toFixed(4),
+    max_current:        +max(currArr).toFixed(4),
+    min_current:        +min(currArr).toFixed(4),
+    range_current:      +(max(currArr)-min(currArr)).toFixed(4),
+    p25_current:        +pct(currArr,25).toFixed(4),
+    p50_current:        +pct(currArr,50).toFixed(4),
+    p75_current:        +pct(currArr,75).toFixed(4),
+    duration:           +(timeArr[timeArr.length-1]-timeArr[0]).toFixed(4),
+    data_points:        timeArr.length,
+    mean_diff:          +mean(d).toFixed(4),
+    max_diff:           +max(d).toFixed(4),
+    energy:             currArr.reduce((s,v)=>s+v**2,0).toFixed(4),
+    rms_current:        +Math.sqrt(mean(currArr.map(v=>v**2))).toFixed(4),
+    skewness:           +skew(currArr).toFixed(4),
+    kurtosis:           +kurt(currArr).toFixed(4),
+    mean_current_left:  +mean(leftArr).toFixed(4),
+    mean_current_right: +mean(rightArr).toFixed(4),
+    max_current_left:   +max(leftArr).toFixed(4),
+    max_current_right:  +max(rightArr).toFixed(4),
+  };
+}
+
+// ==================== ベースライン判定 ====================
+function judgeWithBaseline(features) {
+  console.log("=== judgeWithBaseline 開始 ===");
+  console.log("baselineStats件数:", Object.keys(baselineStats).length);
+  console.log("features.mean_current:", features.mean_current);
+
+  if (Object.keys(baselineStats).length === 0) {
+    console.log("ベースラインなし → unknown");
+    return { label:"unknown", score:0, maxDrift:0, details:[] };
+  }
+
+  const checkFeatures = [
+    "mean_current","max_current","rms_current","std_current",
+    "range_current","mean_diff","max_diff",
+    "energy","skewness","kurtosis",
+    "mean_current_left","mean_current_right",
+    "max_current_left","max_current_right"
+  ];
+
+  const details = [];
+  let maxDrift = 0;
+
+  checkFeatures.forEach(feat => {
+    const base = baselineStats[feat];
+    if (!base || features[feat] === undefined) return;
+    const bMean = base.mean;
+    const bStd  = base.std;
+    if (bStd === 0) {
+      details.push({ feature:feat, value:features[feat],
+        baseline:+bMean.toFixed(3), drift:0, status:"normal" });
+      return;
+    }
+    const drift = Math.abs(features[feat] - bMean) / bStd;
+    console.log(`${feat}: 現在=${features[feat]} 基準=${bMean.toFixed(3)} std=${bStd.toFixed(3)} drift=${drift.toFixed(2)}σ`);
+    maxDrift = Math.max(maxDrift, drift);
+    details.push({
+      feature: feat,
+      value:   features[feat],
+      baseline: +bMean.toFixed(3),
+      bStd:     +bStd.toFixed(3),
+      drift:    +drift.toFixed(2),
+      status:   drift >= 3.0 ? "danger" : drift >= 2.0 ? "warning" : "normal"
+    });
+  });
+
+  console.log("maxDrift:", maxDrift);
+  const label = maxDrift >= 3.0 ? "danger"
+              : maxDrift >= 2.0 ? "warning"
+              : "normal";
+  console.log("判定:", label);
+  return {
+    label,
+    score:    +(Math.min(1.0, maxDrift/5.0)).toFixed(3),
+    maxDrift: +maxDrift.toFixed(2),
+    details
+  };
+}
+
+// ==================== 判定結果表示 ====================
+function renderJudgeResult(el, filename, features, judgment) {
+  const cfg = {
+    danger:  { icon:"🚨", text:"異常予兆",   cls:"judge-danger",  lcls:"judge-label-danger"  },
+    warning: { icon:"⚠️", text:"要注意",     cls:"judge-warning", lcls:"judge-label-warning" },
+    normal:  { icon:"✅", text:"正常",       cls:"judge-normal",  lcls:"judge-label-normal"  },
+    unknown: { icon:"❓", text:"判定不可",   cls:"judge-unknown", lcls:"judge-label-unknown" },
+  };
+  const c = cfg[judgment.label] || cfg.unknown;
+  el.className = `judge-result show ${c.cls}`;
+
+  const opLabel = features.meta.operation || "";
+  const metaStr = [
+    features.meta.station ? features.meta.station+"駅" : "",
+    features.meta.line    ? features.meta.line+"番線"  : "",
+    features.meta.car     ? features.meta.car+"号車"   : "",
+    features.meta.door    ? features.meta.door+"番ドア": "",
+    opLabel
+  ].filter(Boolean).join(" ");
+
+  // 特徴量テーブル行
+  const tableRows = judgment.details.map(d => {
+    const driftCls = d.status==="danger"?"drift-ng":d.status==="warning"?"drift-warn":"drift-ok";
+    const icon = d.status==="danger"?"🔴":d.status==="warning"?"🟡":"🟢";
+    return `<tr>
+      <td>${d.feature}</td>
+      <td style="text-align:right;">${d.value}</td>
+      <td style="text-align:right;">${d.baseline}</td>
+      <td style="text-align:right;">${d.bStd ?? "-"}</td>
+      <td style="text-align:right;" class="${driftCls}">${icon} ${d.drift}σ</td>
+    </tr>`;
+  }).join("");
+
+  el.innerHTML = `
+    <!-- メイン判定表示 -->
+    <div class="judge-main">
+      <div class="judge-icon">${c.icon}</div>
+      <div class="judge-text-block">
+        <div class="judge-label ${c.lcls}">${c.text}</div>
+        <div class="judge-sub">
+          📄 ${filename}<br>
+          ${metaStr}
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要指標 -->
+    <div class="judge-metrics">
+      <div class="judge-metric">
+        <div class="jm-val">${judgment.maxDrift}σ</div>
+        <div class="jm-label">最大乖離</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.mean_current}</div>
+        <div class="jm-label">平均電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.max_current}</div>
+        <div class="jm-label">最大電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.rms_current}</div>
+        <div class="jm-label">RMS電流 (mA)</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.duration}s</div>
+        <div class="jm-label">計測時間</div>
+      </div>
+      <div class="judge-metric">
+        <div class="jm-val">${features.data_points}</div>
+        <div class="jm-label">データ点数</div>
+      </div>
+    </div>
+
+    <!-- プルダウン詳細 -->
+    <button class="judge-detail-toggle" onclick="toggleDetail(this)">
+      <span>📊 特徴量詳細・乖離値を見る</span>
+      <span id="toggleArrow">▼</span>
+    </button>
+    <div class="judge-detail-body">
+      <table class="judge-feature-table">
+        <thead><tr>
+          <th>特徴量</th>
+          <th style="text-align:right;">現在値</th>
+          <th style="text-align:right;">基準値</th>
+          <th style="text-align:right;">基準σ</th>
+          <th style="text-align:right;">乖離度</th>
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+      <div style="font-size:11px;color:var(--text-light);padding:8px 10px;">
+        ※ 乖離度の基準：🟢 2σ未満=正常　🟡 2〜3σ=要注意　🔴 3σ以上=異常予兆
+      </div>
+    </div>`;
+}
+
+function toggleDetail(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector("#toggleArrow");
+  const isOpen = body.classList.toggle("open");
+  arrow.textContent = isOpen ? "▲" : "▼";
+  btn.querySelector("span").textContent = isOpen
+    ? "📊 特徴量詳細・乖離値を閉じる"
+    : "📊 特徴量詳細・乖離値を見る";
+}
+
+// ==================== フィルター ====================
+function applyFilter() {
+  const fA = document.getElementById("filterAction").value;
+  const fC = document.getElementById("filterCar").value;
+  const fL = document.getElementById("filterLabel").value;
+  filteredResults = allResults.filter(r => {
+    if (fA && r.operation !== fA) return false;
+    if (fC && r.car !== fC) return false;
+    if (fL && r.label !== fL) return false;
+    return true;
+  });
+  currentPage = 1; renderTable(); renderPagination();
+}
+
+// ==================== テーブル描画 ====================
+function renderTable() {
+  const tbody = document.getElementById("resultTableBody");
+  const start = (currentPage-1)*PAGE_SIZE;
+  const items = filteredResults.slice(start, start+PAGE_SIZE);
+  if (items.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">
+      <div class="e-icon">📭</div><p>該当データがありません</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = items.map((r,i) => {
+    const absIdx = start+i;
+    const rowCls = r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
+    const badgeText = r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓ 不明";
+    const fillCls = r.label==="danger"?"fill-d":r.label==="warning"?"fill-w":"fill-n";
+    const pct = Math.min(100,(r.score||0)*100).toFixed(0);
+    const actionLabel = r.operation==="open"?"開動作":r.operation==="close"?"閉動作":r.action||r.operation;
+    return `<tr class="${rowCls}" onclick="selectRow(${absIdx})" style="cursor:pointer;">
+      <td style="white-space:nowrap;">${r.datetime||"-"}</td>
+      <td>${r.car}号車</td><td>${r.door}番</td><td>${actionLabel}</td>
+      <td><div class="score-bar">
+        <div class="bar-bg"><div class="bar-fill ${fillCls}" style="width:${pct}%"></div></div>
+        <span style="font-size:11px;font-weight:600;min-width:36px;">${(r.score||0).toFixed(3)}</span>
+      </div></td>
+      <td><span class="badge badge-${r.label||"unknown"}">${badgeText}</span></td>
+      <td><button onclick="selectRow(${absIdx});event.stopPropagation();"
+        style="background:none;border:1px solid #d0d9e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px;">詳細</button></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderPagination() {
+  const total = Math.ceil(filteredResults.length/PAGE_SIZE);
+  const el = document.getElementById("pagination");
+  if (total<=1){el.innerHTML="";return;}
+  let html="";
+  for(let i=1;i<=total;i++)
+    html+=`<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+  el.innerHTML=html;
+}
+function goPage(p){currentPage=p;renderTable();renderPagination();}
+
+// ==================== 行選択 ====================
+function selectRow(idx) {
+  const r = filteredResults[idx]; if(!r)return;
+  const dp = document.getElementById("detailPanel");
+  const featureRows = Object.entries(r.features||{}).map(([k,v])=>
+    `<div class="detail-row"><span class="key">${k}</span>
+     <span class="val-num">${typeof v==="number"?v.toFixed(3):v}</span></div>`).join("");
+  const actionLabel = r.operation==="open"?"開動作":r.operation==="close"?"閉動作":r.action||r.operation;
+  dp.innerHTML=`
+    <div class="detail-row"><span class="key">日時</span><span class="val-num">${r.datetime}</span></div>
+    <div class="detail-row"><span class="key">対象</span>
+      <span class="val-num">${r.car}号車 ${r.door}番ドア ${actionLabel}</span></div>
+    <div class="detail-row"><span class="key">スコア</span>
+      <span class="val-num" style="color:${r.label==="danger"?"var(--danger)":r.label==="warning"?"var(--warning)":"var(--success)"};">
+      ${(r.score||0).toFixed(4)}</span></div>
+    <div style="margin-top:10px;font-size:11px;font-weight:600;color:var(--text-light);margin-bottom:6px;">特徴量</div>
+    ${featureRows}`;
+  const mp = document.getElementById("modelPanel");
+  const details = r.model_details||{};
+  const modelItems = Object.entries(details).map(([name,d])=>{
+    const sc=d.score!=null?d.score.toFixed(3):"N/A";
+    const lc=d.label||"unknown";
+    const fill=lc==="danger"?"fill-d":lc==="warning"?"fill-w":"fill-n";
+    const pct=d.score!=null?Math.min(100,d.score*100).toFixed(0):0;
+    const src=d.source==="individual"?"個別":"統合";
+    return `<div class="model-item">
+      <div class="m-name">[${src}] ${name.replace(d.source+"_","")}</div>
+      <div class="m-score">${sc}</div>
+      <div class="bar-bg" style="margin-top:4px;">
+        <div class="bar-fill ${fill}" style="width:${pct}%;"></div></div></div>`;
+  }).join("");
+  mp.innerHTML=`<div class="model-grid">${modelItems}</div>`;
+}
+
+// ==================== スコア推移グラフ ====================
+function drawScoreChart() {
+  const canvas = document.getElementById("scoreChart");
+  const W = canvas.offsetWidth||340; canvas.width=W; canvas.height=160;
+  const ctx = canvas.getContext("2d"); ctx.clearRect(0,0,W,160);
+  const data = allResults.slice(-40); if(data.length===0)return;
+  const pad={l:40,r:10,t:10,b:30};
+  const cW=W-pad.l-pad.r; const cH=160-pad.t-pad.b;
+  ctx.strokeStyle="#e5e7eb"; ctx.lineWidth=0.5;
+  [0,0.4,0.65,1.0].forEach(v=>{
+    const y=pad.t+cH*(1-v);
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();
+    ctx.fillStyle="#aaa";ctx.font="9px sans-serif";ctx.textAlign="right";
+    ctx.fillText(v.toFixed(2),pad.l-3,y+3);
+  });
+  [{v:0.60,c:"#ca8a04"},{v:0.80,c:"#dc2626"}].forEach(({v,c})=>{
+    const y=pad.t+cH*(1-v);
+    ctx.strokeStyle=c;ctx.setLineDash([4,3]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cW,y);ctx.stroke();ctx.setLineDash([]);
+  });
+  ctx.strokeStyle="#1d4ed8";ctx.lineWidth=1.5;ctx.beginPath();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1||1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });ctx.stroke();
+  data.forEach((r,i)=>{
+    const x=pad.l+(i/(data.length-1||1))*cW;
+    const y=pad.t+cH*(1-(r.score||0));
+    const c=r.label==="danger"?"#dc2626":r.label==="warning"?"#ca8a04":"#16a34a";
+    ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+  });
+  ctx.strokeStyle="#555";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+cH);
+  ctx.lineTo(pad.l+cW,pad.t+cH);ctx.stroke();
+  ctx.fillStyle="#555";ctx.font="10px sans-serif";ctx.textAlign="center";
+  ctx.fillText("直近の動作データ（スコア推移）",pad.l+cW/2,158);
+}
+
+// ==================== デモデータ ====================
+function generateDemoResults() {
+  const results=[]; const operations=["open","close"]; const now=new Date();
+  for(let car=1;car<=3;car++){for(let door=1;door<=3;door++){for(const op of operations){
+    const score=Math.random()*0.30;
+    const label=score>=0.80?"danger":score>=0.60?"warning":"normal";
+    results.push({
+      id:`${now.toISOString()}_${car}_${door}_${op}`,
+      datetime:now.toISOString().slice(0,16).replace("T"," "),
+      car:String(car),door:String(door),operation:op,
+      action:op==="open"?"開動作":"閉動作",
+      score:+score.toFixed(4),label,
+      model_details:{
+        individual_isolation_forest:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"individual"},
+        individual_lof:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"individual"},
+        unified_isolation_forest:{score:+(score+Math.random()*0.05).toFixed(4),label,source:"unified"}
+      },
+      features:{
+        mean_current:+(80+Math.random()*20).toFixed(1),
+        max_current:+(300+Math.random()*100).toFixed(1)
+      }
+    });
+  }}}
+  const danger=results.filter(r=>r.label==="danger").length;
+  const warning=results.filter(r=>r.label==="warning").length;
+  return{predicted_at:now.toISOString(),total:results.length,
+    normal:results.length-danger-warning,warning,danger,has_anomaly:danger>0,results};
+}
+
+window.addEventListener("load", loadAll);
+window.addEventListener("resize", drawScoreChart);
+</script>
+</body>
+</html>
