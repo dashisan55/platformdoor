@@ -1,78 +1,14 @@
 {
-  "predicted_at": "2026-10-24T06:21:22.467691",
-  "total": 6,
-  "normal": 6,
+  "predicted_at": "2026-10-24T06:33:50.448013",
+  "total": 59,
+  "normal": 59,
   "warning": 0,
   "danger": 0,
   "has_anomaly": false,
   "results": [
     {
-      "id": "2026-09-07 04:34:39_1_1_open",
-      "datetime": "2026-09-07 04:34:39",
-      "car": "1",
-      "door": "1",
-      "operation": "open",
-      "action": "開動作",
-      "score": 0.0,
-      "label": "normal",
-      "model_details": {
-        "individual_isolation_forest": {
-          "score": null,
-          "label": "unknown",
-          "source": "individual"
-        },
-        "individual_lof": {
-          "score": null,
-          "label": "unknown",
-          "source": "individual"
-        },
-        "individual_one_class_svm": {
-          "score": null,
-          "label": "unknown",
-          "source": "individual"
-        },
-        "unified_isolation_forest": {
-          "score": null,
-          "label": "unknown",
-          "source": "unified"
-        },
-        "unified_lof": {
-          "score": null,
-          "label": "unknown",
-          "source": "unified"
-        },
-        "unified_one_class_svm": {
-          "score": null,
-          "label": "unknown",
-          "source": "unified"
-        }
-      },
-      "features": {
-        "mean_current": 150.0239,
-        "std_current": 135.7165,
-        "max_current": 380.15,
-        "min_current": 9.7,
-        "range_current": 370.45,
-        "p25_current": 11.075,
-        "p50_current": 83.75,
-        "p75_current": 308.5125,
-        "duration": 10.95,
-        "data_points": 220.0,
-        "mean_diff": 15.8121,
-        "max_diff": 211.65,
-        "energy": 9003748.7175,
-        "rms_current": 202.3021,
-        "skewness": 0.4297,
-        "kurtosis": -1.5246,
-        "mean_current_left": 151.5318,
-        "mean_current_right": 148.5159,
-        "max_current_left": 374.5,
-        "max_current_right": 387.9
-      }
-    },
-    {
-      "id": "2026-09-07 04:34:39_1_2_open",
-      "datetime": "2026-09-07 04:34:39",
+      "id": "2026-09-07 00:03:57_1_2_open",
+      "datetime": "2026-09-07 00:03:57",
       "car": "1",
       "door": "2",
       "operation": "open",
@@ -112,31 +48,351 @@
         }
       },
       "features": {
-        "mean_current": 153.0164,
-        "std_current": 135.8919,
-        "max_current": 410.95,
-        "min_current": 9.35,
-        "range_current": 401.6,
-        "p25_current": 10.9,
-        "p50_current": 103.6,
-        "p75_current": 299.9,
+        "mean_current": 77.0455,
+        "std_current": 110.1213,
+        "max_current": 333.0,
+        "min_current": 9.55,
+        "range_current": 323.45,
+        "p25_current": 10.25,
+        "p50_current": 10.65,
+        "p75_current": 114.325,
         "duration": 10.95,
         "data_points": 220.0,
-        "mean_diff": 15.5589,
-        "max_diff": 198.2,
-        "energy": 9213733.79,
-        "rms_current": 204.6475,
-        "skewness": 0.4365,
-        "kurtosis": -1.3864,
-        "mean_current_left": 156.6923,
-        "mean_current_right": 149.3405,
-        "max_current_left": 412.1,
-        "max_current_right": 409.8
+        "mean_diff": 6.6717,
+        "max_diff": 194.8,
+        "energy": 3973792.55,
+        "rms_current": 134.3975,
+        "skewness": 1.3121,
+        "kurtosis": 0.0084,
+        "mean_current_left": 78.6095,
+        "mean_current_right": 75.4814,
+        "max_current_left": 337.7,
+        "max_current_right": 328.3
       }
     },
     {
-      "id": "2026-09-07 04:34:39_2_1_open",
-      "datetime": "2026-09-07 04:34:39",
+      "id": "2026-09-07 00:03:57_2_3_open",
+      "datetime": "2026-09-07 00:03:57",
+      "car": "2",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.1377,
+        "std_current": 121.038,
+        "max_current": 369.0,
+        "min_current": 8.85,
+        "range_current": 360.15,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 89.5625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.6251,
+        "max_diff": 176.5,
+        "energy": 4671375.83,
+        "rms_current": 145.7173,
+        "skewness": 1.4124,
+        "kurtosis": 0.2661,
+        "mean_current_left": 80.6773,
+        "mean_current_right": 81.5982,
+        "max_current_left": 354.2,
+        "max_current_right": 383.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:57_3_1_open",
+      "datetime": "2026-09-07 00:03:57",
+      "car": "3",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 77.3811,
+        "std_current": 112.6385,
+        "max_current": 350.65,
+        "min_current": 9.7,
+        "range_current": 340.95,
+        "p25_current": 10.5375,
+        "p50_current": 10.95,
+        "p75_current": 94.625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8616,
+        "max_diff": 213.75,
+        "energy": 4108559.7975,
+        "rms_current": 136.6575,
+        "skewness": 1.3787,
+        "kurtosis": 0.1583,
+        "mean_current_left": 82.5664,
+        "mean_current_right": 72.1959,
+        "max_current_left": 370.4,
+        "max_current_right": 330.9
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:57_3_2_open",
+      "datetime": "2026-09-07 00:03:57",
+      "car": "3",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.9841,
+        "std_current": 123.7974,
+        "max_current": 382.35,
+        "min_current": 9.3,
+        "range_current": 373.05,
+        "p25_current": 10.5,
+        "p50_current": 10.9,
+        "p75_current": 80.625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.2477,
+        "max_diff": 243.35,
+        "energy": 4850383.71,
+        "rms_current": 148.483,
+        "skewness": 1.4615,
+        "kurtosis": 0.4025,
+        "mean_current_left": 80.5468,
+        "mean_current_right": 83.4214,
+        "max_current_left": 361.2,
+        "max_current_right": 403.5
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:58_1_1_open",
+      "datetime": "2026-09-07 00:03:58",
+      "car": "1",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.8316,
+        "std_current": 124.5347,
+        "max_current": 370.75,
+        "min_current": 9.3,
+        "range_current": 361.45,
+        "p25_current": 10.25,
+        "p50_current": 10.6,
+        "p75_current": 79.225,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.3009,
+        "max_diff": 179.7,
+        "energy": 4885164.3325,
+        "rms_current": 149.0144,
+        "skewness": 1.4651,
+        "kurtosis": 0.4092,
+        "mean_current_left": 79.4645,
+        "mean_current_right": 84.1986,
+        "max_current_left": 361.0,
+        "max_current_right": 388.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:58_1_3_open",
+      "datetime": "2026-09-07 00:03:58",
+      "car": "1",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.3061,
+        "std_current": 123.8652,
+        "max_current": 381.05,
+        "min_current": 8.65,
+        "range_current": 372.4,
+        "p25_current": 9.85,
+        "p50_current": 10.225,
+        "p75_current": 99.225,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.618,
+        "max_diff": 231.55,
+        "energy": 4865713.4275,
+        "rms_current": 148.7174,
+        "skewness": 1.4229,
+        "kurtosis": 0.2944,
+        "mean_current_left": 85.685,
+        "mean_current_right": 78.9273,
+        "max_current_left": 399.6,
+        "max_current_right": 362.5
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:58_2_1_open",
+      "datetime": "2026-09-07 00:03:58",
       "car": "2",
       "door": "1",
       "operation": "open",
@@ -176,26 +432,3098 @@
         }
       },
       "features": {
-        "mean_current": 149.2168,
-        "std_current": 134.4746,
-        "max_current": 393.9,
-        "min_current": 9.6,
-        "range_current": 384.3,
-        "p25_current": 11.0,
-        "p50_current": 84.675,
-        "p75_current": 308.95,
+        "mean_current": 76.9457,
+        "std_current": 112.4438,
+        "max_current": 341.45,
+        "min_current": 8.85,
+        "range_current": 332.6,
+        "p25_current": 10.2875,
+        "p50_current": 10.7,
+        "p75_current": 92.8,
         "duration": 10.95,
         "data_points": 220.0,
-        "mean_diff": 15.2164,
-        "max_diff": 187.1,
-        "energy": 8876795.58,
-        "rms_current": 200.8708,
-        "skewness": 0.4387,
-        "kurtosis": -1.4695,
-        "mean_current_left": 151.9205,
-        "mean_current_right": 146.5132,
-        "max_current_left": 401.1,
-        "max_current_right": 386.7
+        "mean_diff": 8.1548,
+        "max_diff": 184.25,
+        "energy": 4084136.5025,
+        "rms_current": 136.2507,
+        "skewness": 1.3843,
+        "kurtosis": 0.1858,
+        "mean_current_left": 76.6168,
+        "mean_current_right": 77.2745,
+        "max_current_left": 341.7,
+        "max_current_right": 350.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:58_2_2_open",
+      "datetime": "2026-09-07 00:03:58",
+      "car": "2",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.6273,
+        "std_current": 113.6036,
+        "max_current": 346.05,
+        "min_current": 9.25,
+        "range_current": 336.8,
+        "p25_current": 10.15,
+        "p50_current": 10.55,
+        "p75_current": 80.625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1815,
+        "max_diff": 230.75,
+        "energy": 4131052.885,
+        "rms_current": 137.0311,
+        "skewness": 1.417,
+        "kurtosis": 0.2606,
+        "mean_current_left": 76.3186,
+        "mean_current_right": 76.9359,
+        "max_current_left": 329.3,
+        "max_current_right": 362.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:03:58_3_3_open",
+      "datetime": "2026-09-07 00:03:58",
+      "car": "3",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 83.4836,
+        "std_current": 128.8333,
+        "max_current": 393.45,
+        "min_current": 9.1,
+        "range_current": 384.35,
+        "p25_current": 9.85,
+        "p50_current": 10.35,
+        "p75_current": 75.7625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8708,
+        "max_diff": 227.55,
+        "energy": 5184857.14,
+        "rms_current": 153.5172,
+        "skewness": 1.4934,
+        "kurtosis": 0.5,
+        "mean_current_left": 89.4732,
+        "mean_current_right": 77.4941,
+        "max_current_left": 410.3,
+        "max_current_right": 376.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_1_1_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "1",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.4245,
+        "std_current": 113.0913,
+        "max_current": 353.15,
+        "min_current": 9.4,
+        "range_current": 343.75,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 85.7125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.1708,
+        "max_diff": 215.25,
+        "energy": 4166809.68,
+        "rms_current": 137.6228,
+        "skewness": 1.4854,
+        "kurtosis": 0.581,
+        "mean_current_left": 82.9873,
+        "mean_current_right": 73.8618,
+        "max_current_left": 365.3,
+        "max_current_right": 354.9
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_1_2_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "1",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 86.4307,
+        "std_current": 128.1337,
+        "max_current": 404.95,
+        "min_current": 10.0,
+        "range_current": 394.95,
+        "p25_current": 10.45,
+        "p50_current": 10.95,
+        "p75_current": 84.15,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.6646,
+        "max_diff": 233.8,
+        "energy": 5255472.8925,
+        "rms_current": 154.5591,
+        "skewness": 1.5479,
+        "kurtosis": 0.7806,
+        "mean_current_left": 88.9277,
+        "mean_current_right": 83.9336,
+        "max_current_left": 403.8,
+        "max_current_right": 406.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_1_3_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "1",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.54,
+        "std_current": 116.742,
+        "max_current": 367.1,
+        "min_current": 9.35,
+        "range_current": 357.75,
+        "p25_current": 10.15,
+        "p50_current": 10.5,
+        "p75_current": 91.2375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.5644,
+        "max_diff": 213.9,
+        "energy": 4461043.155,
+        "rms_current": 142.399,
+        "skewness": 1.4595,
+        "kurtosis": 0.5271,
+        "mean_current_left": 83.3145,
+        "mean_current_right": 79.7655,
+        "max_current_left": 352.9,
+        "max_current_right": 381.3
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_2_1_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "2",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.6307,
+        "std_current": 123.6435,
+        "max_current": 387.95,
+        "min_current": 9.3,
+        "range_current": 378.65,
+        "p25_current": 10.25,
+        "p50_current": 10.775,
+        "p75_current": 77.6625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.371,
+        "max_diff": 237.05,
+        "energy": 4865420.5325,
+        "rms_current": 148.713,
+        "skewness": 1.5653,
+        "kurtosis": 0.8094,
+        "mean_current_left": 85.7495,
+        "mean_current_right": 79.5118,
+        "max_current_left": 390.4,
+        "max_current_right": 385.5
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_2_2_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "2",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.5368,
+        "std_current": 123.2869,
+        "max_current": 388.9,
+        "min_current": 9.1,
+        "range_current": 379.8,
+        "p25_current": 10.15,
+        "p50_current": 10.6,
+        "p75_current": 78.2,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.674,
+        "max_diff": 248.75,
+        "energy": 4842634.935,
+        "rms_current": 148.3643,
+        "skewness": 1.5592,
+        "kurtosis": 0.7961,
+        "mean_current_left": 86.055,
+        "mean_current_right": 79.0186,
+        "max_current_left": 401.8,
+        "max_current_right": 376.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_2_3_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "2",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 79.1052,
+        "std_current": 113.8537,
+        "max_current": 367.7,
+        "min_current": 9.25,
+        "range_current": 358.45,
+        "p25_current": 10.25,
+        "p50_current": 10.6,
+        "p75_current": 85.425,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.2514,
+        "max_diff": 235.15,
+        "energy": 4228467.8175,
+        "rms_current": 138.6373,
+        "skewness": 1.4893,
+        "kurtosis": 0.5941,
+        "mean_current_left": 82.1832,
+        "mean_current_right": 76.0273,
+        "max_current_left": 397.3,
+        "max_current_right": 338.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_3_1_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "3",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 85.4498,
+        "std_current": 127.4689,
+        "max_current": 404.7,
+        "min_current": 9.65,
+        "range_current": 395.05,
+        "p25_current": 10.7,
+        "p50_current": 11.15,
+        "p75_current": 83.3875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.1735,
+        "max_diff": 204.25,
+        "energy": 5180995.9025,
+        "rms_current": 153.46,
+        "skewness": 1.5636,
+        "kurtosis": 0.8194,
+        "mean_current_left": 86.0736,
+        "mean_current_right": 84.8259,
+        "max_current_left": 398.4,
+        "max_current_right": 411.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:50_3_2_close",
+      "datetime": "2026-09-07 00:18:50",
+      "car": "3",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 79.1002,
+        "std_current": 113.7267,
+        "max_current": 361.8,
+        "min_current": 9.8,
+        "range_current": 352.0,
+        "p25_current": 10.55,
+        "p50_current": 11.025,
+        "p75_current": 83.7375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8646,
+        "max_diff": 237.85,
+        "energy": 4221935.6725,
+        "rms_current": 138.5302,
+        "skewness": 1.4905,
+        "kurtosis": 0.6021,
+        "mean_current_left": 80.8545,
+        "mean_current_right": 77.3459,
+        "max_current_left": 390.7,
+        "max_current_right": 346.4
+      }
+    },
+    {
+      "id": "2026-09-07 00:18:51_3_3_close",
+      "datetime": "2026-09-07 00:18:51",
+      "car": "3",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.3277,
+        "std_current": 105.9339,
+        "max_current": 345.4,
+        "min_current": 9.05,
+        "range_current": 336.35,
+        "p25_current": 9.9875,
+        "p50_current": 10.4,
+        "p75_current": 92.1375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.7669,
+        "max_diff": 183.4,
+        "energy": 3750539.725,
+        "rms_current": 130.5676,
+        "skewness": 1.3883,
+        "kurtosis": 0.3262,
+        "mean_current_left": 71.0264,
+        "mean_current_right": 81.6291,
+        "max_current_left": 322.1,
+        "max_current_right": 395.7
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:50_1_2_open",
+      "datetime": "2026-09-07 00:25:50",
+      "car": "1",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 77.3839,
+        "std_current": 110.7272,
+        "max_current": 345.25,
+        "min_current": 9.35,
+        "range_current": 335.9,
+        "p25_current": 10.3,
+        "p50_current": 10.7,
+        "p75_current": 115.175,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1418,
+        "max_diff": 183.5,
+        "energy": 4014729.6825,
+        "rms_current": 135.088,
+        "skewness": 1.3176,
+        "kurtosis": 0.0158,
+        "mean_current_left": 79.1205,
+        "mean_current_right": 75.6473,
+        "max_current_left": 354.7,
+        "max_current_right": 335.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_1_1_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "1",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.0548,
+        "std_current": 124.9036,
+        "max_current": 372.3,
+        "min_current": 9.65,
+        "range_current": 362.65,
+        "p25_current": 10.35,
+        "p50_current": 10.7,
+        "p75_current": 78.65,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.1466,
+        "max_diff": 221.8,
+        "energy": 4913455.0025,
+        "rms_current": 149.4453,
+        "skewness": 1.4705,
+        "kurtosis": 0.4183,
+        "mean_current_left": 79.7895,
+        "mean_current_right": 84.32,
+        "max_current_left": 364.8,
+        "max_current_right": 392.4
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_1_3_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "1",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.2218,
+        "std_current": 123.3816,
+        "max_current": 374.1,
+        "min_current": 9.05,
+        "range_current": 365.05,
+        "p25_current": 9.85,
+        "p50_current": 10.25,
+        "p75_current": 96.2125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.7943,
+        "max_diff": 193.7,
+        "energy": 4836357.685,
+        "rms_current": 148.2681,
+        "skewness": 1.4167,
+        "kurtosis": 0.2853,
+        "mean_current_left": 85.2191,
+        "mean_current_right": 79.2245,
+        "max_current_left": 392.6,
+        "max_current_right": 355.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_2_1_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "2",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.9705,
+        "std_current": 112.96,
+        "max_current": 338.7,
+        "min_current": 9.0,
+        "range_current": 329.7,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 90.8625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.4674,
+        "max_diff": 212.0,
+        "energy": 4110570.53,
+        "rms_current": 136.6909,
+        "skewness": 1.3851,
+        "kurtosis": 0.175,
+        "mean_current_left": 76.5,
+        "mean_current_right": 77.4409,
+        "max_current_left": 341.4,
+        "max_current_right": 340.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_2_2_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "2",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.8836,
+        "std_current": 113.7523,
+        "max_current": 344.3,
+        "min_current": 9.4,
+        "range_current": 334.9,
+        "p25_current": 10.25,
+        "p50_current": 10.6,
+        "p75_current": 84.575,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.5626,
+        "max_diff": 176.85,
+        "energy": 4147148.82,
+        "rms_current": 137.2978,
+        "skewness": 1.4059,
+        "kurtosis": 0.2281,
+        "mean_current_left": 76.4041,
+        "mean_current_right": 77.3632,
+        "max_current_left": 329.3,
+        "max_current_right": 359.3
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_2_3_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "2",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.0152,
+        "std_current": 121.0976,
+        "max_current": 366.65,
+        "min_current": 9.25,
+        "range_current": 357.4,
+        "p25_current": 10.05,
+        "p50_current": 10.475,
+        "p75_current": 94.875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1598,
+        "max_diff": 214.8,
+        "energy": 4670182.2125,
+        "rms_current": 145.6987,
+        "skewness": 1.4237,
+        "kurtosis": 0.2996,
+        "mean_current_left": 80.5286,
+        "mean_current_right": 81.5018,
+        "max_current_left": 347.1,
+        "max_current_right": 386.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_3_1_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "3",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 77.2648,
+        "std_current": 112.5592,
+        "max_current": 337.75,
+        "min_current": 9.2,
+        "range_current": 328.55,
+        "p25_current": 10.45,
+        "p50_current": 10.85,
+        "p75_current": 93.4125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.7135,
+        "max_diff": 194.4,
+        "energy": 4100674.1375,
+        "rms_current": 136.5263,
+        "skewness": 1.3761,
+        "kurtosis": 0.1506,
+        "mean_current_left": 82.5736,
+        "mean_current_right": 71.9559,
+        "max_current_left": 359.9,
+        "max_current_right": 319.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:51_3_2_open",
+      "datetime": "2026-09-07 00:25:51",
+      "car": "3",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.1432,
+        "std_current": 123.886,
+        "max_current": 377.75,
+        "min_current": 9.45,
+        "range_current": 368.3,
+        "p25_current": 10.45,
+        "p50_current": 10.875,
+        "p75_current": 81.6875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.2909,
+        "max_diff": 184.85,
+        "energy": 4860955.08,
+        "rms_current": 148.6447,
+        "skewness": 1.452,
+        "kurtosis": 0.3805,
+        "mean_current_left": 80.7918,
+        "mean_current_right": 83.4945,
+        "max_current_left": 358.9,
+        "max_current_right": 396.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:25:52_3_3_open",
+      "datetime": "2026-09-07 00:25:52",
+      "car": "3",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 83.7611,
+        "std_current": 128.5475,
+        "max_current": 394.2,
+        "min_current": 9.1,
+        "range_current": 385.1,
+        "p25_current": 9.9,
+        "p50_current": 10.375,
+        "p75_current": 77.5375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.8146,
+        "max_diff": 150.85,
+        "energy": 5178885.7225,
+        "rms_current": 153.4288,
+        "skewness": 1.4789,
+        "kurtosis": 0.4731,
+        "mean_current_left": 89.965,
+        "mean_current_right": 77.5573,
+        "max_current_left": 414.3,
+        "max_current_right": 374.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_1_1_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "1",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.2023,
+        "std_current": 112.7986,
+        "max_current": 352.6,
+        "min_current": 9.35,
+        "range_current": 343.25,
+        "p25_current": 10.1875,
+        "p50_current": 10.675,
+        "p75_current": 85.7125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.903,
+        "max_diff": 231.45,
+        "energy": 4144608.195,
+        "rms_current": 137.2557,
+        "skewness": 1.4879,
+        "kurtosis": 0.5853,
+        "mean_current_left": 82.605,
+        "mean_current_right": 73.7995,
+        "max_current_left": 366.4,
+        "max_current_right": 338.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_1_2_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "1",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 86.5261,
+        "std_current": 128.4787,
+        "max_current": 413.05,
+        "min_current": 9.55,
+        "range_current": 403.5,
+        "p25_current": 10.3,
+        "p50_current": 10.725,
+        "p75_current": 86.3125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.0425,
+        "max_diff": 192.0,
+        "energy": 5278579.9425,
+        "rms_current": 154.8985,
+        "skewness": 1.5361,
+        "kurtosis": 0.7461,
+        "mean_current_left": 89.0764,
+        "mean_current_right": 83.9759,
+        "max_current_left": 415.7,
+        "max_current_right": 410.4
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_1_3_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "1",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.0984,
+        "std_current": 116.5807,
+        "max_current": 368.0,
+        "min_current": 8.95,
+        "range_current": 359.05,
+        "p25_current": 9.9,
+        "p50_current": 10.4,
+        "p75_current": 92.025,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.7959,
+        "max_diff": 202.45,
+        "energy": 4436960.6775,
+        "rms_current": 142.0141,
+        "skewness": 1.4688,
+        "kurtosis": 0.5573,
+        "mean_current_left": 82.8859,
+        "mean_current_right": 79.3109,
+        "max_current_left": 355.8,
+        "max_current_right": 380.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_2_1_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "2",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.6857,
+        "std_current": 123.2061,
+        "max_current": 392.7,
+        "min_current": 9.55,
+        "range_current": 383.15,
+        "p25_current": 10.4,
+        "p50_current": 10.825,
+        "p75_current": 78.9125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.4906,
+        "max_diff": 217.7,
+        "energy": 4843664.0375,
+        "rms_current": 148.3801,
+        "skewness": 1.5647,
+        "kurtosis": 0.8132,
+        "mean_current_left": 85.7077,
+        "mean_current_right": 79.6636,
+        "max_current_left": 399.0,
+        "max_current_right": 386.4
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_2_2_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "2",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.7427,
+        "std_current": 123.4199,
+        "max_current": 383.65,
+        "min_current": 9.45,
+        "range_current": 374.2,
+        "p25_current": 10.4,
+        "p50_current": 10.8,
+        "p75_current": 78.2375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.4785,
+        "max_diff": 227.45,
+        "energy": 4857345.28,
+        "rms_current": 148.5895,
+        "skewness": 1.5573,
+        "kurtosis": 0.7888,
+        "mean_current_left": 86.1445,
+        "mean_current_right": 79.3409,
+        "max_current_left": 401.5,
+        "max_current_right": 365.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_2_3_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "2",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.9939,
+        "std_current": 113.661,
+        "max_current": 357.1,
+        "min_current": 9.55,
+        "range_current": 347.55,
+        "p25_current": 10.3,
+        "p50_current": 10.775,
+        "p75_current": 85.05,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1123,
+        "max_diff": 195.45,
+        "energy": 4214946.3975,
+        "rms_current": 138.4155,
+        "skewness": 1.4825,
+        "kurtosis": 0.5694,
+        "mean_current_left": 82.1605,
+        "mean_current_right": 75.8273,
+        "max_current_left": 388.3,
+        "max_current_right": 374.4
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_3_1_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "3",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 85.1495,
+        "std_current": 126.9193,
+        "max_current": 416.4,
+        "min_current": 9.35,
+        "range_current": 407.05,
+        "p25_current": 10.45,
+        "p50_current": 10.95,
+        "p75_current": 82.7125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8591,
+        "max_diff": 201.2,
+        "energy": 5138971.765,
+        "rms_current": 152.8364,
+        "skewness": 1.5633,
+        "kurtosis": 0.8285,
+        "mean_current_left": 85.6041,
+        "mean_current_right": 84.695,
+        "max_current_left": 416.2,
+        "max_current_right": 416.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:13_3_2_close",
+      "datetime": "2026-09-07 00:34:13",
+      "car": "3",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.8314,
+        "std_current": 113.0662,
+        "max_current": 356.05,
+        "min_current": 9.7,
+        "range_current": 346.35,
+        "p25_current": 10.65,
+        "p50_current": 11.15,
+        "p75_current": 84.95,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.3034,
+        "max_diff": 190.0,
+        "energy": 4179636.765,
+        "rms_current": 137.8345,
+        "skewness": 1.4907,
+        "kurtosis": 0.6026,
+        "mean_current_left": 80.8705,
+        "mean_current_right": 76.7923,
+        "max_current_left": 377.6,
+        "max_current_right": 358.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:34:14_3_3_close",
+      "datetime": "2026-09-07 00:34:14",
+      "car": "3",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.0977,
+        "std_current": 106.1606,
+        "max_current": 334.75,
+        "min_current": 8.95,
+        "range_current": 325.8,
+        "p25_current": 9.85,
+        "p50_current": 10.25,
+        "p75_current": 91.15,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1183,
+        "max_diff": 184.4,
+        "energy": 3753404.2,
+        "rms_current": 130.6175,
+        "skewness": 1.3996,
+        "kurtosis": 0.3597,
+        "mean_current_left": 70.6214,
+        "mean_current_right": 81.5741,
+        "max_current_left": 316.2,
+        "max_current_right": 364.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_1_1_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "1",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.9527,
+        "std_current": 124.9824,
+        "max_current": 371.55,
+        "min_current": 9.2,
+        "range_current": 362.35,
+        "p25_current": 10.15,
+        "p50_current": 10.475,
+        "p75_current": 79.575,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8858,
+        "max_diff": 237.75,
+        "energy": 4914107.4,
+        "rms_current": 149.4552,
+        "skewness": 1.4669,
+        "kurtosis": 0.4057,
+        "mean_current_left": 79.6941,
+        "mean_current_right": 84.2114,
+        "max_current_left": 360.0,
+        "max_current_right": 387.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_1_2_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "1",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 77.202,
+        "std_current": 110.6199,
+        "max_current": 340.8,
+        "min_current": 9.45,
+        "range_current": 331.35,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 111.8375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.4068,
+        "max_diff": 192.8,
+        "energy": 4003321.1075,
+        "rms_current": 134.8959,
+        "skewness": 1.3166,
+        "kurtosis": 0.0145,
+        "mean_current_left": 79.0718,
+        "mean_current_right": 75.3323,
+        "max_current_left": 343.6,
+        "max_current_right": 338.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_1_3_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "1",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.2536,
+        "std_current": 123.7846,
+        "max_current": 373.05,
+        "min_current": 8.95,
+        "range_current": 364.1,
+        "p25_current": 9.75,
+        "p50_current": 10.075,
+        "p75_current": 94.1375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.9276,
+        "max_diff": 168.7,
+        "energy": 4859421.555,
+        "rms_current": 148.6213,
+        "skewness": 1.4151,
+        "kurtosis": 0.2754,
+        "mean_current_left": 85.8323,
+        "mean_current_right": 78.675,
+        "max_current_left": 394.3,
+        "max_current_right": 353.2
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_2_1_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "2",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.9161,
+        "std_current": 112.6732,
+        "max_current": 335.05,
+        "min_current": 9.0,
+        "range_current": 326.05,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 91.3,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.7443,
+        "max_diff": 163.9,
+        "energy": 4094495.0025,
+        "rms_current": 136.4234,
+        "skewness": 1.3812,
+        "kurtosis": 0.1694,
+        "mean_current_left": 76.5568,
+        "mean_current_right": 77.2755,
+        "max_current_left": 338.0,
+        "max_current_right": 381.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_2_3_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "2",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.0248,
+        "std_current": 121.0909,
+        "max_current": 365.65,
+        "min_current": 9.1,
+        "range_current": 356.55,
+        "p25_current": 10.0875,
+        "p50_current": 10.475,
+        "p75_current": 89.3,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.0,
+        "max_diff": 197.15,
+        "energy": 4670165.9025,
+        "rms_current": 145.6984,
+        "skewness": 1.4211,
+        "kurtosis": 0.2937,
+        "mean_current_left": 80.1864,
+        "mean_current_right": 81.8632,
+        "max_current_left": 346.6,
+        "max_current_right": 384.7
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_3_1_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "3",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 77.3839,
+        "std_current": 112.7264,
+        "max_current": 342.8,
+        "min_current": 9.5,
+        "range_current": 333.3,
+        "p25_current": 10.4,
+        "p50_current": 10.75,
+        "p75_current": 96.0375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.2219,
+        "max_diff": 161.6,
+        "energy": 4113008.5875,
+        "rms_current": 136.7315,
+        "skewness": 1.3674,
+        "kurtosis": 0.1287,
+        "mean_current_left": 82.3982,
+        "mean_current_right": 72.3695,
+        "max_current_left": 362.9,
+        "max_current_right": 322.7
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:07_3_2_open",
+      "datetime": "2026-09-07 00:45:07",
+      "car": "3",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.4291,
+        "std_current": 124.152,
+        "max_current": 380.15,
+        "min_current": 9.75,
+        "range_current": 370.4,
+        "p25_current": 10.4,
+        "p50_current": 10.85,
+        "p75_current": 82.075,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.2534,
+        "max_diff": 190.5,
+        "energy": 4885817.88,
+        "rms_current": 149.0244,
+        "skewness": 1.4485,
+        "kurtosis": 0.3698,
+        "mean_current_left": 81.0277,
+        "mean_current_right": 83.8305,
+        "max_current_left": 360.8,
+        "max_current_right": 399.5
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:08_2_2_open",
+      "datetime": "2026-09-07 00:45:08",
+      "car": "2",
+      "door": "2",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 76.902,
+        "std_current": 113.7809,
+        "max_current": 344.5,
+        "min_current": 9.6,
+        "range_current": 334.9,
+        "p25_current": 10.25,
+        "p50_current": 10.65,
+        "p75_current": 82.0625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.1169,
+        "max_diff": 177.15,
+        "energy": 4149205.4375,
+        "rms_current": 137.3318,
+        "skewness": 1.4109,
+        "kurtosis": 0.2466,
+        "mean_current_left": 76.4482,
+        "mean_current_right": 77.3559,
+        "max_current_left": 328.7,
+        "max_current_right": 360.3
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:08_3_3_open",
+      "datetime": "2026-09-07 00:45:08",
+      "car": "3",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 83.6561,
+        "std_current": 128.7674,
+        "max_current": 390.2,
+        "min_current": 9.15,
+        "range_current": 381.05,
+        "p25_current": 9.75,
+        "p50_current": 10.25,
+        "p75_current": 76.8125,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.6858,
+        "max_diff": 174.3,
+        "energy": 5187465.7375,
+        "rms_current": 153.5558,
+        "skewness": 1.4797,
+        "kurtosis": 0.4717,
+        "mean_current_left": 89.6482,
+        "mean_current_right": 77.6641,
+        "max_current_left": 413.3,
+        "max_current_right": 367.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_1_1_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "1",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.147,
+        "std_current": 112.4425,
+        "max_current": 350.4,
+        "min_current": 9.7,
+        "range_current": 340.7,
+        "p25_current": 10.6,
+        "p50_current": 11.0,
+        "p75_current": 85.9625,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.0979,
+        "max_diff": 233.35,
+        "energy": 4125058.5175,
+        "rms_current": 136.9316,
+        "skewness": 1.4977,
+        "kurtosis": 0.6106,
+        "mean_current_left": 82.8432,
+        "mean_current_right": 73.4509,
+        "max_current_left": 367.8,
+        "max_current_right": 334.3
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_1_2_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "1",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 86.07,
+        "std_current": 127.9135,
+        "max_current": 408.2,
+        "min_current": 9.45,
+        "range_current": 398.75,
+        "p25_current": 10.45,
+        "p50_current": 10.875,
+        "p75_current": 83.4875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.0377,
+        "max_diff": 182.35,
+        "energy": 5229377.125,
+        "rms_current": 154.1749,
+        "skewness": 1.5526,
+        "kurtosis": 0.7941,
+        "mean_current_left": 88.1505,
+        "mean_current_right": 83.9895,
+        "max_current_left": 410.4,
+        "max_current_right": 406.0
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_1_3_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "1",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 81.0659,
+        "std_current": 116.6233,
+        "max_current": 361.4,
+        "min_current": 9.05,
+        "range_current": 352.35,
+        "p25_current": 10.1,
+        "p50_current": 10.575,
+        "p75_current": 91.0875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.9144,
+        "max_diff": 219.35,
+        "energy": 4437988.81,
+        "rms_current": 142.0305,
+        "skewness": 1.4708,
+        "kurtosis": 0.559,
+        "mean_current_left": 82.8618,
+        "mean_current_right": 79.27,
+        "max_current_left": 357.4,
+        "max_current_right": 371.3
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_2_1_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "2",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.4252,
+        "std_current": 123.1606,
+        "max_current": 391.8,
+        "min_current": 9.35,
+        "range_current": 382.45,
+        "p25_current": 10.2,
+        "p50_current": 10.65,
+        "p75_current": 78.25,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.9009,
+        "max_diff": 228.75,
+        "energy": 4831740.8875,
+        "rms_current": 148.1974,
+        "skewness": 1.5664,
+        "kurtosis": 0.8211,
+        "mean_current_left": 85.2586,
+        "mean_current_right": 79.5918,
+        "max_current_left": 393.0,
+        "max_current_right": 390.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_2_2_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "2",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 82.2811,
+        "std_current": 122.7449,
+        "max_current": 388.9,
+        "min_current": 9.4,
+        "range_current": 379.5,
+        "p25_current": 10.2875,
+        "p50_current": 10.725,
+        "p75_current": 78.375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.0482,
+        "max_diff": 250.9,
+        "energy": 4804031.3475,
+        "rms_current": 147.7718,
+        "skewness": 1.5659,
+        "kurtosis": 0.8239,
+        "mean_current_left": 85.5536,
+        "mean_current_right": 79.0086,
+        "max_current_left": 404.7,
+        "max_current_right": 373.1
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_2_3_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "2",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.6911,
+        "std_current": 113.5657,
+        "max_current": 361.2,
+        "min_current": 9.2,
+        "range_current": 352.0,
+        "p25_current": 10.15,
+        "p50_current": 10.65,
+        "p75_current": 84.225,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.9281,
+        "max_diff": 224.15,
+        "energy": 4199683.2975,
+        "rms_current": 138.1646,
+        "skewness": 1.4982,
+        "kurtosis": 0.6211,
+        "mean_current_left": 81.8518,
+        "mean_current_right": 75.5305,
+        "max_current_left": 389.6,
+        "max_current_right": 394.8
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_3_1_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "3",
+      "door": "1",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 84.7305,
+        "std_current": 126.7791,
+        "max_current": 412.85,
+        "min_current": 9.2,
+        "range_current": 403.65,
+        "p25_current": 10.25,
+        "p50_current": 10.7,
+        "p75_current": 82.225,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 8.8968,
+        "max_diff": 212.95,
+        "energy": 5115479.215,
+        "rms_current": 152.4866,
+        "skewness": 1.5685,
+        "kurtosis": 0.8443,
+        "mean_current_left": 85.1736,
+        "mean_current_right": 84.2873,
+        "max_current_left": 411.8,
+        "max_current_right": 413.9
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:25_3_2_close",
+      "datetime": "2026-09-07 00:45:25",
+      "car": "3",
+      "door": "2",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 78.3905,
+        "std_current": 113.2722,
+        "max_current": 359.8,
+        "min_current": 9.85,
+        "range_current": 349.95,
+        "p25_current": 10.65,
+        "p50_current": 11.15,
+        "p75_current": 83.6,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 9.1272,
+        "max_diff": 245.05,
+        "energy": 4174641.745,
+        "rms_current": 137.7521,
+        "skewness": 1.5159,
+        "kurtosis": 0.6764,
+        "mean_current_left": 80.1505,
+        "mean_current_right": 76.6305,
+        "max_current_left": 385.8,
+        "max_current_right": 361.6
+      }
+    },
+    {
+      "id": "2026-09-07 00:45:26_3_3_close",
+      "datetime": "2026-09-07 00:45:26",
+      "car": "3",
+      "door": "3",
+      "operation": "close",
+      "action": "閉動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 75.7782,
+        "std_current": 105.6282,
+        "max_current": 337.35,
+        "min_current": 8.85,
+        "range_current": 328.5,
+        "p25_current": 9.85,
+        "p50_current": 10.35,
+        "p75_current": 91.2875,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 7.7048,
+        "max_diff": 176.4,
+        "energy": 3717923.48,
+        "rms_current": 129.9987,
+        "skewness": 1.3977,
+        "kurtosis": 0.3502,
+        "mean_current_left": 70.515,
+        "mean_current_right": 81.0414,
+        "max_current_left": 319.8,
+        "max_current_right": 363.0
+      }
+    },
+    {
+      "id": "2026-09-07 04:34:39_1_3_open",
+      "datetime": "2026-09-07 04:34:39",
+      "car": "1",
+      "door": "3",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 152.7336,
+        "std_current": 135.7519,
+        "max_current": 385.8,
+        "min_current": 9.2,
+        "range_current": 376.6,
+        "p25_current": 10.45,
+        "p50_current": 90.475,
+        "p75_current": 311.8375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 15.7911,
+        "max_diff": 230.2,
+        "energy": 9186350.805,
+        "rms_current": 204.3432,
+        "skewness": 0.3908,
+        "kurtosis": -1.5423,
+        "mean_current_left": 157.6391,
+        "mean_current_right": 147.8282,
+        "max_current_left": 408.5,
+        "max_current_right": 380.6
       }
     },
     {
@@ -263,9 +3591,73 @@
       }
     },
     {
-      "id": "2026-09-07 04:34:39_2_3_open",
+      "id": "2026-09-07 04:34:39_3_1_open",
       "datetime": "2026-09-07 04:34:39",
-      "car": "2",
+      "car": "3",
+      "door": "1",
+      "operation": "open",
+      "action": "開動作",
+      "score": 0.0,
+      "label": "normal",
+      "model_details": {
+        "individual_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "individual_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "individual"
+        },
+        "unified_isolation_forest": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_lof": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        },
+        "unified_one_class_svm": {
+          "score": null,
+          "label": "unknown",
+          "source": "unified"
+        }
+      },
+      "features": {
+        "mean_current": 151.6652,
+        "std_current": 137.6895,
+        "max_current": 407.4,
+        "min_current": 8.85,
+        "range_current": 398.55,
+        "p25_current": 11.075,
+        "p50_current": 88.575,
+        "p75_current": 306.7375,
+        "duration": 10.95,
+        "data_points": 220.0,
+        "mean_diff": 17.2386,
+        "max_diff": 245.85,
+        "energy": 9231364.4525,
+        "rms_current": 204.8432,
+        "skewness": 0.4644,
+        "kurtosis": -1.4337,
+        "mean_current_left": 156.9618,
+        "mean_current_right": 146.3686,
+        "max_current_left": 401.3,
+        "max_current_right": 413.5
+      }
+    },
+    {
+      "id": "2026-09-07 04:34:39_3_3_open",
+      "datetime": "2026-09-07 04:34:39",
+      "car": "3",
       "door": "3",
       "operation": "open",
       "action": "開動作",
@@ -304,35 +3696,35 @@
         }
       },
       "features": {
-        "mean_current": 149.1205,
-        "std_current": 133.4824,
-        "max_current": 366.55,
-        "min_current": 9.3,
-        "range_current": 357.25,
-        "p25_current": 10.65,
-        "p50_current": 87.7,
-        "p75_current": 304.1625,
+        "mean_current": 149.2705,
+        "std_current": 134.8192,
+        "max_current": 387.25,
+        "min_current": 9.15,
+        "range_current": 378.1,
+        "p25_current": 10.4875,
+        "p50_current": 88.8,
+        "p75_current": 302.35,
         "duration": 10.95,
         "data_points": 220.0,
-        "mean_diff": 15.4884,
-        "max_diff": 197.55,
-        "energy": 8811982.135,
-        "rms_current": 200.1361,
-        "skewness": 0.4074,
-        "kurtosis": -1.5491,
-        "mean_current_left": 151.4691,
-        "mean_current_right": 146.7718,
-        "max_current_left": 396.3,
-        "max_current_right": 390.6
+        "mean_diff": 16.3884,
+        "max_diff": 221.25,
+        "energy": 8900736.455,
+        "rms_current": 201.1415,
+        "skewness": 0.4517,
+        "kurtosis": -1.4312,
+        "mean_current_left": 149.7618,
+        "mean_current_right": 148.7791,
+        "max_current_left": 407.6,
+        "max_current_right": 366.9
       }
     },
     {
-      "id": "2026-09-07 05:35:57_1_2_close",
-      "datetime": "2026-09-07 05:35:57",
-      "car": "1",
+      "id": "2026-09-07 04:53:50_2_2_open",
+      "datetime": "2026-09-07 04:53:50",
+      "car": "2",
       "door": "2",
-      "operation": "close",
-      "action": "閉動作",
+      "operation": "open",
+      "action": "開動作",
       "score": 0.0,
       "label": "normal",
       "model_details": {
@@ -368,26 +3760,26 @@
         }
       },
       "features": {
-        "mean_current": 86.4286,
-        "std_current": 128.338,
-        "max_current": 410.3,
-        "min_current": 9.45,
-        "range_current": 400.85,
-        "p25_current": 10.45,
-        "p50_current": 10.95,
-        "p75_current": 84.9375,
+        "mean_current": 148.4334,
+        "std_current": 136.0718,
+        "max_current": 385.85,
+        "min_current": 9.4,
+        "range_current": 376.45,
+        "p25_current": 10.6,
+        "p50_current": 78.875,
+        "p75_current": 308.925,
         "duration": 10.95,
         "data_points": 220.0,
-        "mean_diff": 8.7208,
-        "max_diff": 191.4,
-        "energy": 5266919.78,
-        "rms_current": 154.7273,
-        "skewness": 1.5378,
-        "kurtosis": 0.7477,
-        "mean_current_left": 88.7082,
-        "mean_current_right": 84.1491,
-        "max_current_left": 410.7,
-        "max_current_right": 409.9
+        "mean_diff": 16.8048,
+        "max_diff": 234.5,
+        "energy": 8920564.3825,
+        "rms_current": 201.3654,
+        "skewness": 0.4581,
+        "kurtosis": -1.4839,
+        "mean_current_left": 151.1009,
+        "mean_current_right": 145.7659,
+        "max_current_left": 402.7,
+        "max_current_right": 369.0
       }
     }
   ]
