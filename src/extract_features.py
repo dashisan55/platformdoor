@@ -1,12 +1,11 @@
 """
-特徴量抽出スクリプト（朝イチ自動選別 & サブフォルダ全探索対応版）
+特徴量抽出スクリプト（全件確実判定版）
 
 使い方:
   python src/extract_features.py --input data/raw --output data/features
 """
 
 import os
-import re
 import glob
 import argparse
 import logging
@@ -23,10 +22,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 logger = logging.getLogger(__name__)
-
-# 朝の点検対象時間帯（03:30 〜 06:30）
-TARGET_HOUR_START = 3
-TARGET_HOUR_END   = 7
 
 
 def parse_csv_file(filepath: str) -> tuple:
@@ -142,47 +137,6 @@ def extract_features(filepath: str, label: int = 0) -> dict:
         return None
 
 
-def select_morning_files(all_files):
-    """
-    大量のファイル群から、ドアごと（全9ドア）の朝イチ（03:30〜06:30）の
-    最初の開動作・閉動作だけを自動選別する
-    """
-    selected = []
-    # ファイル名順（時系列順）にソート
-    all_files = sorted(all_files, key=lambda f: os.path.basename(f))
-    
-    # ドア×動作ごとの検出フラグ (car_door_op -> bool)
-    found_map = {}
-
-    for fp in all_files:
-        fn = os.path.basename(fp)
-        m = re.match(r"^\d{8}(\d{2})\d{4}_.*_(\d+)号車_(\d+)番ドア_(開動作|閉動作)", fn)
-        if not m:
-            # マッチしない場合はそのまま候補とする
-            selected.append(fp)
-            continue
-
-        hour = int(m.group(1))
-        car  = m.group(2)
-        door = m.group(3)
-        op   = m.group(4)
-
-        # 朝の点検時間帯かチェック
-        if TARGET_HOUR_START <= hour < TARGET_HOUR_END:
-            key = f"{car}_{door}_{op}"
-            if key not in found_map:
-                selected.append(fp)
-                found_map[key] = True
-                logger.info(f"  [朝イチ選別] {car}号車{door}番 ({op}): {fn}")
-
-    # もし朝の時間帯で見つからなかった場合（昼間のテスト等）は、全ファイルを対象とする
-    if not selected:
-        logger.warning("朝の点検時間帯（03:30〜06:30）のデータが見当たらないため、全ファイルを判定します。")
-        return all_files
-
-    return selected
-
-
 def main():
     parser = argparse.ArgumentParser(description="特徴量抽出")
     parser.add_argument("--input",  default="data/raw",      help="入力フォルダ")
@@ -192,7 +146,7 @@ def main():
 
     os.makedirs(args.output, exist_ok=True)
 
-    # rawフォルダ内のすべてのサブフォルダから全CSVを再帰的に検索
+    # rawフォルダ内のすべてのサブフォルダから全CSVを検索
     all_files = sorted(glob.glob(os.path.join(args.input, "**", "*.csv"), recursive=True) +
                        glob.glob(os.path.join(args.input, "*.csv")))
     all_files = sorted(list(set(all_files)))
@@ -205,12 +159,9 @@ def main():
         df_empty.to_csv(os.path.join(args.output, "features_latest.csv"), index=False)
         return
 
-    # ★ 大量ファイルの中から「朝イチの開閉（計18ファイル等）」だけを自動選別！
-    target_files = select_morning_files(all_files)
-    logger.info(f"自動選別された朝イチ点検データ数: {len(target_files)}")
-
+    # 投入されたファイルをすべて判定対象とする
     all_features = []
-    for filepath in target_files:
+    for filepath in all_files:
         features = extract_features(filepath)
         if features:
             all_features.append(features)
