@@ -1,5 +1,5 @@
 {
-  "predicted_at": "2026-10-24T06:16:13.346279",
+  "predicted_at": "2026-10-24T06:16:46.805276",
   "total": 1,
   "normal": 1,
   "warning": 0,
@@ -7,10 +7,10 @@
   "has_anomaly": false,
   "results": [
     {
-      "id": "2026-09-07 00:03:57_1_2_open",
+      "id": "2026-09-07 00:03:57_2_3_open",
       "datetime": "2026-09-07 00:03:57",
-      "car": "1",
-      "door": "2",
+      "car": "2",
+      "door": "3",
       "operation": "open",
       "action": "開動作",
       "score": 0.0,
@@ -48,26 +48,26 @@
         }
       },
       "features": {
-        "mean_current": 77.0455,
-        "std_current": 110.1213,
-        "max_current": 333.0,
-        "min_current": 9.55,
-        "range_current": 323.45,
-        "p25_current": 10.25,
-        "p50_current": 10.65,
-        "p75_current": 114.325,
+        "mean_current": 81.1377,
+        "std_current": 121.038,
+        "max_current": 369.0,
+        "min_current": 8.85,
+        "range_current": 360.15,
+        "p25_current": 10.2,
+        "p50_current": 10.55,
+        "p75_current": 89.5625,
         "duration": 10.95,
         "data_points": 220.0,
-        "mean_diff": 6.6717,
-        "max_diff": 194.8,
-        "energy": 3973792.55,
-        "rms_current": 134.3975,
-        "skewness": 1.3121,
-        "kurtosis": 0.0084,
-        "mean_current_left": 78.6095,
-        "mean_current_right": 75.4814,
-        "max_current_left": 337.7,
-        "max_current_right": 328.3
+        "mean_diff": 7.6251,
+        "max_diff": 176.5,
+        "energy": 4671375.83,
+        "rms_current": 145.7173,
+        "skewness": 1.4124,
+        "kurtosis": 0.2661,
+        "mean_current_left": 80.6773,
+        "mean_current_right": 81.5982,
+        "max_current_left": 354.2,
+        "max_current_right": 383.8
       }
     }
   ]
