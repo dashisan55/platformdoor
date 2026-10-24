@@ -6,10 +6,7 @@ name: 毎朝自動判定
 on:
   schedule:
     - cron: "30 20 * * *"   # UTC 20:30 = JST 翌05:30（タイマー実行）
-  push:
-    paths:
-      - 'data/raw/*.csv'    # バッチ等でCSVが追加されたら即自動起動！
-  workflow_dispatch:        # 手動実行ボタンも維持
+  workflow_dispatch:        # 手動実行ボタン
 
 jobs:
   morning-check:
@@ -30,7 +27,15 @@ jobs:
       - name: パッケージインストール
         run: pip install -r requirements.txt
 
-      # ① 点検データの特徴量抽出
+      # ★ data直下に置かれたCSVを raw フォルダへ一括自動移動！
+      - name: data直下のCSVをrawへ一括移動
+        run: |
+          mkdir -p data/raw
+          # data/ 直下のCSVをすべて data/raw/ へ一括移動
+          mv data/*.csv data/raw/ 2>/dev/null || true
+          echo "✅ data直下のCSVを data/raw/ へ一括移動しました。"
+
+      # ① 点検データの特徴量抽出（朝イチ自動選別）
       - name: 特徴量抽出
         run: |
           python src/extract_features.py \
@@ -50,15 +55,15 @@ jobs:
       # ③ 判定済み生データの自動削除（お掃除）
       - name: 判定済みCSVのクリーンアップ
         run: |
-          # .gitkeep 以外のCSVファイルを削除してrawフォルダを空にする
           find data/raw/ -type f -name "*.csv" -delete
-          echo "✅ 判定完了に伴い、data/raw/ の古いCSVを自動削除しました。"
+          find data/ -maxdepth 1 -type f -name "*.csv" -delete
+          echo "✅ 判定完了に伴い、古いCSVをすべて自動削除しました。"
 
       # ④ 判定結果の保存 ＆ お掃除結果をコミット
       - name: 結果保存とお掃除をコミット
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/results/ data/raw/
-          git diff --cached --quiet || git commit -m "📊 朝の点検結果更新 ＆ データ自動お掃除 [skip ci]"
+          git add -A
+          git diff --cached --quiet || git commit -m "📊 朝の点検結果更新 ＆ データ移動とお掃除 [skip ci]"
           git push
