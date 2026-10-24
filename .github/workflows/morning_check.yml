@@ -1,12 +1,15 @@
 # ===============================================
-# 毎日 AM5:30(JST) 朝の点検判定
+# 毎朝自動判定 ＆ 判定後自動クリーンアップ
 # ===============================================
 name: 毎朝自動判定
 
 on:
   schedule:
-    - cron: "30 20 * * *"   # UTC 20:30 = JST 翌05:30
-  workflow_dispatch:
+    - cron: "30 20 * * *"   # UTC 20:30 = JST 翌05:30（タイマー実行）
+  push:
+    paths:
+      - 'data/raw/*.csv'    # バッチ等でCSVが追加されたら即自動起動！
+  workflow_dispatch:        # 手動実行ボタンも維持
 
 jobs:
   morning-check:
@@ -27,6 +30,7 @@ jobs:
       - name: パッケージインストール
         run: pip install -r requirements.txt
 
+      # ① 点検データの特徴量抽出
       - name: 特徴量抽出
         run: |
           python src/extract_features.py \
@@ -34,6 +38,7 @@ jobs:
             --output data/features \
             --config config/settings.yaml
 
+      # ② 異常判定実行
       - name: 異常判定実行
         run: |
           python src/predict.py \
@@ -42,21 +47,18 @@ jobs:
             --output   data/results/results_latest.json \
             --config   config/settings.yaml
 
-      - name: 結果をコミット
+      # ③ 判定済み生データの自動削除（お掃除）
+      - name: 判定済みCSVのクリーンアップ
+        run: |
+          # .gitkeep 以外のCSVファイルを削除してrawフォルダを空にする
+          find data/raw/ -type f -name "*.csv" -delete
+          echo "✅ 判定完了に伴い、data/raw/ の古いCSVを自動削除しました。"
+
+      # ④ 判定結果の保存 ＆ お掃除結果をコミット
+      - name: 結果保存とお掃除をコミット
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/results/ reports/
-          git diff --cached --quiet || git commit -m "📊 朝の点検結果 $(date +'%Y-%m-%d')"
+          git add data/results/ data/raw/
+          git diff --cached --quiet || git commit -m "📊 朝の点検結果更新 ＆ データ自動お掃除 [skip ci]"
           git push
-
-      - name: 異常通知
-        env:
-          MAIL_FROM:         ${{ secrets.MAIL_FROM }}
-          MAIL_TO:           ${{ secrets.MAIL_TO }}
-          MAIL_PASSWORD:     ${{ secrets.MAIL_PASSWORD }}
-          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
-        run: |
-          python src/notify.py \
-            --event morning_check \
-            --results data/results/results_latest.json
