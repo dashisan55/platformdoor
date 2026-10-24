@@ -32,105 +32,51 @@
     font-size: 12px;
   }
 
-  /* 簡易パスワード保護ログイン画面 */
+  /* パスワード保護オーバーレイ */
   .auth-overlay {
-    position: fixed;
-    inset: 0;
-    background: #050814;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    position: fixed; inset: 0; background: #050814; z-index: 9999;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
   }
   .auth-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px 28px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 32px 28px; width: 320px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
   }
   .auth-card .icon { font-size: 40px; margin-bottom: 12px; }
   .auth-card h2 { font-size: 16px; margin-bottom: 6px; color: #fff; }
   .auth-card p { font-size: 11px; color: var(--text-muted); margin-bottom: 20px; }
   .auth-input {
-    width: 100%;
-    padding: 10px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-    letter-spacing: 4px;
-    margin-bottom: 14px;
-    outline: none;
+    width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border);
+    border-radius: 6px; color: #fff; font-size: 16px; text-align: center; letter-spacing: 4px;
+    margin-bottom: 14px; outline: none;
   }
   .auth-input:focus { border-color: var(--primary-accent); }
   .btn-auth {
-    width: 100%;
-    padding: 10px;
-    background: var(--primary-light);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
+    width: 100%; padding: 10px; background: var(--primary-light); color: #fff;
+    border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer;
   }
   .btn-auth:hover { opacity: 0.9; }
-  .auth-error {
-    color: var(--danger);
-    font-size: 11px;
-    margin-top: 10px;
-    display: none;
-  }
+  .auth-error { color: var(--danger); font-size: 11px; margin-top: 10px; display: none; }
 
-  /* アプリケーション全体コンテナ */
+  /* アプリコンテナ */
   .app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 8px 12px;
-    gap: 8px;
+    display: flex; flex-direction: column; height: 100vh; padding: 8px 12px; gap: 8px;
   }
 
-  /* ヘッダー＆サマリー統合バー */
+  /* ヘッダー＆サマリー */
   header {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 52px;
-    flex-shrink: 0;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 16px; display: flex; align-items: center; justify-content: space-between;
+    height: 52px; flex-shrink: 0;
   }
-
-  .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
   .header-brand .logo { font-size: 22px; }
   .header-brand h1 { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
   .header-brand p { font-size: 10px; color: var(--text-muted); }
 
-  .summary-inline {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .summary-inline { display: flex; align-items: center; gap: 12px; }
   .summary-badge {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 4px 12px;
-    text-align: center;
-    min-width: 80px;
+    background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 12px; text-align: center; min-width: 80px;
   }
   .summary-badge .val { font-size: 16px; font-weight: 700; line-height: 1; }
   .summary-badge .lbl { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
@@ -139,78 +85,40 @@
   .val-warning { color: var(--warning); }
   .val-danger { color: var(--danger); }
 
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
   .last-updated { font-size: 10px; color: var(--text-muted); }
   .btn-refresh {
-    background: var(--primary-light);
-    color: #fff;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 600;
+    background: var(--primary-light); color: #fff; border: none; padding: 4px 10px;
+    border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600;
   }
   .btn-refresh:hover { opacity: 0.9; }
 
-  /* メインコンテンツ 3カラムレイアウト */
+  /* 3カラムレイアウト */
   .main-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr 340px;
-    gap: 8px;
-    flex: 1;
-    min-height: 0;
+    display: grid; grid-template-columns: 320px 1fr 340px; gap: 8px; flex: 1; min-height: 0;
   }
 
   .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    display: flex; flex-direction: column; overflow: hidden;
   }
   .card-header {
-    background: var(--card-header);
-    border-bottom: 1px solid var(--border);
-    padding: 6px 12px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--primary-accent);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
+    background: var(--card-header); border-bottom: 1px solid var(--border);
+    padding: 6px 12px; font-size: 11px; font-weight: 700; color: var(--primary-accent);
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
   .card-body {
-    padding: 10px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow-y: auto;
+    padding: 10px; flex: 1; display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
   }
 
   /* 左カラム */
   .left-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
   .drop-zone {
-    border: 2px dashed var(--primary-light);
-    border-radius: 8px;
-    padding: 14px 8px;
-    text-align: center;
-    cursor: pointer;
-    background: rgba(59, 130, 246, 0.05);
-    transition: all 0.2s;
-    flex-shrink: 0;
+    border: 2px dashed var(--primary-light); border-radius: 8px; padding: 14px 8px;
+    text-align: center; cursor: pointer; background: rgba(59, 130, 246, 0.05);
+    transition: all 0.2s; flex-shrink: 0;
   }
-  .drop-zone:hover, .drop-zone.drag-over {
-    background: rgba(59, 130, 246, 0.15);
-    border-color: var(--primary-accent);
-  }
+  .drop-zone:hover, .drop-zone.drag-over { background: rgba(59, 130, 246, 0.15); border-color: var(--primary-accent); }
   .drop-zone .dz-icon { font-size: 26px; margin-bottom: 4px; }
   .drop-zone .dz-title { font-size: 12px; font-weight: 700; color: var(--primary-accent); }
   .drop-zone .dz-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
@@ -244,13 +152,18 @@
   /* 中央カラム */
   .center-col { display: flex; flex-direction: column; min-height: 0; }
   .filter-bar-mini {
-    display: flex; gap: 6px; align-items: center; padding: 6px;
+    display: flex; gap: 8px; align-items: center; padding: 6px 10px;
     background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); flex-shrink: 0;
   }
   .filter-bar-mini select {
     background: var(--bg-dark); color: #fff; border: 1px solid var(--border);
     border-radius: 4px; padding: 2px 6px; font-size: 10px;
   }
+  .toggle-label {
+    display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--primary-accent);
+    cursor: pointer; margin-left: auto; font-weight: 600;
+  }
+
   .table-container { flex: 1; min-height: 0; overflow-y: auto; }
   .result-table { width: 100%; border-collapse: collapse; font-size: 11px; }
   .result-table th {
@@ -258,25 +171,16 @@
     color: var(--text-muted); padding: 6px 8px; text-align: left; font-weight: 600;
     border-bottom: 1px solid var(--border); z-index: 10;
   }
-  .result-table td { padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .result-table td { padding: 4px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .result-table tr:hover td { background: rgba(59, 130, 246, 0.1); }
-  .result-table tr.row-danger td { background: rgba(239, 68, 68, 0.1); }
-  .result-table tr.row-warning td { background: rgba(245, 158, 11, 0.1); }
+  .result-table tr.selected td { background: rgba(59, 130, 246, 0.2); }
+  .result-table tr.row-danger td { background: rgba(239, 68, 68, 0.15); }
+  .result-table tr.row-warning td { background: rgba(245, 158, 11, 0.15); }
 
   .badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; font-weight: 700; }
   .badge-normal  { background: rgba(16,185,129,0.2); color: var(--success); }
   .badge-warning { background: rgba(245,158,11,0.2); color: var(--warning); }
   .badge-danger  { background: rgba(239,68,68,0.2); color: var(--danger); }
-
-  .pagination-mini {
-    display: flex; justify-content: center; gap: 4px; padding: 4px;
-    background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); flex-shrink: 0;
-  }
-  .page-btn {
-    background: var(--bg-dark); color: var(--text-muted); border: 1px solid var(--border);
-    padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 10px;
-  }
-  .page-btn.active { background: var(--primary-light); color: #fff; }
 
   /* 右カラム */
   .right-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
@@ -292,7 +196,7 @@
   .model-card-mini .m-name { font-size: 8px; color: var(--text-muted); }
   .model-card-mini .m-val { font-size: 11px; font-weight: 700; color: var(--primary-accent); }
 
-  /* モーダルダイアログ */
+  /* モーダル */
   .modal-overlay {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
     z-index: 1000; align-items: center; justify-content: center;
@@ -312,7 +216,6 @@
   .drift-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
   .drift-table th { background: rgba(0,0,0,0.3); padding: 6px; text-align: left; color: var(--text-muted); }
   .drift-table td { padding: 6px; border-bottom: 1px solid var(--border); }
-
   .drift-ok   { color: var(--success); font-weight: 700; }
   .drift-warn { color: var(--warning); font-weight: 700; }
   .drift-ng   { color: var(--danger); font-weight: 700; }
@@ -322,7 +225,7 @@
 </head>
 <body>
 
-<!-- 🔒 認証オーバーレイ (ログイン画面) -->
+<!-- 🔒 認証オーバーレイ -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
     <div class="icon">🔒</div>
@@ -336,18 +239,18 @@
 
 <div class="app-container">
   
-  <!-- ① ヘッダー ＆ サマリー統合バー -->
+  <!-- ① ヘッダー ＆ サマリー -->
   <header>
     <div class="header-brand">
       <div class="logo">🚉</div>
       <div>
         <h1>プラットフォームドア 異常予兆検知ダッシュボード</h1>
-        <p>五反田駅 1番線 ／ 状態監視保全（CBM）システム</p>
+        <p>五反田駅 1番線 ／ 全9ドア開閉健全度サマリー</p>
       </div>
     </div>
 
     <div class="summary-inline">
-      <div class="summary-badge"><div class="val val-total" id="s-total">-</div><div class="lbl">総判定数</div></div>
+      <div class="summary-badge"><div class="val val-total" id="s-total">-</div><div class="lbl">表示ドア数</div></div>
       <div class="summary-badge"><div class="val val-normal" id="s-normal">-</div><div class="lbl">✅ 正常</div></div>
       <div class="summary-badge"><div class="val val-warning" id="s-warning">-</div><div class="lbl">⚠️ 要注意</div></div>
       <div class="summary-badge"><div class="val val-danger" id="s-danger">-</div><div class="lbl">🚨 異常予兆</div></div>
@@ -384,8 +287,7 @@
         <div class="card-header">📡 長期トレンド（ドリフト監視）</div>
         <div class="card-body">
           <div class="drift-summary-box" id="driftAlertBody">
-            <span class="drift-pill badge-normal">監視中</span>
-            ベースライン統計を検証中...
+            <span class="drift-pill badge-normal">正常</span> 長期トレンド変動なし（基準内）
           </div>
           <div style="flex: 1; min-height: 110px; margin-top: 6px;">
             <canvas id="driftChart"></canvas>
@@ -394,48 +296,46 @@
       </div>
     </div>
 
-    <!-- === 中央カラム：監視ログテーブル === -->
+    <!-- === 中央カラム：全9ドア 最新開閉判定結果 === -->
     <div class="center-col">
       <div class="card" style="height: 100%;">
         <div class="card-header">
-          <span>📋 動作判定結果ログ</span>
-          <span style="font-size: 9px; color: var(--text-muted);" id="logCountInfo">0件</span>
+          <span>📋 全9ドア 最新開閉判定ステータス</span>
+          <span style="font-size: 9px; color: var(--text-muted);" id="logCountInfo">18件 (最新)</span>
         </div>
 
+        <!-- フィルターバー -->
         <div class="filter-bar-mini">
           <label>動作: 
             <select id="filterAction" onchange="applyFilter()">
-              <option value="">すべて</option>
-              <option value="open">開動作</option>
-              <option value="close">閉動作</option>
+              <option value="">開・閉両方</option>
+              <option value="open">開動作のみ</option>
+              <option value="close">閉動作のみ</option>
             </select>
           </label>
           <label>号車: 
             <select id="filterCar" onchange="applyFilter()">
-              <option value="">すべて</option>
+              <option value="">全号車</option>
               <option value="1">1号車</option>
               <option value="2">2号車</option>
               <option value="3">3号車</option>
             </select>
           </label>
-          <label>判定: 
-            <select id="filterLabel" onchange="applyFilter()">
-              <option value="">すべて</option>
-              <option value="danger">異常予兆</option>
-              <option value="warning">要注意</option>
-              <option value="normal">正常</option>
-            </select>
+          <label class="toggle-label">
+            <input type="checkbox" id="chkLatestOnly" checked onchange="applyFilter()">
+            <span>最新18件に集約</span>
           </label>
         </div>
 
+        <!-- テーブル（18件ぴったり収容） -->
         <div class="table-container">
           <table class="result-table">
             <thead>
               <tr>
-                <th>日時</th>
                 <th>号車</th>
                 <th>ドア</th>
                 <th>動作</th>
+                <th>日時</th>
                 <th>スコア</th>
                 <th>判定</th>
               </tr>
@@ -445,25 +345,23 @@
             </tbody>
           </table>
         </div>
-
-        <div class="pagination-mini" id="pagination"></div>
       </div>
     </div>
 
     <!-- === 右カラム：分析グラフ & 詳細 === -->
     <div class="right-col">
       <div class="card" style="height: 150px; flex-shrink: 0;">
-        <div class="card-header">📈 スコア推移（直近40動作）</div>
+        <div class="card-header">📈 全ドアスコア分布</div>
         <div class="card-body" style="padding: 4px 8px;">
           <canvas id="scoreChart" height="110"></canvas>
         </div>
       </div>
 
       <div class="card" style="flex: 1;">
-        <div class="card-header">🔍 選択データ詳細</div>
+        <div class="card-header">🔍 選択ドア詳細データ</div>
         <div class="card-body">
           <div id="detailPanel">
-            <div class="loading-spinner" style="margin-top:20px;">行をクリックすると詳細を表示します</div>
+            <div class="loading-spinner" style="margin-top:20px;">テーブルの行をクリックすると詳細を表示します</div>
           </div>
         </div>
       </div>
@@ -481,7 +379,7 @@
   </div>
 </div>
 
-<!-- モーダルダイアログ -->
+<!-- モーダル -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -493,8 +391,6 @@
 </div>
 
 <script>
-  // ==================== 🔐 パスワード保護制御 ===================
-  // 設定したいパスワード（例: "5555"）
   const AUTH_PASS = "5555";
 
   function checkAuth() {
@@ -504,7 +400,7 @@
       sessionStorage.setItem("platformdoor_auth", "true");
       document.getElementById("authOverlay").style.display = "none";
       err.style.display = "none";
-      loadAll(); // 認証後にロード開始
+      loadAll();
     } else {
       err.style.display = "block";
     }
@@ -525,16 +421,15 @@
     location.reload();
   }
 
-  // ==================== データ読み込み定数 ===================
   const RESULTS_URL  = "./data/results/results_latest.json";
   const DRIFT_URL    = "./reports/baseline_drift.csv";
   const BASELINE_URL = "./models/baseline_stats.json";
-  const PAGE_SIZE    = 25;
 
-  let allResults = [], filteredResults = [], currentPage = 1;
+  let allResults = [], displayResults = [];
   let baselineData  = [];
   let baselineStats = {};
   let currentModalData = null;
+  let selectedIdx = -1;
 
   async function loadAll() {
     await loadBaselineStats();
@@ -554,16 +449,11 @@
         data = generateDemoResults();
       }
       allResults = data.results || [];
-      document.getElementById("s-total").textContent   = data.total   || 0;
-      document.getElementById("s-normal").textContent  = data.normal  || 0;
-      document.getElementById("s-warning").textContent = data.warning || 0;
-      document.getElementById("s-danger").textContent  = data.danger  || 0;
       
       const dt = data.predicted_at ? new Date(data.predicted_at).toLocaleString("ja-JP") : "不明";
       document.getElementById("lastUpdated").textContent = dt;
       
       applyFilter();
-      drawScoreChart();
     } catch(e) {
       console.error(e);
       document.getElementById("lastUpdated").textContent = "エラー";
@@ -615,12 +505,8 @@
       return;
     }
     let html = "";
-    if (dangers.length > 0) {
-      html += `<span class="drift-pill badge-danger">🚨 大幅乖離 ${dangers.length}件</span> `;
-    }
-    if (warnings.length > 0) {
-      html += `<span class="drift-pill badge-warning">⚠️ 乖離注意 ${warnings.length}件</span>`;
-    }
+    if (dangers.length > 0) html += `<span class="drift-pill badge-danger">🚨 大幅乖離 ${dangers.length}件</span> `;
+    if (warnings.length > 0) html += `<span class="drift-pill badge-warning">⚠️ 乖離注意 ${warnings.length}件</span>`;
     body.innerHTML = html;
   }
 
@@ -654,7 +540,6 @@
 
       const x = pad.l + i * barW + barW * 0.15;
       const bw = barW * 0.7;
-
       const barH = Math.abs(cur / maxVal) * cH;
       ctx.fillStyle = color;
       ctx.fillRect(x, pad.t + cH - barH, bw, barH);
@@ -666,11 +551,163 @@
       ctx.setLineDash([]);
 
       ctx.fillStyle = "#94a3b8"; ctx.font = "8px sans-serif"; ctx.textAlign = "center";
-      const label = r.feature.replace("_current","");
-      ctx.fillText(label, x + bw/2, pad.t + cH + 12);
+      ctx.fillText(r.feature.replace("_current",""), x + bw/2, pad.t + cH + 12);
     });
   }
 
+  // ==================== ★ 9ドア×開閉の最新18件への集約フィルタ ====================
+  function applyFilter() {
+    const fA = document.getElementById("filterAction").value;
+    const fC = document.getElementById("filterCar").value;
+    const latestOnly = document.getElementById("chkLatestOnly").checked;
+
+    let list = [...allResults];
+
+    if (latestOnly) {
+      // ドア番号(car_door) × 動作(operation) ごとに「最新の日時」のものを1件だけ残す
+      const map = new Map();
+      list.sort((a,b) => (b.datetime || "").localeCompare(a.datetime || "")); // 新しい順にソート
+
+      list.forEach(r => {
+        const key = `${r.car}_${r.door}_${r.operation}`;
+        if (!map.has(key)) {
+          map.set(key, r);
+        }
+      });
+      list = Array.from(map.values());
+    }
+
+    // 号車・ドア順（1号車1番開、1号車1番閉...）に綺麗に整列ソート
+    list.sort((a, b) => {
+      if (a.car !== b.car) return (+a.car) - (+b.car);
+      if (a.door !== b.door) return (+a.door) - (+b.door);
+      return (b.operation || "").localeCompare(a.operation || ""); // 開が先、閉が後
+    });
+
+    // ユーザー選択フィルター
+    displayResults = list.filter(r => {
+      if (fA && r.operation !== fA) return false;
+      if (fC && r.car !== fC) return false;
+      return true;
+    });
+
+    // サマリー数字を更新（表示されているドアごとの健康状態）
+    const dangerCount  = displayResults.filter(r => r.label === "danger").length;
+    const warningCount = displayResults.filter(r => r.label === "warning").length;
+    const normalCount  = displayResults.filter(r => r.label === "normal").length;
+
+    document.getElementById("s-total").textContent   = displayResults.length;
+    document.getElementById("s-normal").textContent  = normalCount;
+    document.getElementById("s-warning").textContent = warningCount;
+    document.getElementById("s-danger").textContent  = dangerCount;
+    document.getElementById("logCountInfo").textContent = `${displayResults.length}件 ${latestOnly ? '(最新18件集約)' : '(全件)'}`;
+
+    renderTable();
+    drawScoreChart();
+    if (displayResults.length > 0 && selectedIdx === -1) {
+      selectRow(0);
+    }
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById("resultTableBody");
+
+    if (displayResults.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">データがありません</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = displayResults.map((r, i) => {
+      const isSel = (i === selectedIdx) ? "selected" : "";
+      const rowCls = r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
+      const badgeText = r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓";
+      const badgeCls  = `badge-${r.label||"unknown"}`;
+      const actionLabel = r.operation==="open"?"開":"閉";
+      const timeStr = (r.datetime||"").slice(5, 16);
+      
+      return `<tr class="${rowCls} ${isSel}" onclick="selectRow(${i})" style="cursor:pointer;">
+        <td style="font-weight:700;">${r.car}号車</td>
+        <td>${r.door}番</td>
+        <td style="font-weight:700; color:${r.operation==='open'?'var(--primary-accent)':'#ec4899'};">${actionLabel}</td>
+        <td style="color:var(--text-muted); font-size:10px;">${timeStr}</td>
+        <td>${(r.score||0).toFixed(3)}</td>
+        <td><span class="badge ${badgeCls}">${badgeText}</span></td>
+      </tr>`;
+    }).join("");
+  }
+
+  function selectRow(idx) {
+    selectedIdx = idx;
+    const r = displayResults[idx]; if (!r) return;
+    
+    // テーブルの選択スタイル反映
+    document.querySelectorAll("#resultTableBody tr").forEach((tr, i) => {
+      tr.classList.toggle("selected", i === idx);
+    });
+
+    const dp = document.getElementById("detailPanel");
+    const featureRows = Object.entries(r.features||{}).slice(0,8).map(([k,v]) =>
+      `<div class="detail-item"><span class="k">${k}</span><span class="v">${typeof v==="number"?v.toFixed(2):v}</span></div>`
+    ).join("");
+    const actionLabel = r.operation==="open"?"開動作":"閉動作";
+
+    dp.innerHTML = `
+      <div style="font-weight:700; margin-bottom:6px; color:var(--primary-accent);">
+        ${r.car}号車 ${r.door}番ドア (${actionLabel}) - ${r.datetime}
+      </div>
+      <div class="detail-grid">${featureRows}</div>
+    `;
+
+    const mp = document.getElementById("modelPanel");
+    const details = r.model_details||{};
+    const items = Object.entries(details).map(([name, d]) => `
+      <div class="model-card-mini">
+        <div class="m-name">${name.replace("individual_","個:").replace("unified_","統:")}</div>
+        <div class="m-val">${d.score != null ? d.score.toFixed(3) : "N/A"}</div>
+      </div>
+    `).join("");
+    mp.innerHTML = `<div class="model-mini-grid">${items}</div>`;
+  }
+
+  function drawScoreChart() {
+    const canvas = document.getElementById("scoreChart");
+    const container = canvas.parentElement;
+    const W = container.offsetWidth || 300;
+    const H = container.offsetHeight || 110;
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, W, H);
+
+    if (displayResults.length === 0) return;
+
+    const pad = { l: 20, r: 10, t: 10, b: 20 };
+    const cW = W - pad.l - pad.r;
+    const cH = H - pad.t - pad.b;
+    const barW = cW / displayResults.length;
+
+    ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = 1;
+    [0.6, 0.8].forEach(v => {
+      const y = pad.t + cH * (1 - v);
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
+    });
+
+    displayResults.forEach((r, i) => {
+      const sc = r.score || 0;
+      const barH = sc * cH;
+      const color = r.label === "danger" ? "#ef4444" : r.label === "warning" ? "#f59e0b" : "#10b981";
+      const x = pad.l + i * barW + barW * 0.15;
+      const bw = barW * 0.7;
+
+      ctx.fillStyle = color;
+      ctx.fillRect(x, pad.t + cH - barH, bw, barH);
+
+      ctx.fillStyle = "#64748b"; ctx.font = "8px sans-serif"; ctx.textAlign = "center";
+      const lbl = `${r.car}-${r.door}${r.operation==='open'?'開':'閉'}`;
+      ctx.fillText(lbl, x + bw/2, pad.t + cH + 12);
+    });
+  }
+
+  // 現地ドラッグ＆ドロップ判定
   function onDragOver(e) { e.preventDefault(); document.getElementById("dropZone").classList.add("drag-over"); }
   function onDragLeave() { document.getElementById("dropZone").classList.remove("drag-over"); }
   function onDrop(e) {
@@ -861,155 +898,24 @@
     document.getElementById("detailModal").classList.remove("show");
   }
 
-  function applyFilter() {
-    const fA = document.getElementById("filterAction").value;
-    const fC = document.getElementById("filterCar").value;
-    const fL = document.getElementById("filterLabel").value;
-    filteredResults = allResults.filter(r => {
-      if (fA && r.operation !== fA) return false;
-      if (fC && r.car !== fC) return false;
-      if (fL && r.label !== fL) return false;
-      return true;
-    });
-    currentPage = 1;
-    document.getElementById("logCountInfo").textContent = `${filteredResults.length}件`;
-    renderTable();
-    renderPagination();
-  }
-
-  function renderTable() {
-    const tbody = document.getElementById("resultTableBody");
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const items = filteredResults.slice(start, start + PAGE_SIZE);
-
-    if (items.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">データがありません</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = items.map((r, i) => {
-      const absIdx = start + i;
-      const rowCls = r.label==="danger"?"row-danger":r.label==="warning"?"row-warning":"";
-      const badgeText = r.label==="danger"?"🚨 異常予兆":r.label==="warning"?"⚠️ 要注意":r.label==="normal"?"✅ 正常":"❓";
-      const badgeCls  = `badge-${r.label||"unknown"}`;
-      const actionLabel = r.operation==="open"?"開":r.operation==="close"?"閉":r.operation;
-      
-      return `<tr class="${rowCls}" onclick="selectRow(${absIdx})" style="cursor:pointer;">
-        <td>${(r.datetime||"").slice(5,16)}</td>
-        <td>${r.car}号車</td>
-        <td>${r.door}番</td>
-        <td>${actionLabel}</td>
-        <td>${(r.score||0).toFixed(3)}</td>
-        <td><span class="badge ${badgeCls}">${badgeText}</span></td>
-      </tr>`;
-    }).join("");
-  }
-
-  function renderPagination() {
-    const total = Math.ceil(filteredResults.length / PAGE_SIZE);
-    const el = document.getElementById("pagination");
-    if (total <= 1) { el.innerHTML = ""; return; }
-    let html = "";
-    for (let i = 1; i <= total; i++) {
-      html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
-    }
-    el.innerHTML = html;
-  }
-  function goPage(p) { currentPage = p; renderTable(); renderPagination(); }
-
-  function selectRow(idx) {
-    const r = filteredResults[idx]; if (!r) return;
-    const dp = document.getElementById("detailPanel");
-    const featureRows = Object.entries(r.features||{}).slice(0,8).map(([k,v]) =>
-      `<div class="detail-item"><span class="k">${k}</span><span class="v">${typeof v==="number"?v.toFixed(2):v}</span></div>`
-    ).join("");
-    const actionLabel = r.operation==="open"?"開動作":"閉動作";
-
-    dp.innerHTML = `
-      <div style="font-weight:700; margin-bottom:6px; color:var(--primary-accent);">
-        ${r.car}号車 ${r.door}番ドア (${actionLabel}) - ${r.datetime}
-      </div>
-      <div class="detail-grid">${featureRows}</div>
-    `;
-
-    const mp = document.getElementById("modelPanel");
-    const details = r.model_details||{};
-    const items = Object.entries(details).map(([name, d]) => `
-      <div class="model-card-mini">
-        <div class="m-name">${name.replace("individual_","個:").replace("unified_","統:")}</div>
-        <div class="m-val">${d.score != null ? d.score.toFixed(3) : "N/A"}</div>
-      </div>
-    `).join("");
-    mp.innerHTML = `<div class="model-mini-grid">${items}</div>`;
-  }
-
-  function drawScoreChart() {
-    const canvas = document.getElementById("scoreChart");
-    const container = canvas.parentElement;
-    const W = container.offsetWidth || 300;
-    const H = container.offsetHeight || 110;
-    canvas.width = W; canvas.height = H;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, W, H);
-
-    const data = allResults.slice(-40);
-    if (data.length === 0) return;
-
-    const pad = { l: 25, r: 5, t: 10, b: 15 };
-    const cW = W - pad.l - pad.r;
-    const cH = H - pad.t - pad.b;
-
-    ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = 1;
-    [0.4, 0.8].forEach(v => {
-      const y = pad.t + cH * (1 - v);
-      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
-    });
-
-    ctx.strokeStyle = "#3b82f6"; ctx.lineWidth = 1.5; ctx.beginPath();
-    data.forEach((r, i) => {
-      const x = pad.l + (i / (data.length - 1 || 1)) * cW;
-      const y = pad.t + cH * (1 - (r.score || 0));
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    data.forEach((r, i) => {
-      const x = pad.l + (i / (data.length - 1 || 1)) * cW;
-      const y = pad.t + cH * (1 - (r.score || 0));
-      ctx.fillStyle = r.label === "danger" ? "#ef4444" : r.label === "warning" ? "#f59e0b" : "#10b981";
-      ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill();
-    });
-  }
-
   function generateDemoResults() {
     const results = []; const ops = ["open","close"]; const now = new Date();
     for(let car=1; car<=3; car++) {
       for(let door=1; door<=3; door++) {
         for(const op of ops) {
-          const score = Math.random() * 0.30;
-          const label = score >= 0.80 ? "danger" : score >= 0.60 ? "warning" : "normal";
           results.push({
             id: `${now.toISOString()}_${car}_${door}_${op}`,
             datetime: now.toISOString().slice(0, 16).replace("T", " "),
             car: String(car), door: String(door), operation: op,
-            score: +score.toFixed(4), label,
-            model_details: {
-              individual_isolation_forest: { score: +(score+0.02).toFixed(4) },
-              individual_lof:              { score: +(score+0.01).toFixed(4) },
-              unified_isolation_forest:    { score: +score.toFixed(4) }
-            },
-            features: {
-              mean_current: +(80+Math.random()*20).toFixed(1),
-              max_current:  +(300+Math.random()*100).toFixed(1)
-            }
+            score: 0.05, label: "normal",
+            model_details: {}, features: {}
           });
         }
       }
     }
-    return { predicted_at: now.toISOString(), total: results.length, normal: results.length, warning:0, danger:0, results };
+    return { predicted_at: now.toISOString(), total: results.length, results };
   }
 
-  // 起動制御
   window.addEventListener("load", initAuth);
   window.addEventListener("resize", () => {
     drawScoreChart();
