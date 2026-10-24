@@ -184,7 +184,60 @@
 
   /* 右カラム */
   .right-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
-  canvas { width: 100% !important; }
+  
+  /* ★ 全ドア健全度グリッド (マトリクス) ★ */
+  .door-matrix-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 2px 0;
+  }
+  .car-column {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px;
+  }
+  .car-header {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+  }
+  .door-cell {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 4px;
+    margin-bottom: 4px;
+    font-size: 9px;
+  }
+  .door-cell:last-child { margin-bottom: 0; }
+  .door-cell-title {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .door-op-row {
+    display: flex;
+    gap: 4px;
+  }
+  .op-badge {
+    flex: 1;
+    text-align: center;
+    padding: 2px 0;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 9px;
+  }
+  .op-normal  { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.4); }
+  .op-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.4); }
+  .op-danger  { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.4); }
 
   .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 10px; }
   .detail-item { background: rgba(0,0,0,0.2); padding: 4px 6px; border-radius: 4px; display: flex; justify-content: space-between; }
@@ -304,7 +357,6 @@
           <span style="font-size: 9px; color: var(--text-muted);" id="logCountInfo">18件 (最新)</span>
         </div>
 
-        <!-- フィルターバー -->
         <div class="filter-bar-mini">
           <label>動作: 
             <select id="filterAction" onchange="applyFilter()">
@@ -327,7 +379,6 @@
           </label>
         </div>
 
-        <!-- テーブル（18件ぴったり収容） -->
         <div class="table-container">
           <table class="result-table">
             <thead>
@@ -348,12 +399,18 @@
       </div>
     </div>
 
-    <!-- === 右カラム：分析グラフ & 詳細 === -->
+    <!-- === 右カラム：全ドア状態グリッド & 詳細 === -->
     <div class="right-col">
-      <div class="card" style="height: 150px; flex-shrink: 0;">
-        <div class="card-header">📈 全ドアスコア分布</div>
-        <div class="card-body" style="padding: 4px 8px;">
-          <canvas id="scoreChart" height="110"></canvas>
+      <!-- ★ 全ドア健全度グリッド (新マトリクス表示) ★ -->
+      <div class="card" style="flex-shrink: 0;">
+        <div class="card-header">
+          <span>🚉 全9ドア 健全度マップ</span>
+          <span style="font-size: 8px; color: var(--text-muted);">開・閉別ステータス</span>
+        </div>
+        <div class="card-body" style="padding: 6px;">
+          <div class="door-matrix-container" id="doorMatrix">
+            <!-- JavaScriptで全9ドアのセルを自動生成 -->
+          </div>
         </div>
       </div>
 
@@ -555,7 +612,7 @@
     });
   }
 
-  // ==================== ★ 9ドア×開閉の最新18件への集約フィルタ ====================
+  // ==================== 9ドア×開閉の最新18件への集約 ＆ マトリクス描画 ====================
   function applyFilter() {
     const fA = document.getElementById("filterAction").value;
     const fC = document.getElementById("filterCar").value;
@@ -564,34 +621,27 @@
     let list = [...allResults];
 
     if (latestOnly) {
-      // ドア番号(car_door) × 動作(operation) ごとに「最新の日時」のものを1件だけ残す
       const map = new Map();
-      list.sort((a,b) => (b.datetime || "").localeCompare(a.datetime || "")); // 新しい順にソート
-
+      list.sort((a,b) => (b.datetime || "").localeCompare(a.datetime || ""));
       list.forEach(r => {
         const key = `${r.car}_${r.door}_${r.operation}`;
-        if (!map.has(key)) {
-          map.set(key, r);
-        }
+        if (!map.has(key)) map.set(key, r);
       });
       list = Array.from(map.values());
     }
 
-    // 号車・ドア順（1号車1番開、1号車1番閉...）に綺麗に整列ソート
     list.sort((a, b) => {
       if (a.car !== b.car) return (+a.car) - (+b.car);
       if (a.door !== b.door) return (+a.door) - (+b.door);
-      return (b.operation || "").localeCompare(a.operation || ""); // 開が先、閉が後
+      return (b.operation || "").localeCompare(a.operation || "");
     });
 
-    // ユーザー選択フィルター
     displayResults = list.filter(r => {
       if (fA && r.operation !== fA) return false;
       if (fC && r.car !== fC) return false;
       return true;
     });
 
-    // サマリー数字を更新（表示されているドアごとの健康状態）
     const dangerCount  = displayResults.filter(r => r.label === "danger").length;
     const warningCount = displayResults.filter(r => r.label === "warning").length;
     const normalCount  = displayResults.filter(r => r.label === "normal").length;
@@ -603,7 +653,7 @@
     document.getElementById("logCountInfo").textContent = `${displayResults.length}件 ${latestOnly ? '(最新18件集約)' : '(全件)'}`;
 
     renderTable();
-    drawScoreChart();
+    renderDoorMatrix(); // マトリクス描画
     if (displayResults.length > 0 && selectedIdx === -1) {
       selectRow(0);
     }
@@ -611,7 +661,6 @@
 
   function renderTable() {
     const tbody = document.getElementById("resultTableBody");
-
     if (displayResults.length === 0) {
       tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px;">データがありません</td></tr>`;
       return;
@@ -636,11 +685,44 @@
     }).join("");
   }
 
+  // ★ 全9ドアの開閉マトリクス（グリッド）描画 ★
+  function renderDoorMatrix() {
+    const container = document.getElementById("doorMatrix");
+    let html = "";
+
+    for (let car = 1; car <= 3; car++) {
+      html += `<div class="car-column">
+        <div class="car-header">${car}号車</div>`;
+
+      for (let door = 1; door <= 3; door++) {
+        // 対象ドアの最新の開・閉データを検索
+        const openData  = allResults.filter(r => r.car == car && r.door == door && r.operation === "open")
+                                    .sort((a,b)=>(b.datetime||"").localeCompare(a.datetime||""))[0];
+        const closeData = allResults.filter(r => r.car == car && r.door == door && r.operation === "close")
+                                    .sort((a,b)=>(b.datetime||"").localeCompare(a.datetime||""))[0];
+
+        const getOpClass = (d) => !d ? "" : d.label === "danger" ? "op-danger" : d.label === "warning" ? "op-warning" : "op-normal";
+        const getOpText  = (d, label) => !d ? `${label}:-` : `${label}:${(d.score||0).toFixed(2)}`;
+
+        html += `
+          <div class="door-cell">
+            <div class="door-cell-title"><span>${door}番ドア</span></div>
+            <div class="door-op-row">
+              <div class="op-badge ${getOpClass(openData)}">${getOpText(openData, "開")}</div>
+              <div class="op-badge ${getOpClass(closeData)}">${getOpText(closeData, "閉")}</div>
+            </div>
+          </div>
+        `;
+      }
+      html += `</div>`;
+    }
+    container.innerHTML = html;
+  }
+
   function selectRow(idx) {
     selectedIdx = idx;
     const r = displayResults[idx]; if (!r) return;
     
-    // テーブルの選択スタイル反映
     document.querySelectorAll("#resultTableBody tr").forEach((tr, i) => {
       tr.classList.toggle("selected", i === idx);
     });
@@ -667,44 +749,6 @@
       </div>
     `).join("");
     mp.innerHTML = `<div class="model-mini-grid">${items}</div>`;
-  }
-
-  function drawScoreChart() {
-    const canvas = document.getElementById("scoreChart");
-    const container = canvas.parentElement;
-    const W = container.offsetWidth || 300;
-    const H = container.offsetHeight || 110;
-    canvas.width = W; canvas.height = H;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, W, H);
-
-    if (displayResults.length === 0) return;
-
-    const pad = { l: 20, r: 10, t: 10, b: 20 };
-    const cW = W - pad.l - pad.r;
-    const cH = H - pad.t - pad.b;
-    const barW = cW / displayResults.length;
-
-    ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = 1;
-    [0.6, 0.8].forEach(v => {
-      const y = pad.t + cH * (1 - v);
-      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
-    });
-
-    displayResults.forEach((r, i) => {
-      const sc = r.score || 0;
-      const barH = sc * cH;
-      const color = r.label === "danger" ? "#ef4444" : r.label === "warning" ? "#f59e0b" : "#10b981";
-      const x = pad.l + i * barW + barW * 0.15;
-      const bw = barW * 0.7;
-
-      ctx.fillStyle = color;
-      ctx.fillRect(x, pad.t + cH - barH, bw, barH);
-
-      ctx.fillStyle = "#64748b"; ctx.font = "8px sans-serif"; ctx.textAlign = "center";
-      const lbl = `${r.car}-${r.door}${r.operation==='open'?'開':'閉'}`;
-      ctx.fillText(lbl, x + bw/2, pad.t + cH + 12);
-    });
   }
 
   // 現地ドラッグ＆ドロップ判定
@@ -907,7 +951,7 @@
             id: `${now.toISOString()}_${car}_${door}_${op}`,
             datetime: now.toISOString().slice(0, 16).replace("T", " "),
             car: String(car), door: String(door), operation: op,
-            score: 0.05, label: "normal",
+            score: 0.00, label: "normal",
             model_details: {}, features: {}
           });
         }
@@ -918,7 +962,6 @@
 
   window.addEventListener("load", initAuth);
   window.addEventListener("resize", () => {
-    drawScoreChart();
     if (baselineData.length) drawDriftChart(baselineData);
   });
 </script>
