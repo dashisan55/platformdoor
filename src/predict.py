@@ -1,7 +1,7 @@
 def predict_all(features_path, models_dir, output_path, config):
-    # ファイルが存在しない、または中身が空（0バイト）の場合の安全ガード
+    # ファイルが存在しない、または中身が空（0バイト）の場合は安全に終了
     if not os.path.exists(features_path) or os.path.getsize(features_path) == 0:
-        logger.warning(f"特徴量ファイルが存在しないか空です: {features_path}（対象データ0件として処理）")
+        logger.warning(f"特徴量ファイルが存在しないか空です: {features_path}（対象0件として処理）")
         summary = {
             "predicted_at": datetime.now().isoformat(),
             "total":        0,
@@ -19,7 +19,7 @@ def predict_all(features_path, models_dir, output_path, config):
     try:
         df = pd.read_csv(features_path)
     except Exception as e:
-        logger.warning(f"CSV読み込みエラー（空データ等）: {e}（対象データ0件として処理）")
+        logger.warning(f"CSV読み込みエラー: {e}（対象0件として処理）")
         summary = {
             "predicted_at": datetime.now().isoformat(),
             "total":        0,
@@ -57,7 +57,6 @@ def predict_all(features_path, models_dir, output_path, config):
         "operation", "filename", "label"
     ]
     feature_cols = [c for c in df.columns if c not in exclude]
-    logger.info(f"使用特徴量: {len(feature_cols)}列")
 
     results = []
     danger_count  = 0
