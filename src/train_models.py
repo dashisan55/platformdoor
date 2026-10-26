@@ -1,5 +1,5 @@
 """
-モデル学習・比較スクリプト（分割CSV全読込対応版）
+モデル学習・比較スクリプト（全CSV自動集約・安全学習 完全版）
 
 実行方法:
   python src/train_models.py --features_dir data/features
@@ -36,6 +36,14 @@ logger = logging.getLogger(__name__)
 
 
 def load_config(path="config/settings.yaml"):
+    if not os.path.exists(path):
+        return {
+            "anomaly_detection": {
+                "individual_model": True,
+                "unified_model": True,
+                "contamination": 0.01
+            }
+        }
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -64,7 +72,7 @@ def preprocess(df, feature_cols):
     for col in X.columns:
         mu, sigma = X[col].mean(), X[col].std()
         if sigma > 0:
-            X[col] = X[col].clip(mu - 3*sigma, mu + 3*sigma)
+            X[col] = X[col].clip(mu - 3 * sigma, mu + 3 * sigma)
     return X
 
 
@@ -93,7 +101,7 @@ def normalize_scores(raw_scores):
 
 def train_individual_models(df, config, models_dir):
     logger.info("=== 個別モデル学習開始 ===")
-    contamination = config["anomaly_detection"]["contamination"]
+    contamination = config.get("anomaly_detection", {}).get("contamination", 0.01)
     feature_cols  = get_available_features(df)
     logger.info(f"使用特徴量: {len(feature_cols)}列")
 
@@ -158,7 +166,7 @@ def train_individual_models(df, config, models_dir):
 
 def train_unified_model(df, config, models_dir):
     logger.info("=== 統合モデル学習開始 ===")
-    contamination = config["anomaly_detection"]["contamination"]
+    contamination = config.get("anomaly_detection", {}).get("contamination", 0.01)
     feature_cols  = get_available_features(df)
 
     summary = {}
@@ -279,6 +287,58 @@ def compare_with_baseline(df, models_dir, reports_dir):
     logger.info(f"ドリフト検出結果出力: {drift_path}")
 
 
+def compare_models(individual_summary, unified_summary, reports_dir):
+    logger.info("=== モデル比較レポート生成 ===")
+    os.makedirs(reports_dir, exist_ok=True)
+
+    rows = []
+    model_names = ["isolation_forest", "lof", "one_class_svm"]
+
+    for model_id, results in individual_summary.items():
+        for model_name in model_names:
+            if model_name in results:
+                r = results[model_name]
+                rows.append({
+                    "type":              "個別モデル",
+                    "model_id":          model_id,
+                    "algorithm":         model_name,
+                    "score_mean":        r["score_mean"],
+                    "score_std":         r["score_std"],
+                    "threshold_warning": r.get("threshold_warning"),
+                    "threshold_danger":  r.get("threshold_danger"),
+                })
+
+    for model_id, results in unified_summary.items():
+        for model_name in model_names:
+            if model_name in results:
+                r = results[model_name]
+                rows.append({
+                    "type":              "統合モデル",
+                    "model_id":          model_id,
+                    "algorithm":         model_name,
+                    "score_mean":        r["score_mean"],
+                    "score_std":         r["score_std"],
+                    "threshold_warning": None,
+                    "threshold_danger":  None,
+                })
+
+    df_report = pd.DataFrame(rows)
+    if len(df_report) > 0:
+        csv_path = os.path.join(reports_dir, "model_comparison.csv")
+        df_report.to_csv(csv_path, index=False, encoding="utf-8-sig")
+        logger.info(f"比較CSV出力: {csv_path}")
+
+        summary_json = {
+            "generated_at":           datetime.now().isoformat(),
+            "individual_model_count": len(individual_summary),
+            "unified_model_count":    len(unified_summary),
+            "details":                rows
+        }
+        json_path = os.path.join(reports_dir, "model_comparison.json")
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(summary_json, f, ensure_ascii=False, indent=2)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--features_dir", default="data/features")
@@ -289,37 +349,48 @@ def main():
 
     config = load_config(args.config)
 
-    # 分割された全正常CSVを一括読み込み
-    csv_files = sorted(glob.glob(os.path.join(args.features_dir, "features_normal_part*.csv")))
-    if not csv_files:
-        csv_files = [os.path.join(args.features_dir, "features_all.csv")]
+    # data/features フォルダ内のすべてのCSVを自動検索
+    csv_files = sorted(glob.glob(os.path.join(args.features_dir, "*.csv")))
+    # 故障専用データ（features_fault.csv）は学習対象から除外
+    csv_files = [f for f in csv_files if "fault" not in os.path.basename(f)]
 
-    logger.info(f"特徴量ファイル読み込み対象: {len(csv_files)}件")
-    df_list = [pd.read_csv(f) for f in csv_files if os.path.exists(f)]
+    logger.info(f"特徴量ファイル読み込み対象: {len(csv_files)}件 ({[os.path.basename(f) for f in csv_files]})")
+    
+    # ファイルが存在し、中身が0バイトでないものだけを読み込む
+    df_list = [pd.read_csv(f) for f in csv_files if os.path.exists(f) and os.path.getsize(f) > 0]
     
     if not df_list:
         logger.error("学習用データが見つかりません。")
         return
 
     df = pd.concat(df_list, ignore_index=True)
-    # 正常データ（label=0）のみで学習
+    
+    # 正常データ（label=0）のみに限定
     if 'label' in df.columns:
         df = df[df['label'] == 0]
 
     logger.info(f"学習用正常データ: {len(df)}件 / {len(df.columns)}列")
 
+    # 1. ベースライン保存（未作成時のみ）
     save_baseline_if_not_exists(df, args.models)
+
+    # 2. ドリフト検出
     compare_with_baseline(df, args.models, args.reports)
 
+    # 3. モデル学習
     individual_summary = {}
     unified_summary    = {}
 
-    if config["anomaly_detection"]["individual_model"]:
+    if config.get("anomaly_detection", {}).get("individual_model", True):
         individual_summary = train_individual_models(df, config, args.models)
 
-    if config["anomaly_detection"]["unified_model"]:
+    if config.get("anomaly_detection", {}).get("unified_model", True):
         unified_summary = train_unified_model(df, config, args.models)
 
+    # 4. モデル比較レポート出力
+    compare_models(individual_summary, unified_summary, args.reports)
+
+    # 5. 学習メタ情報保存
     marker = {
         "trained_at":        datetime.now().isoformat(),
         "n_samples":         len(df),
