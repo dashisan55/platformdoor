@@ -1,0 +1,32 @@
+{
+  "model_id": "car3_door2_close",
+  "model_name": "isolation_forest",
+  "n_samples": 16514,
+  "feature_cols": [
+    "mean_current",
+    "std_current",
+    "max_current",
+    "min_current",
+    "range_current",
+    "p25_current",
+    "p50_current",
+    "p75_current",
+    "duration",
+    "data_points",
+    "mean_diff",
+    "max_diff",
+    "energy",
+    "rms_current",
+    "skewness",
+    "kurtosis",
+    "mean_current_left",
+    "mean_current_right",
+    "max_current_left",
+    "max_current_right"
+  ],
+  "score_mean": 0.14668324542084266,
+  "score_std": 0.10840029734186002,
+  "score_p95": 0.32695744763303375,
+  "score_p99": 0.6553831896702944,
+  "trained_at": "2026-10-26T05:23:25.345154"
+}

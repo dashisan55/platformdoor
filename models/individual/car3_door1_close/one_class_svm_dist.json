@@ -1,0 +1,32 @@
+{
+  "model_id": "car3_door1_close",
+  "model_name": "one_class_svm",
+  "n_samples": 16502,
+  "feature_cols": [
+    "mean_current",
+    "std_current",
+    "max_current",
+    "min_current",
+    "range_current",
+    "p25_current",
+    "p50_current",
+    "p75_current",
+    "duration",
+    "data_points",
+    "mean_diff",
+    "max_diff",
+    "energy",
+    "rms_current",
+    "skewness",
+    "kurtosis",
+    "mean_current_left",
+    "mean_current_right",
+    "max_current_left",
+    "max_current_right"
+  ],
+  "score_mean": 0.10535959554294677,
+  "score_std": 0.062042781004089484,
+  "score_p95": 0.19383161990316441,
+  "score_p99": 0.25615068256473045,
+  "trained_at": "2026-10-26T05:23:22.794973"
+}

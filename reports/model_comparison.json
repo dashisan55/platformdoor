@@ -1,0 +1,547 @@
+{
+  "generated_at": "2026-10-26T05:28:01.285042",
+  "individual_model_count": 18,
+  "unified_model_count": 2,
+  "details": [
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.13290571252925465,
+      "score_std": 0.11150456557497303,
+      "threshold_warning": 0.3275180429595183,
+      "threshold_danger": 0.6204163904506849
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_close",
+      "algorithm": "lof",
+      "score_mean": 0.008274527876681951,
+      "score_std": 0.022722016398987563,
+      "threshold_warning": 0.0185834891484941,
+      "threshold_danger": 0.03139723175885938
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.12629607221999464,
+      "score_std": 0.06616943899496695,
+      "threshold_warning": 0.22014606009238394,
+      "threshold_danger": 0.2835943495181502
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.13912796529268973,
+      "score_std": 0.14189503309441084,
+      "threshold_warning": 0.35776234660884854,
+      "threshold_danger": 0.9114136616426768
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_open",
+      "algorithm": "lof",
+      "score_mean": 0.008906347811053717,
+      "score_std": 0.01982875432108215,
+      "threshold_warning": 0.02008477550326775,
+      "threshold_danger": 0.03491704571308431
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door1_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.13694318026121188,
+      "score_std": 0.07348792520868042,
+      "threshold_warning": 0.25139024899533297,
+      "threshold_danger": 0.33500493666116476
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1445367394315917,
+      "score_std": 0.12046702434267748,
+      "threshold_warning": 0.36527592117941016,
+      "threshold_danger": 0.6682846493664101
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_close",
+      "algorithm": "lof",
+      "score_mean": 0.005859806570897818,
+      "score_std": 0.016114116314308386,
+      "threshold_warning": 0.013369423692177373,
+      "threshold_danger": 0.020806704743802366
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1266403296274026,
+      "score_std": 0.06429929059714865,
+      "threshold_warning": 0.22229251173517325,
+      "threshold_danger": 0.2856120496755459
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1495961118712456,
+      "score_std": 0.13671491899665267,
+      "threshold_warning": 0.3436572970255381,
+      "threshold_danger": 0.9255820577772138
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_open",
+      "algorithm": "lof",
+      "score_mean": 0.011298623305512128,
+      "score_std": 0.027667649407417807,
+      "threshold_warning": 0.023554310112515603,
+      "threshold_danger": 0.03919670799852878
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door2_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.13226532025340665,
+      "score_std": 0.06956226104166713,
+      "threshold_warning": 0.23684720209529467,
+      "threshold_danger": 0.3173030419054964
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.138428224653207,
+      "score_std": 0.10889215823499292,
+      "threshold_warning": 0.33853550881476535,
+      "threshold_danger": 0.6169758291171868
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_close",
+      "algorithm": "lof",
+      "score_mean": 0.007231659458254794,
+      "score_std": 0.020773937619162807,
+      "threshold_warning": 0.016535879954616136,
+      "threshold_danger": 0.027840065604703822
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1306332820126471,
+      "score_std": 0.0633814901370927,
+      "threshold_warning": 0.2221489997988867,
+      "threshold_danger": 0.2857665395671198
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1356153928781284,
+      "score_std": 0.14030322204876136,
+      "threshold_warning": 0.36724057474673316,
+      "threshold_danger": 0.8832443123819876
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_open",
+      "algorithm": "lof",
+      "score_mean": 0.005301697286478626,
+      "score_std": 0.012266029387550254,
+      "threshold_warning": 0.012712519231502323,
+      "threshold_danger": 0.021958254666646467
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car1_door3_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.11136324586638079,
+      "score_std": 0.06270131452074991,
+      "threshold_warning": 0.20151335330626793,
+      "threshold_danger": 0.2649891574242588
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14159163323357118,
+      "score_std": 0.11177805124897475,
+      "threshold_warning": 0.34083176298304896,
+      "threshold_danger": 0.6178334088988635
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_close",
+      "algorithm": "lof",
+      "score_mean": 0.005489988546494405,
+      "score_std": 0.02078925479468852,
+      "threshold_warning": 0.011545145237559755,
+      "threshold_danger": 0.01908390771238211
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1016196880230957,
+      "score_std": 0.06591210816322667,
+      "threshold_warning": 0.19637814363226813,
+      "threshold_danger": 0.26039290185040986
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14628241211352702,
+      "score_std": 0.1374888433686934,
+      "threshold_warning": 0.3545175540782014,
+      "threshold_danger": 0.9207372492595819
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_open",
+      "algorithm": "lof",
+      "score_mean": 0.006417036799294381,
+      "score_std": 0.015856069170630992,
+      "threshold_warning": 0.014678405722857937,
+      "threshold_danger": 0.023723423121573745
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door1_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.13102937224076613,
+      "score_std": 0.06794823008408021,
+      "threshold_warning": 0.23218125019772418,
+      "threshold_danger": 0.3098912180055031
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.13526941709090842,
+      "score_std": 0.11565522623017341,
+      "threshold_warning": 0.34641391674412936,
+      "threshold_danger": 0.6274846894841549
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_close",
+      "algorithm": "lof",
+      "score_mean": 0.006965513065346284,
+      "score_std": 0.01754967926269953,
+      "threshold_warning": 0.015556005641415101,
+      "threshold_danger": 0.024622009516753387
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.12390270754937455,
+      "score_std": 0.06288954244135289,
+      "threshold_warning": 0.21812215222937958,
+      "threshold_danger": 0.2824274380469528
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1405242913539749,
+      "score_std": 0.1419939855460418,
+      "threshold_warning": 0.3681004757057321,
+      "threshold_danger": 0.9376998419902878
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_open",
+      "algorithm": "lof",
+      "score_mean": 0.009535894007490758,
+      "score_std": 0.021387630605886145,
+      "threshold_warning": 0.01973286133560405,
+      "threshold_danger": 0.032103157523923016
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door2_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.14552102171471384,
+      "score_std": 0.07590677396583992,
+      "threshold_warning": 0.2586601984301345,
+      "threshold_danger": 0.3310724771987937
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14434299442028226,
+      "score_std": 0.11628014867170829,
+      "threshold_warning": 0.37632627876600105,
+      "threshold_danger": 0.5952481350015453
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_close",
+      "algorithm": "lof",
+      "score_mean": 0.008913772800583955,
+      "score_std": 0.02029116410333377,
+      "threshold_warning": 0.0202989804648544,
+      "threshold_danger": 0.032741661044638604
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.15086799565092818,
+      "score_std": 0.06230633356265988,
+      "threshold_warning": 0.2397539147169461,
+      "threshold_danger": 0.30000064450185804
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14115927416262494,
+      "score_std": 0.14381721109656073,
+      "threshold_warning": 0.374481407724378,
+      "threshold_danger": 0.9138515599318082
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_open",
+      "algorithm": "lof",
+      "score_mean": 0.008790485186748447,
+      "score_std": 0.013968816109960785,
+      "threshold_warning": 0.019239565629885175,
+      "threshold_danger": 0.031107718249579825
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car2_door3_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1553979587316588,
+      "score_std": 0.0677968336247306,
+      "threshold_warning": 0.25027788247459337,
+      "threshold_danger": 0.3188981881367179
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14266083850902517,
+      "score_std": 0.11472254763235487,
+      "threshold_warning": 0.3524666018105097,
+      "threshold_danger": 0.6493865054465525
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_close",
+      "algorithm": "lof",
+      "score_mean": 0.007008906059181529,
+      "score_std": 0.0185823670369307,
+      "threshold_warning": 0.015950422648576365,
+      "threshold_danger": 0.026301607708651125
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.10535959554294677,
+      "score_std": 0.062042781004089484,
+      "threshold_warning": 0.19383161990316441,
+      "threshold_danger": 0.25615068256473045
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.13906885479926726,
+      "score_std": 0.14042066430823397,
+      "threshold_warning": 0.36660438089658276,
+      "threshold_danger": 0.9168928199421175
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_open",
+      "algorithm": "lof",
+      "score_mean": 0.0063600381863934494,
+      "score_std": 0.01834222690664303,
+      "threshold_warning": 0.01426744170999665,
+      "threshold_danger": 0.02491323105723874
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door1_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.11365678474217378,
+      "score_std": 0.06539909566887966,
+      "threshold_warning": 0.20486898838312081,
+      "threshold_danger": 0.2661871186660408
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14668324542084266,
+      "score_std": 0.10840029734186002,
+      "threshold_warning": 0.32695744763303375,
+      "threshold_danger": 0.6553831896702944
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_close",
+      "algorithm": "lof",
+      "score_mean": 0.008523496381756254,
+      "score_std": 0.018310080491426385,
+      "threshold_warning": 0.01925305458880209,
+      "threshold_danger": 0.031255698979800677
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.14143832853252541,
+      "score_std": 0.06155835214231522,
+      "threshold_warning": 0.23160314767896203,
+      "threshold_danger": 0.2919987980978738
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1414804679570047,
+      "score_std": 0.14098776869573185,
+      "threshold_warning": 0.36940862347247233,
+      "threshold_danger": 0.9265797749168274
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_open",
+      "algorithm": "lof",
+      "score_mean": 0.006118037724797118,
+      "score_std": 0.017573346057779417,
+      "threshold_warning": 0.01322984470892991,
+      "threshold_danger": 0.021730832622371805
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door2_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1292238580263572,
+      "score_std": 0.07004105313768644,
+      "threshold_warning": 0.231975001985663,
+      "threshold_danger": 0.3003764340473947
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.1487981136672121,
+      "score_std": 0.11227462786689667,
+      "threshold_warning": 0.3490924916282819,
+      "threshold_danger": 0.6208401138246428
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_close",
+      "algorithm": "lof",
+      "score_mean": 0.013305980275617104,
+      "score_std": 0.019683679445503522,
+      "threshold_warning": 0.031701983824787394,
+      "threshold_danger": 0.05165794901293737
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.15205435996313688,
+      "score_std": 0.06845318658101228,
+      "threshold_warning": 0.2604350270556382,
+      "threshold_danger": 0.3265545004818542
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.14089033989292146,
+      "score_std": 0.14041792292082983,
+      "threshold_warning": 0.3723214903417154,
+      "threshold_danger": 0.8942706998582637
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_open",
+      "algorithm": "lof",
+      "score_mean": 0.006503056114916738,
+      "score_std": 0.015812501024719858,
+      "threshold_warning": 0.014437181183097877,
+      "threshold_danger": 0.02366167629453652
+    },
+    {
+      "type": "個別モデル",
+      "model_id": "car3_door3_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.07805180597502706,
+      "score_std": 0.0604404895638196,
+      "threshold_warning": 0.16584056988382861,
+      "threshold_danger": 0.23880413982662613
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_open",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.16639226146234729,
+      "score_std": 0.12744078521820965,
+      "threshold_warning": null,
+      "threshold_danger": null
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_open",
+      "algorithm": "lof",
+      "score_mean": 0.010136830493682272,
+      "score_std": 0.010164720666755868,
+      "threshold_warning": null,
+      "threshold_danger": null
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_open",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1769444989668499,
+      "score_std": 0.07465318765307451,
+      "threshold_warning": null,
+      "threshold_danger": null
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_close",
+      "algorithm": "isolation_forest",
+      "score_mean": 0.17210863224874992,
+      "score_std": 0.12794505214554414,
+      "threshold_warning": null,
+      "threshold_danger": null
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_close",
+      "algorithm": "lof",
+      "score_mean": 0.017311316976074794,
+      "score_std": 0.01599782975896643,
+      "threshold_warning": null,
+      "threshold_danger": null
+    },
+    {
+      "type": "統合モデル",
+      "model_id": "unified_close",
+      "algorithm": "one_class_svm",
+      "score_mean": 0.1755384428930915,
+      "score_std": 0.07059603019508061,
+      "threshold_warning": null,
+      "threshold_danger": null
+    }
+  ]
+}
