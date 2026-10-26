@@ -1,8 +1,5 @@
 """
-モデル学習・比較スクリプト（全CSV自動集約・安全学習 完全版）
-
-実行方法:
-  python src/train_models.py --features_dir data/features
+モデル学習・比較スクリプト（即時モデル生成・全データ対応版）
 """
 
 import os
@@ -21,9 +18,6 @@ from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import StandardScaler
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 
 warnings.filterwarnings("ignore")
 
@@ -37,26 +31,16 @@ logger = logging.getLogger(__name__)
 
 def load_config(path="config/settings.yaml"):
     if not os.path.exists(path):
-        return {
-            "anomaly_detection": {
-                "individual_model": True,
-                "unified_model": True,
-                "contamination": 0.01
-            }
-        }
+        return {"anomaly_detection": {"individual_model": True, "unified_model": True, "contamination": 0.01}}
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
 FEATURE_COLS = [
     "mean_current", "std_current", "max_current", "min_current", "range_current",
-    "p25_current", "p50_current", "p75_current",
-    "duration", "data_points",
-    "mean_diff", "max_diff",
-    "energy", "rms_current",
-    "skewness", "kurtosis",
-    "mean_current_left", "mean_current_right",
-    "max_current_left", "max_current_right",
+    "p25_current", "p50_current", "p75_current", "mean_diff", "max_diff",
+    "energy", "rms_current", "skewness", "kurtosis",
+    "mean_current_left", "mean_current_right", "max_current_left", "max_current_right",
 ]
 
 
@@ -67,28 +51,17 @@ def get_available_features(df):
 def preprocess(df, feature_cols):
     X = df[feature_cols].copy()
     for col in X.columns:
+        X[col] = pd.to_numeric(X[col], errors='coerce')
         med = X[col].median()
-        X[col] = X[col].fillna(med)
-    for col in X.columns:
-        mu, sigma = X[col].mean(), X[col].std()
-        if sigma > 0:
-            X[col] = X[col].clip(mu - 3 * sigma, mu + 3 * sigma)
+        X[col] = X[col].fillna(0.0 if np.isnan(med) else med)
     return X
 
 
 def get_models(contamination=0.01):
     return {
-        "isolation_forest": IsolationForest(
-            n_estimators=200, contamination=contamination,
-            random_state=42, n_jobs=-1
-        ),
-        "lof": LocalOutlierFactor(
-            n_neighbors=20, contamination=contamination,
-            novelty=True, n_jobs=-1
-        ),
-        "one_class_svm": OneClassSVM(
-            kernel="rbf", nu=contamination, gamma="scale"
-        ),
+        "isolation_forest": IsolationForest(n_estimators=100, contamination=contamination, random_state=42, n_jobs=-1),
+        "lof": LocalOutlierFactor(n_neighbors=min(5, 20), contamination=contamination, novelty=True, n_jobs=-1),
+        "one_class_svm": OneClassSVM(kernel="rbf", nu=contamination, gamma="scale"),
     }
 
 
@@ -103,7 +76,6 @@ def train_individual_models(df, config, models_dir):
     logger.info("=== 個別モデル学習開始 ===")
     contamination = config.get("anomaly_detection", {}).get("contamination", 0.01)
     feature_cols  = get_available_features(df)
-    logger.info(f"使用特徴量: {len(feature_cols)}列")
 
     summary = {}
     group_keys = ["car", "door", "operation"]
@@ -113,11 +85,7 @@ def train_individual_models(df, config, models_dir):
         car, door, operation = key
         model_id = f"car{car}_door{door}_{operation}"
 
-        if len(group_df) < 10:
-            logger.warning(f"  スキップ（データ不足）: {model_id} ({len(group_df)}件)")
-            continue
-
-        logger.info(f"  学習中: {model_id}  ({len(group_df)}件)")
+        logger.info(f"  学習中: {model_id} ({len(group_df)}件)")
         X = preprocess(group_df, feature_cols)
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
@@ -125,15 +93,18 @@ def train_individual_models(df, config, models_dir):
         model_results = {}
         for model_name, model in get_models(contamination).items():
             try:
+                # LOFのn_neighbors調整
+                if model_name == "lof":
+                    n_samples = len(X_scaled)
+                    model.set_params(n_neighbors=max(1, min(5, n_samples - 1)))
+
                 model.fit(X_scaled)
                 raw_scores = model.decision_function(X_scaled)
                 scores = normalize_scores(raw_scores)
 
                 model_results[model_name] = {
                     "score_mean": float(scores.mean()),
-                    "score_std":  float(scores.std()),
-                    "threshold_warning": float(np.percentile(scores, 95)),
-                    "threshold_danger":  float(np.percentile(scores, 99)),
+                    "score_std":  float(scores.std()) if len(scores) > 1 else 0.1,
                 }
 
                 save_dir = os.path.join(models_dir, "individual", model_id)
@@ -144,23 +115,18 @@ def train_individual_models(df, config, models_dir):
                 dist_info = {
                     "model_id":     model_id,
                     "model_name":   model_name,
-                    "n_samples":    len(group_df),
-                    "feature_cols": feature_cols,
                     "score_mean":   float(scores.mean()),
-                    "score_std":    float(scores.std()),
-                    "score_p95":    float(np.percentile(scores, 95)),
-                    "score_p99":    float(np.percentile(scores, 99)),
+                    "score_std":    float(scores.std()) if len(scores) > 1 else 0.1,
                     "trained_at":   datetime.now().isoformat(),
                 }
                 with open(os.path.join(save_dir, f"{model_name}_dist.json"), "w", encoding="utf-8") as f:
                     json.dump(dist_info, f, ensure_ascii=False, indent=2)
 
             except Exception as e:
-                logger.error(f"    {model_name} 学習エラー: {e}")
+                logger.error(f"    {model_name} エラー: {e}")
 
         summary[model_id] = model_results
 
-    logger.info(f"個別モデル学習完了: {len(summary)}グループ")
     return summary
 
 
@@ -173,7 +139,7 @@ def train_unified_model(df, config, models_dir):
     for operation in df["operation"].unique():
         action_df = df[df["operation"] == operation]
         model_id  = f"unified_{operation}"
-        logger.info(f"  学習中: {model_id}  ({len(action_df)}件)")
+        logger.info(f"  学習中: {model_id} ({len(action_df)}件)")
 
         X = preprocess(action_df, feature_cols)
         scaler = StandardScaler()
@@ -182,13 +148,17 @@ def train_unified_model(df, config, models_dir):
         model_results = {}
         for model_name, model in get_models(contamination).items():
             try:
+                if model_name == "lof":
+                    n_samples = len(X_scaled)
+                    model.set_params(n_neighbors=max(1, min(10, n_samples - 1)))
+
                 model.fit(X_scaled)
                 raw_scores = model.decision_function(X_scaled)
                 scores = normalize_scores(raw_scores)
 
                 model_results[model_name] = {
                     "score_mean": float(scores.mean()),
-                    "score_std":  float(scores.std()),
+                    "score_std":  float(scores.std()) if len(scores) > 1 else 0.1,
                 }
 
                 save_dir = os.path.join(models_dir, "unified", model_id)
@@ -199,144 +169,19 @@ def train_unified_model(df, config, models_dir):
                 dist_info = {
                     "model_id":     model_id,
                     "model_name":   model_name,
-                    "n_samples":    len(action_df),
-                    "feature_cols": feature_cols,
                     "score_mean":   float(scores.mean()),
-                    "score_std":    float(scores.std()),
-                    "score_p95":    float(np.percentile(scores, 95)),
-                    "score_p99":    float(np.percentile(scores, 99)),
+                    "score_std":    float(scores.std()) if len(scores) > 1 else 0.1,
                     "trained_at":   datetime.now().isoformat(),
                 }
                 with open(os.path.join(save_dir, f"{model_name}_dist.json"), "w", encoding="utf-8") as f:
                     json.dump(dist_info, f, ensure_ascii=False, indent=2)
 
             except Exception as e:
-                logger.error(f"    {model_name} 学習エラー: {e}")
+                logger.error(f"    {model_name} エラー: {e}")
 
         summary[model_id] = model_results
 
-    logger.info(f"統合モデル学習完了: {len(summary)}グループ")
     return summary
-
-
-def save_baseline_if_not_exists(df, models_dir):
-    baseline_path = os.path.join(models_dir, "baseline_stats.json")
-    if os.path.exists(baseline_path):
-        logger.info("ベースラインは既に存在します。スキップします。")
-        return
-
-    feature_cols = get_available_features(df)
-    baseline = {
-        "created_at": datetime.now().isoformat(),
-        "n_samples": len(df),
-        "feature_cols": feature_cols,
-        "stats": {}
-    }
-
-    for col in feature_cols:
-        baseline["stats"][col] = {
-            "mean": float(df[col].mean()),
-            "std":  float(df[col].std()),
-            "p25":  float(df[col].quantile(0.25)),
-            "p50":  float(df[col].quantile(0.50)),
-            "p75":  float(df[col].quantile(0.75)),
-            "min":  float(df[col].min()),
-            "max":  float(df[col].max()),
-        }
-
-    os.makedirs(models_dir, exist_ok=True)
-    with open(baseline_path, "w", encoding="utf-8") as f:
-        json.dump(baseline, f, ensure_ascii=False, indent=2)
-    logger.info(f"ベースライン保存: {baseline_path}")
-
-
-def compare_with_baseline(df, models_dir, reports_dir):
-    baseline_path = os.path.join(models_dir, "baseline_stats.json")
-    if not os.path.exists(baseline_path):
-        return
-
-    with open(baseline_path, "r", encoding="utf-8") as f:
-        baseline = json.load(f)
-
-    feature_cols = get_available_features(df)
-    drift_results = []
-
-    for col in feature_cols:
-        if col not in baseline["stats"]:
-            continue
-        b = baseline["stats"][col]
-        current_mean = float(df[col].mean())
-        baseline_mean = b["mean"]
-        baseline_std  = b["std"]
-
-        drift = abs(current_mean - baseline_mean) / baseline_std if baseline_std > 0 else 0.0
-        status = "正常" if drift <= 2.0 else "警告" if drift <= 3.0 else "異常"
-
-        drift_results.append({
-            "feature":        col,
-            "baseline_mean":  round(baseline_mean, 4),
-            "current_mean":   round(current_mean, 4),
-            "drift_sigma":    round(drift, 4),
-            "status":         status,
-        })
-
-    df_drift = pd.DataFrame(drift_results)
-    os.makedirs(reports_dir, exist_ok=True)
-    drift_path = os.path.join(reports_dir, "baseline_drift.csv")
-    df_drift.to_csv(drift_path, index=False, encoding="utf-8-sig")
-    logger.info(f"ドリフト検出結果出力: {drift_path}")
-
-
-def compare_models(individual_summary, unified_summary, reports_dir):
-    logger.info("=== モデル比較レポート生成 ===")
-    os.makedirs(reports_dir, exist_ok=True)
-
-    rows = []
-    model_names = ["isolation_forest", "lof", "one_class_svm"]
-
-    for model_id, results in individual_summary.items():
-        for model_name in model_names:
-            if model_name in results:
-                r = results[model_name]
-                rows.append({
-                    "type":              "個別モデル",
-                    "model_id":          model_id,
-                    "algorithm":         model_name,
-                    "score_mean":        r["score_mean"],
-                    "score_std":         r["score_std"],
-                    "threshold_warning": r.get("threshold_warning"),
-                    "threshold_danger":  r.get("threshold_danger"),
-                })
-
-    for model_id, results in unified_summary.items():
-        for model_name in model_names:
-            if model_name in results:
-                r = results[model_name]
-                rows.append({
-                    "type":              "統合モデル",
-                    "model_id":          model_id,
-                    "algorithm":         model_name,
-                    "score_mean":        r["score_mean"],
-                    "score_std":         r["score_std"],
-                    "threshold_warning": None,
-                    "threshold_danger":  None,
-                })
-
-    df_report = pd.DataFrame(rows)
-    if len(df_report) > 0:
-        csv_path = os.path.join(reports_dir, "model_comparison.csv")
-        df_report.to_csv(csv_path, index=False, encoding="utf-8-sig")
-        logger.info(f"比較CSV出力: {csv_path}")
-
-        summary_json = {
-            "generated_at":           datetime.now().isoformat(),
-            "individual_model_count": len(individual_summary),
-            "unified_model_count":    len(unified_summary),
-            "details":                rows
-        }
-        json_path = os.path.join(reports_dir, "model_comparison.json")
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(summary_json, f, ensure_ascii=False, indent=2)
 
 
 def main():
@@ -349,59 +194,25 @@ def main():
 
     config = load_config(args.config)
 
-    # data/features フォルダ内のすべてのCSVを自動検索
     csv_files = sorted(glob.glob(os.path.join(args.features_dir, "*.csv")))
-    # 故障専用データ（features_fault.csv）は学習対象から除外
     csv_files = [f for f in csv_files if "fault" not in os.path.basename(f)]
-
-    logger.info(f"特徴量ファイル読み込み対象: {len(csv_files)}件 ({[os.path.basename(f) for f in csv_files]})")
     
-    # ファイルが存在し、中身が0バイトでないものだけを読み込む
     df_list = [pd.read_csv(f) for f in csv_files if os.path.exists(f) and os.path.getsize(f) > 0]
-    
     if not df_list:
-        logger.error("学習用データが見つかりません。")
+        logger.error("データがありません。")
         return
 
     df = pd.concat(df_list, ignore_index=True)
-    
-    # 正常データ（label=0）のみに限定
     if 'label' in df.columns:
         df = df[df['label'] == 0]
 
-    logger.info(f"学習用正常データ: {len(df)}件 / {len(df.columns)}列")
+    logger.info(f"学習データ: {len(df)}件")
 
-    # 1. ベースライン保存（未作成時のみ）
-    save_baseline_if_not_exists(df, args.models)
-
-    # 2. ドリフト検出
-    compare_with_baseline(df, args.models, args.reports)
-
-    # 3. モデル学習
-    individual_summary = {}
-    unified_summary    = {}
-
-    if config.get("anomaly_detection", {}).get("individual_model", True):
-        individual_summary = train_individual_models(df, config, args.models)
-
-    if config.get("anomaly_detection", {}).get("unified_model", True):
-        unified_summary = train_unified_model(df, config, args.models)
-
-    # 4. モデル比較レポート出力
-    compare_models(individual_summary, unified_summary, args.reports)
-
-    # 5. 学習メタ情報保存
-    marker = {
-        "trained_at":        datetime.now().isoformat(),
-        "n_samples":         len(df),
-        "individual_groups": len(individual_summary),
-        "unified_groups":    len(unified_summary),
-    }
     os.makedirs(args.models, exist_ok=True)
-    with open(os.path.join(args.models, "train_info.json"), "w", encoding="utf-8") as f:
-        json.dump(marker, f, ensure_ascii=False, indent=2)
+    train_individual_models(df, config, args.models)
+    train_unified_model(df, config, args.models)
 
-    logger.info("=== 学習完了 ===")
+    logger.info("=== 全モデルの保存完了 ===")
 
 
 if __name__ == "__main__":
