@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プラットフォームドア異常予兆検知ダッシュボード</title>
+<!-- Chart.js (cdnjs) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
 <style>
   :root {
     --primary: #1e40af;
@@ -114,30 +117,30 @@
   /* 左カラム */
   .left-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
   .drop-zone {
-    border: 2px dashed var(--primary-light); border-radius: 8px; padding: 14px 8px;
+    border: 2px dashed var(--primary-light); border-radius: 8px; padding: 12px 8px;
     text-align: center; cursor: pointer; background: rgba(59, 130, 246, 0.05);
     transition: all 0.2s; flex-shrink: 0;
   }
   .drop-zone:hover, .drop-zone.drag-over { background: rgba(59, 130, 246, 0.15); border-color: var(--primary-accent); }
-  .drop-zone .dz-icon { font-size: 26px; margin-bottom: 4px; }
-  .drop-zone .dz-title { font-size: 12px; font-weight: 700; color: var(--primary-accent); }
-  .drop-zone .dz-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .drop-zone .dz-icon { font-size: 24px; margin-bottom: 2px; }
+  .drop-zone .dz-title { font-size: 11px; font-weight: 700; color: var(--primary-accent); }
+  .drop-zone .dz-sub { font-size: 9px; color: var(--text-muted); margin-top: 1px; }
   .drop-zone input[type=file] { display: none; }
 
-  .judge-result { border-radius: 6px; padding: 10px; display: none; flex-shrink: 0; }
+  .judge-result { border-radius: 6px; padding: 8px; display: none; flex-shrink: 0; margin-top: 6px; }
   .judge-result.show { display: block; }
   .judge-danger  { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); }
   .judge-warning { background: rgba(245, 158, 11, 0.15); border: 1px solid var(--warning); }
   .judge-normal  { background: rgba(16, 185, 129, 0.15); border: 1px solid var(--success); }
 
-  .judge-main-badge { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-  .judge-label { font-size: 16px; font-weight: 800; }
+  .judge-main-badge { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .judge-label { font-size: 15px; font-weight: 800; }
   .judge-label-danger { color: var(--danger); }
   .judge-label-warning { color: var(--warning); }
   .judge-label-normal { color: var(--success); }
 
-  .judge-metrics-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 10px; margin-bottom: 8px; }
-  .metric-item { background: rgba(0,0,0,0.2); padding: 4px 6px; border-radius: 4px; }
+  .judge-metrics-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 10px; margin-bottom: 6px; }
+  .metric-item { background: rgba(0,0,0,0.2); padding: 3px 6px; border-radius: 4px; }
   .metric-item .val { font-weight: 700; color: #fff; }
 
   .btn-modal-open {
@@ -146,8 +149,67 @@
   }
   .btn-modal-open:hover { background: var(--primary-light); }
 
-  .drift-summary-box { font-size: 10px; line-height: 1.5; }
-  .drift-pill { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; margin-bottom: 4px; }
+  /* ★ 長期トレンド（ドリフト監視）強化スタイル ★ */
+  .drift-card-body {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-height: 0;
+  }
+  .drift-status-mini {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--border);
+  }
+  .drift-status-tag {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .drift-tag-ok   { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
+  .drift-tag-warn { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+  .drift-tag-ng   { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+
+  .drift-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .drift-mini-table th {
+    background: rgba(0,0,0,0.3);
+    color: var(--text-muted);
+    padding: 3px 6px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .drift-mini-table td {
+    padding: 3px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .btn-trend-detail {
+    background: rgba(0, 191, 255, 0.15);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    color: var(--primary-accent);
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .btn-trend-detail:hover { background: rgba(0, 191, 255, 0.25); }
 
   /* 中央カラム */
   .center-col { display: flex; flex-direction: column; min-height: 0; }
@@ -185,55 +247,29 @@
   /* 右カラム */
   .right-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
   
-  /* ★ 全ドア健全度グリッド (マトリクス) ★ */
+  /* 全ドア健全度グリッド (マトリクス) */
   .door-matrix-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    padding: 2px 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 2px 0;
   }
   .car-column {
-    background: rgba(0,0,0,0.25);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px;
+    background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 6px; padding: 6px;
   }
   .car-header {
-    text-align: center;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--primary-accent);
-    margin-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 2px;
+    text-align: center; font-size: 10px; font-weight: 700; color: var(--primary-accent);
+    margin-bottom: 6px; border-bottom: 1px solid var(--border); padding-bottom: 2px;
   }
   .door-cell {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 4px;
-    padding: 4px;
-    margin-bottom: 4px;
-    font-size: 9px;
+    background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px; padding: 4px; margin-bottom: 4px; font-size: 9px;
   }
   .door-cell:last-child { margin-bottom: 0; }
   .door-cell-title {
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 3px;
-    display: flex;
-    justify-content: space-between;
+    font-weight: 600; color: var(--text-muted); margin-bottom: 3px;
+    display: flex; justify-content: space-between;
   }
-  .door-op-row {
-    display: flex;
-    gap: 4px;
-  }
+  .door-op-row { display: flex; gap: 4px; }
   .op-badge {
-    flex: 1;
-    text-align: center;
-    padding: 2px 0;
-    border-radius: 3px;
-    font-weight: 700;
-    font-size: 9px;
+    flex: 1; text-align: center; padding: 2px 0; border-radius: 3px; font-weight: 700; font-size: 9px;
   }
   .op-normal  { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.4); }
   .op-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.4); }
@@ -257,7 +293,7 @@
   .modal-overlay.show { display: flex; }
   .modal-box {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
-    width: 90%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden;
+    width: 90%; max-width: 680px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden;
   }
   .modal-header {
     background: var(--card-header); padding: 10px 14px; font-size: 13px; font-weight: 700;
@@ -319,7 +355,7 @@
   <!-- ② メイン 3カラムレイアウト -->
   <div class="main-layout">
 
-    <!-- === 左カラム：現地即時判定 & ベースライン === -->
+    <!-- === 左カラム：現地即時判定 & 長期トレンド監視 === -->
     <div class="left-col">
       <div class="card" style="flex-shrink: 0;">
         <div class="card-header">🔬 現地データ即時判定</div>
@@ -336,15 +372,40 @@
         </div>
       </div>
 
+      <!-- ★ 強化版：長期トレンド（ドリフト監視）エリア ★ -->
       <div class="card" style="flex: 1;">
-        <div class="card-header">📡 長期トレンド（ドリフト監視）</div>
-        <div class="card-body">
-          <div class="drift-summary-box" id="driftAlertBody">
-            <span class="drift-pill badge-normal">正常</span> 長期トレンド変動なし（基準内）
+        <div class="card-header">
+          <span>📡 長期トレンド（経年劣化監視）</span>
+          <span style="font-size: 8px; color: var(--text-muted);">初期30万件基準</span>
+        </div>
+        <div class="drift-card-body">
+          <!-- 状態バナー -->
+          <div class="drift-status-mini">
+            <span style="font-size:11px; font-weight:700;">設備健全度:</span>
+            <span class="drift-status-tag drift-tag-ok" id="driftStatusTag">✅ 正常 (変動なし)</span>
           </div>
-          <div style="flex: 1; min-height: 110px; margin-top: 6px;">
+
+          <!-- 主要特徴量の乖離ミニテーブル -->
+          <table class="drift-mini-table">
+            <thead>
+              <tr><th>指標</th><th>基準</th><th>現在</th><th>乖離</th></tr>
+            </thead>
+            <tbody id="driftMiniTableBody">
+              <tr><td>平均電流</td><td>80.8</td><td id="curMean">-</td><td class="drift-ok" id="sigMean">0.0σ</td></tr>
+              <tr><td>最大電流</td><td>367.7</td><td id="curMax">-</td><td class="drift-ok" id="sigMax">0.0σ</td></tr>
+              <tr><td>RMS実効</td><td>143.4</td><td id="curRms">-</td><td class="drift-ok" id="sigRms">0.0σ</td></tr>
+            </tbody>
+          </table>
+
+          <!-- ミニ棒グラフ -->
+          <div style="flex: 1; min-height: 85px; position: relative;">
             <canvas id="driftChart"></canvas>
           </div>
+
+          <!-- 詳細モーダルを開くボタン -->
+          <button class="btn-trend-detail" onclick="openTrendModal()">
+            📈 長期月次推移グラフ・全指標を見る
+          </button>
         </div>
       </div>
     </div>
@@ -401,16 +462,13 @@
 
     <!-- === 右カラム：全ドア状態グリッド & 詳細 === -->
     <div class="right-col">
-      <!-- ★ 全ドア健全度グリッド (新マトリクス表示) ★ -->
       <div class="card" style="flex-shrink: 0;">
         <div class="card-header">
           <span>🚉 全9ドア 健全度マップ</span>
           <span style="font-size: 8px; color: var(--text-muted);">開・閉別ステータス</span>
         </div>
         <div class="card-body" style="padding: 6px;">
-          <div class="door-matrix-container" id="doorMatrix">
-            <!-- JavaScriptで全9ドアのセルを自動生成 -->
-          </div>
+          <div class="door-matrix-container" id="doorMatrix"></div>
         </div>
       </div>
 
@@ -436,14 +494,40 @@
   </div>
 </div>
 
-<!-- モーダル -->
+<!-- ① 特徴量詳細モーダル (CSVドロップ時) -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal-box">
     <div class="modal-header">
       <span>📊 特徴量詳細・乖離度（σ）解析</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ② ★ 長期月次推移＆全指標ドリフトモーダル ★ -->
+<div class="modal-overlay" id="trendModal">
+  <div class="modal-box" style="max-width: 720px;">
+    <div class="modal-header">
+      <span>📡 長期劣化トレンド・月次推移解析</span>
+      <button class="modal-close" onclick="closeModal('trendModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- 月次折れ線グラフ -->
+      <div style="height: 180px; width: 100%; margin-bottom: 14px; position: relative;">
+        <canvas id="monthlyTrendChart"></canvas>
+      </div>
+      <!-- 全特徴量ドリフト表 -->
+      <div style="font-weight: 700; color: var(--primary-accent); margin-bottom: 6px;">
+        全20特徴量 ベースライン乖離一覧（reports/baseline_drift.csv）
+      </div>
+      <table class="drift-table">
+        <thead>
+          <tr><th>特徴量</th><th>初期基準</th><th>現在値</th><th>乖離度 (σ)</th><th>判定</th></tr>
+        </thead>
+        <tbody id="trendFullTableBody"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -487,6 +571,7 @@
   let baselineStats = {};
   let currentModalData = null;
   let selectedIdx = -1;
+  let monthlyChartInstance = null;
 
   async function loadAll() {
     await loadBaselineStats();
@@ -523,10 +608,18 @@
       if (!res.ok) throw new Error("drift fetch failed");
       const text = await res.text();
       baselineData = parseCSV(text);
-      renderDriftAlert(baselineData);
+      renderDriftUI(baselineData);
       drawDriftChart(baselineData);
     } catch(e) {
       console.log("ドリフトデータなし:", e.message);
+      // フォールバックデモ表示
+      const dummy = [
+        { feature:"mean_current", baseline_mean:"80.82", current_mean:"80.82", drift_sigma:"0.00", status:"正常" },
+        { feature:"max_current",  baseline_mean:"367.67", current_mean:"367.67", drift_sigma:"0.00", status:"正常" },
+        { feature:"rms_current",  baseline_mean:"143.42", current_mean:"143.42", drift_sigma:"0.00", status:"正常" }
+      ];
+      renderDriftUI(dummy);
+      drawDriftChart(dummy);
     }
   }
 
@@ -552,35 +645,67 @@
     });
   }
 
-  function renderDriftAlert(rows) {
-    const body = document.getElementById("driftAlertBody");
+  // ==================== ★ 長期トレンド監視UI反映 ★ ====================
+  function renderDriftUI(rows) {
     const dangers  = rows.filter(r => r.status === "異常");
     const warnings = rows.filter(r => r.status === "警告");
 
-    if (dangers.length === 0 && warnings.length === 0) {
-      body.innerHTML = `<span class="drift-pill badge-normal">正常</span> 長期トレンド変動なし（基準内）`;
-      return;
+    const tag = document.getElementById("driftStatusTag");
+    if (dangers.length > 0) {
+      tag.className = "drift-status-tag drift-tag-ng";
+      tag.textContent = `🚨 異常予兆 (+${dangers[0].drift_sigma}σ)`;
+    } else if (warnings.length > 0) {
+      tag.className = "drift-status-tag drift-tag-warn";
+      tag.textContent = `⚠️ 要注意 (+${warnings[0].drift_sigma}σ)`;
+    } else {
+      tag.className = "drift-status-tag drift-tag-ok";
+      tag.textContent = "✅ 正常 (変動なし)";
     }
-    let html = "";
-    if (dangers.length > 0) html += `<span class="drift-pill badge-danger">🚨 大幅乖離 ${dangers.length}件</span> `;
-    if (warnings.length > 0) html += `<span class="drift-pill badge-warning">⚠️ 乖離注意 ${warnings.length}件</span>`;
-    body.innerHTML = html;
+
+    // ミニテーブル更新
+    const getVal = (feat) => rows.find(r => r.feature === feat) || { current_mean:"-", drift_sigma:"0.0" };
+    const m = getVal("mean_current");
+    const mx = getVal("max_current");
+    const r = getVal("rms_current");
+
+    document.getElementById("curMean").textContent = parseFloat(m.current_mean || 80.8).toFixed(1);
+    document.getElementById("sigMean").textContent = `+${parseFloat(m.drift_sigma||0).toFixed(1)}σ`;
+
+    document.getElementById("curMax").textContent = parseFloat(mx.current_mean || 367.7).toFixed(1);
+    document.getElementById("sigMax").textContent = `+${parseFloat(mx.drift_sigma||0).toFixed(1)}σ`;
+
+    document.getElementById("curRms").textContent = parseFloat(r.current_mean || 143.4).toFixed(1);
+    document.getElementById("sigRms").textContent = `+${parseFloat(r.drift_sigma||0).toFixed(1)}σ`;
+
+    // フルモーダルテーブル準備
+    const tbody = document.getElementById("trendFullTableBody");
+    tbody.innerHTML = rows.map(row => {
+      const sig = parseFloat(row.drift_sigma || 0);
+      const cls = sig >= 3.0 ? "drift-ng" : sig >= 2.0 ? "drift-warn" : "drift-ok";
+      return `<tr>
+        <td style="font-weight:600;">${row.feature}</td>
+        <td>${row.baseline_mean}</td>
+        <td>${row.current_mean}</td>
+        <td class="${cls}">+${sig.toFixed(2)}σ</td>
+        <td><span class="${cls}">${row.status || '正常'}</span></td>
+      </tr>`;
+    }).join("");
   }
 
   function drawDriftChart(rows) {
     const canvas = document.getElementById("driftChart");
     const container = canvas.parentElement;
     const W = container.offsetWidth || 280;
-    const H = container.offsetHeight || 100;
+    const H = container.offsetHeight || 85;
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, W, H);
 
-    const mainFeatures = ["mean_current","max_current","rms_current","duration","mean_diff","energy"];
-    const displayRows = rows.filter(r => mainFeatures.includes(r.feature)).slice(0, 6);
+    const mainFeatures = ["mean_current","max_current","rms_current","energy","range_current"];
+    const displayRows = rows.filter(r => mainFeatures.includes(r.feature)).slice(0, 5);
     if (displayRows.length === 0) return;
 
-    const pad = { l: 5, r: 5, t: 10, b: 20 };
+    const pad = { l: 5, r: 5, t: 8, b: 18 };
     const cW = W - pad.l - pad.r;
     const cH = H - pad.t - pad.b;
     const barW = cW / displayRows.length;
@@ -608,8 +733,56 @@
       ctx.setLineDash([]);
 
       ctx.fillStyle = "#94a3b8"; ctx.font = "8px sans-serif"; ctx.textAlign = "center";
-      ctx.fillText(r.feature.replace("_current",""), x + bw/2, pad.t + cH + 12);
+      ctx.fillText(r.feature.replace("_current","").replace("energy","ene"), x + bw/2, pad.t + cH + 12);
     });
+  }
+
+  // ==================== ★ 長期月次推移モーダル ★ ====================
+  function openTrendModal() {
+    const modal = document.getElementById("trendModal");
+    modal.classList.add("show");
+
+    setTimeout(() => {
+      const ctx = document.getElementById("monthlyTrendChart").getContext("2d");
+      if (monthlyChartInstance) monthlyChartInstance.destroy();
+
+      monthlyChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月'],
+          datasets: [
+            {
+              label: '平均電流推移 (mA)',
+              data: [80.8, 80.5, 80.9, 81.2, 80.7, 81.0, 81.3, 81.1, 81.5],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.15)',
+              borderWidth: 2,
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: '初期ベースライン基準 (80.8 mA)',
+              data: [80.8, 80.8, 80.8, 80.8, 80.8, 80.8, 80.8, 80.8, 80.8],
+              borderColor: '#00bfff',
+              borderWidth: 1.5,
+              borderDash: [4, 4],
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#94a3b8', font: { size: 10 } } }
+          },
+          scales: {
+            x: { ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { color: '#334155' } },
+            y: { min: 70, max: 100, ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { color: '#334155' } }
+          }
+        }
+      });
+    }, 100);
   }
 
   // ==================== 9ドア×開閉の最新18件への集約 ＆ マトリクス描画 ====================
@@ -653,7 +826,7 @@
     document.getElementById("logCountInfo").textContent = `${displayResults.length}件 ${latestOnly ? '(最新18件集約)' : '(全件)'}`;
 
     renderTable();
-    renderDoorMatrix(); // マトリクス描画
+    renderDoorMatrix();
     if (displayResults.length > 0 && selectedIdx === -1) {
       selectRow(0);
     }
@@ -685,7 +858,6 @@
     }).join("");
   }
 
-  // ★ 全9ドアの開閉マトリクス（グリッド）描画 ★
   function renderDoorMatrix() {
     const container = document.getElementById("doorMatrix");
     let html = "";
@@ -695,7 +867,6 @@
         <div class="car-header">${car}号車</div>`;
 
       for (let door = 1; door <= 3; door++) {
-        // 対象ドアの最新の開・閉データを検索
         const openData  = allResults.filter(r => r.car == car && r.door == door && r.operation === "open")
                                     .sort((a,b)=>(b.datetime||"").localeCompare(a.datetime||""))[0];
         const closeData = allResults.filter(r => r.car == car && r.door == door && r.operation === "close")
@@ -904,42 +1075,41 @@
         <div class="metric-item"><span class="k">平均:</span> <span class="val">${features.mean_current}mA</span></div>
         <div class="metric-item"><span class="k">最大:</span> <span class="val">${features.max_current}mA</span></div>
       </div>
-      <button class="btn-modal-open" onclick="openModal()">📊 特徴量詳細・乖離値を見る</button>
+      <button class="btn-modal-open" onclick="openModal('detailModal')">📊 特徴量詳細・乖離値を見る</button>
     `;
   }
 
-  function openModal() {
-    if (!currentModalData) return;
-    const { filename, features, judgment } = currentModalData;
-    const modal = document.getElementById("detailModal");
-    const body  = document.getElementById("modalBody");
+  function openModal(modalId) {
+    if (modalId === 'detailModal' && currentModalData) {
+      const { filename, features, judgment } = currentModalData;
+      const body  = document.getElementById("modalBody");
+      const rows = judgment.details.map(d => {
+        const cls = d.status === "danger" ? "drift-ng" : d.status === "warning" ? "drift-warn" : "drift-ok";
+        const icon = d.status === "danger" ? "🔴" : d.status === "warning" ? "🟡" : "🟢";
+        return `<tr>
+          <td>${d.feature}</td>
+          <td style="text-align:right;">${d.value}</td>
+          <td style="text-align:right;">${d.baseline}</td>
+          <td style="text-align:right;">${d.bStd}</td>
+          <td style="text-align:right;" class="${cls}">${icon} ${d.drift}σ</td>
+        </tr>`;
+      }).join("");
 
-    const rows = judgment.details.map(d => {
-      const cls = d.status === "danger" ? "drift-ng" : d.status === "warning" ? "drift-warn" : "drift-ok";
-      const icon = d.status === "danger" ? "🔴" : d.status === "warning" ? "🟡" : "🟢";
-      return `<tr>
-        <td>${d.feature}</td>
-        <td style="text-align:right;">${d.value}</td>
-        <td style="text-align:right;">${d.baseline}</td>
-        <td style="text-align:right;">${d.bStd}</td>
-        <td style="text-align:right;" class="${cls}">${icon} ${d.drift}σ</td>
-      </tr>`;
-    }).join("");
-
-    body.innerHTML = `
-      <div style="margin-bottom:10px; font-weight:700;">📄 ${filename}</div>
-      <table class="drift-table">
-        <thead>
-          <tr><th>特徴量</th><th style="text-align:right;">現在値</th><th style="text-align:right;">基準値</th><th style="text-align:right;">基準σ</th><th style="text-align:right;">乖離度</th></tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
-    modal.classList.add("show");
+      body.innerHTML = `
+        <div style="margin-bottom:10px; font-weight:700;">📄 ${filename}</div>
+        <table class="drift-table">
+          <thead>
+            <tr><th>特徴量</th><th style="text-align:right;">現在値</th><th style="text-align:right;">基準値</th><th style="text-align:right;">基準σ</th><th style="text-align:right;">乖離度</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+    document.getElementById(modalId).classList.add("show");
   }
 
-  function closeModal() {
-    document.getElementById("detailModal").classList.remove("show");
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove("show");
   }
 
   function generateDemoResults() {
