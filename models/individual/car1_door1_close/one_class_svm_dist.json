@@ -1,32 +1,7 @@
 {
   "model_id": "car1_door1_close",
   "model_name": "one_class_svm",
-  "n_samples": 16500,
-  "feature_cols": [
-    "mean_current",
-    "std_current",
-    "max_current",
-    "min_current",
-    "range_current",
-    "p25_current",
-    "p50_current",
-    "p75_current",
-    "duration",
-    "data_points",
-    "mean_diff",
-    "max_diff",
-    "energy",
-    "rms_current",
-    "skewness",
-    "kurtosis",
-    "mean_current_left",
-    "mean_current_right",
-    "max_current_left",
-    "max_current_right"
-  ],
-  "score_mean": 0.12629607221999464,
-  "score_std": 0.06616943899496695,
-  "score_p95": 0.22014606009238394,
-  "score_p99": 0.2835943495181502,
-  "trained_at": "2026-10-26T05:22:59.437283"
+  "score_mean": 0.08348502575465919,
+  "score_std": 0.07574292163997198,
+  "trained_at": "2026-10-26T05:57:46.488673"
 }

@@ -1,32 +1,7 @@
 {
   "model_id": "car3_door2_close",
   "model_name": "lof",
-  "n_samples": 16514,
-  "feature_cols": [
-    "mean_current",
-    "std_current",
-    "max_current",
-    "min_current",
-    "range_current",
-    "p25_current",
-    "p50_current",
-    "p75_current",
-    "duration",
-    "data_points",
-    "mean_diff",
-    "max_diff",
-    "energy",
-    "rms_current",
-    "skewness",
-    "kurtosis",
-    "mean_current_left",
-    "mean_current_right",
-    "max_current_left",
-    "max_current_right"
-  ],
-  "score_mean": 0.008523496381756254,
-  "score_std": 0.018310080491426385,
-  "score_p95": 0.01925305458880209,
-  "score_p99": 0.031255698979800677,
-  "trained_at": "2026-10-26T05:23:26.369078"
+  "score_mean": 0.007480461537595796,
+  "score_std": 0.012291818140174814,
+  "trained_at": "2026-10-26T05:58:05.068457"
 }

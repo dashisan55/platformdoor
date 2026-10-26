@@ -1,32 +1,7 @@
 {
   "model_id": "car1_door2_open",
   "model_name": "one_class_svm",
-  "n_samples": 16703,
-  "feature_cols": [
-    "mean_current",
-    "std_current",
-    "max_current",
-    "min_current",
-    "range_current",
-    "p25_current",
-    "p50_current",
-    "p75_current",
-    "duration",
-    "data_points",
-    "mean_diff",
-    "max_diff",
-    "energy",
-    "rms_current",
-    "skewness",
-    "kurtosis",
-    "mean_current_left",
-    "mean_current_right",
-    "max_current_left",
-    "max_current_right"
-  ],
-  "score_mean": 0.13226532025340665,
-  "score_std": 0.06956226104166713,
-  "score_p95": 0.23684720209529467,
-  "score_p99": 0.3173030419054964,
-  "trained_at": "2026-10-26T05:23:05.322746"
+  "score_mean": 0.0990015984002052,
+  "score_std": 0.06734460693274337,
+  "trained_at": "2026-10-26T05:57:50.709029"
 }

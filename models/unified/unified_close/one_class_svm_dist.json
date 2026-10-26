@@ -1,32 +1,7 @@
 {
   "model_id": "unified_close",
   "model_name": "one_class_svm",
-  "n_samples": 148469,
-  "feature_cols": [
-    "mean_current",
-    "std_current",
-    "max_current",
-    "min_current",
-    "range_current",
-    "p25_current",
-    "p50_current",
-    "p75_current",
-    "duration",
-    "data_points",
-    "mean_diff",
-    "max_diff",
-    "energy",
-    "rms_current",
-    "skewness",
-    "kurtosis",
-    "mean_current_left",
-    "mean_current_right",
-    "max_current_left",
-    "max_current_right"
-  ],
-  "score_mean": 0.1755384428930915,
-  "score_std": 0.07059603019508061,
-  "score_p95": 0.27931856777862507,
-  "score_p99": 0.34267340482212805,
-  "trained_at": "2026-10-26T05:28:01.278634"
+  "score_mean": 0.16433007921802423,
+  "score_std": 0.07843944156976317,
+  "trained_at": "2026-10-26T06:05:37.581900"
 }

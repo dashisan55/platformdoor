@@ -1,32 +1,7 @@
 {
   "model_id": "unified_close",
   "model_name": "lof",
-  "n_samples": 148469,
-  "feature_cols": [
-    "mean_current",
-    "std_current",
-    "max_current",
-    "min_current",
-    "range_current",
-    "p25_current",
-    "p50_current",
-    "p75_current",
-    "duration",
-    "data_points",
-    "mean_diff",
-    "max_diff",
-    "energy",
-    "rms_current",
-    "skewness",
-    "kurtosis",
-    "mean_current_left",
-    "mean_current_right",
-    "max_current_left",
-    "max_current_right"
-  ],
-  "score_mean": 0.017311316976074794,
-  "score_std": 0.01599782975896643,
-  "score_p95": 0.037960700171016964,
-  "score_p99": 0.0593800339149406,
-  "trained_at": "2026-10-26T05:26:20.764587"
+  "score_mean": 0.006884034505840188,
+  "score_std": 0.006473995516345102,
+  "trained_at": "2026-10-26T06:03:53.091210"
 }
